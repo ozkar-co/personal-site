@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'
 import './App.css'
+import introImage from './assets/intro.jpg'
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -31,6 +32,7 @@ function App() {
       <main>
         <section id="hero" className="hero">
           <div className="hero-content">
+            <img src={introImage} alt="Profile" className="profile-image" />
             <h1>SOFTWARE<br />ENGINEER & TECH<br />GEEK</h1>
             <p>
               I'm a passionate system engineer with over a decade of experience in backend development, 
