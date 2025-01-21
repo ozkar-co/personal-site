@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import './Header.scss'
 
 interface HeaderProps {
   onMenuToggle?: () => void;

@@ -1,4 +1,5 @@
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'
+import './Social.scss'
 
 export const Social = () => {
   return (

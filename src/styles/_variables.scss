@@ -1,0 +1,17 @@
+// Colores principales
+$color-background: #1a1a1a;
+$color-text: #ffffff;
+$color-accent: #00cc00;
+
+// Variaciones y transparencias
+$color-background-transparent: rgba($color-background, 0.8);
+$color-card: rgba($color-text, 0.1);
+$color-accent-glow: rgba($color-accent, 0.3);
+$color-accent-transparent: rgba($color-accent, 0.1);
+
+// Tamaños
+$header-height: 64px;
+$container-max-width: 1200px;
+
+// Breakpoints
+$breakpoint-mobile: 768px; 

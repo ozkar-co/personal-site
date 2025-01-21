@@ -1,3 +1,5 @@
+import './Skills.scss'
+
 export const Skills = () => {
   return (
     <section id="skills" className="skills">

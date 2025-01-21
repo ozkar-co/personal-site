@@ -1,4 +1,5 @@
-import introImage from '../../assets/intro.jpg'
+import introImage from '../../assets/intro.png'
+import './Hero.scss'
 
 interface HeroProps {
   onCVClick: () => void;
