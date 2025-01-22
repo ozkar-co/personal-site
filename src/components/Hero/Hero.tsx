@@ -1,4 +1,4 @@
-import introImage from '../../assets/intro.png'
+import introImage from '../../assets/intro.jpeg'
 import './Hero.scss'
 
 interface HeroProps {
@@ -9,7 +9,7 @@ export const Hero = ({ onCVClick }: HeroProps) => {
   return (
     <section id="hero" className="hero">
       <div className="hero-background">
-        <img src={introImage} alt="Banner" />
+        <img src={introImage} alt="Banner" loading="lazy" />
       </div>
       <div className="hero-content">
         <h1>SOFTWARE<br />ENGINEER & TECH<br />GEEK</h1>
