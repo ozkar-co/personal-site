@@ -1,0 +1,13 @@
+@use '../../styles/variables' as *;
+
+.footer {
+  padding: 1rem;
+  text-align: center;
+  background: $color-background-transparent;
+  backdrop-filter: blur(10px);
+  
+  p {
+    margin: 0;
+    color: $color-text;
+  }
+} 

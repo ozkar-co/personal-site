@@ -3,6 +3,7 @@ import { Header } from './components/Header/Header'
 import { Hero } from './components/Hero/Hero'
 import { Skills } from './components/Skills/Skills'
 import { Social } from './components/Social/Social'
+import { Footer } from './components/Footer/Footer'
 
 function App() {
   const handleCVClick = () => {
@@ -18,9 +19,7 @@ function App() {
         <Skills />
         <Social />
       </main>
-      <footer className="footer">
-        <p>Copyright © OzCodx {new Date().getFullYear()}</p>
-      </footer>
+      <Footer />
     </div>
   )
 }
