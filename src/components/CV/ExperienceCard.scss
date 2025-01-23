@@ -1,0 +1,89 @@
+@use '../../styles/variables' as *;
+
+.experience-card {
+  &-content {
+    cursor: pointer;
+  }
+
+  &-main {
+    padding: 0.5rem 0;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: rgba($color-accent, 0.1);
+    }
+  }
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+
+    .position {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 0;
+      color: $color-text;
+    }
+
+    .organization {
+      font-weight: 500;
+      color: $color-accent;
+    }
+  }
+
+  &-subheader {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: rgba($color-text, 0.8);
+
+    .location {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+
+  &-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out, opacity 0.3s ease-out;
+    padding: 0 1rem;
+    opacity: 0;
+
+    &.expanded {
+      max-height: 500px;
+      padding: 1rem;
+      opacity: 1;
+      border-top: 1px solid rgba($color-accent, 0.2);
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 1.2rem;
+
+      li {
+        margin-bottom: 0.5rem;
+        line-height: 1.6;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+.expand-arrow {
+  text-align: center;
+  font-size: 0.8rem;
+  color: $color-accent;
+  transition: transform 0.3s ease;
+  margin-top: 0.5rem;
+
+  &.expanded {
+    transform: rotate(180deg);
+  }
+} 

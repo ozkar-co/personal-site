@@ -1,8 +1,9 @@
+import { ReactNode } from 'react';
 import './CVCard.scss';
 
 interface CVCardProps {
   title: string;
-  content: string | string[];
+  content: string | string[] | ReactNode;
   alignRight?: boolean;
 }
 
@@ -13,14 +14,16 @@ export const CVCard = ({ title, content, alignRight = false }: CVCardProps) => {
         <h2>{title}</h2>
       </div>
       <div className="cv-card-content">
-        {Array.isArray(content) ? (
+        {typeof content === 'string' ? (
+          <p>{content}</p>
+        ) : Array.isArray(content) ? (
           <ul>
             {content.map((item, index) => (
               <li key={index}>{item}</li>
             ))}
           </ul>
         ) : (
-          <p>{content}</p>
+          content
         )}
       </div>
     </div>
