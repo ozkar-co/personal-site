@@ -6,13 +6,13 @@ export const Social = () => {
     <section id="social" className="social">
       <div className="social-container">
         <div className="social-title">
-          <h2>CONNECT WITH ME</h2>
+          <h2>CONECTA CONMIGO</h2>
         </div>
         <div className="social-content">
           <div className="social-links">
-            <a href="mailto:ozcodx@gmail.com" aria-label="Email">
+            <a href="mailto:ozcodx@gmail.com" aria-label="Correo">
               <FaEnvelope size={32} />
-              <span>Email</span>
+              <span>Correo</span>
             </a>
             <a href="https://github.com/ozcodx" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
               <FaGithub size={32} />

@@ -5,12 +5,12 @@ export const Skills = () => {
     <section id="skills" className="skills">
       <div className="skills-container">
         <div className="skills-title">
-          <h2>WHAT I CAN OFFER TO YOU</h2>
+          <h2>MIS HABILIDADES</h2>
         </div>
         <div className="skills-content">
           <div className="skills-grid">
             <div className="skill-card">
-              <h3>LANGUAGES</h3>
+              <h3>LENGUAJES</h3>
               <ul>
                 <li>Python</li>
                 <li>Node.js</li>
@@ -20,7 +20,7 @@ export const Skills = () => {
               </ul>
             </div>
             <div className="skill-card">
-              <h3>TECHNOLOGIES</h3>
+              <h3>TECNOLOGÍAS</h3>
               <ul>
                 <li>Docker</li>
                 <li>PostgreSQL</li>
@@ -30,13 +30,13 @@ export const Skills = () => {
               </ul>
             </div>
             <div className="skill-card">
-              <h3>OTHER EXPERTISE</h3>
+              <h3>OTRAS EXPERTICIAS</h3>
               <ul>
-                <li>Software Design</li>
-                <li>API Development</li>
+                <li>Diseño de Software</li>
+                <li>Desarrollo de APIs</li>
                 <li>Agile & Scrum</li>
-                <li>Open-Source Projects</li>
-                <li>Technical Writing</li>
+                <li>Proyectos Open-Source</li>
+                <li>Documentación Técnica</li>
               </ul>
             </div>
           </div>

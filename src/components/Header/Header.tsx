@@ -16,8 +16,11 @@ export const Header = ({ onMenuToggle }: HeaderProps) => {
 
   return (
     <header className="header">
+      <div className="header-title">
+        <Link to="/">OzCodx</Link>
+      </div>
       <nav className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
-        <Link to="/">HOME</Link>
+        <Link to="/">OZ</Link>
         <Link to="/cv">CV</Link>
       </nav>
       <button 
