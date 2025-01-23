@@ -6,8 +6,13 @@ export const CV = () => {
   return (
     <div className="cv">
       <h1>Curriculum Vitae</h1>
-      
+      <CVCard
+        title="Sobre Mí"
+        content="Desarrollador apasionado con más de 6 años de experiencia en desarrollo web. Especializado en tecnologías frontend modernas y arquitecturas escalables."
+      />
+      <h1>Experiencia Laboral</h1>
       <ExperienceCard
+        alignRight
         position="Desarrollador Senior"
         organization="TechCorp"
         location="Madrid, España"
@@ -31,10 +36,10 @@ export const CV = () => {
           "Integración de sistemas de pago y autenticación",
           "Mantenimiento y mejora de bases de datos"
         ]}
-        alignRight
       />
 
       <ExperienceCard
+        alignRight
         position="Desarrollador Frontend"
         organization="DigitalAgency"
         location="Valencia, España"
@@ -46,7 +51,7 @@ export const CV = () => {
           "Integración con APIs de terceros"
         ]}
       />
-
+      <h1>Educación</h1>
       <ExperienceCard
         position="Maestría en Ciencias de la Computación"
         organization="Universidad Tech"
@@ -58,10 +63,9 @@ export const CV = () => {
           "Participación en proyectos de investigación",
           "Premio a la mejor tesis del año"
         ]}
-        alignRight
       />
-
       <ExperienceCard
+        alignRight
         position="Ingeniería de Software"
         organization="Universidad Tech"
         location="Madrid, España"
@@ -74,11 +78,6 @@ export const CV = () => {
         ]}
       />
 
-      <CVCard
-        title="Sobre Mí"
-        content="Desarrollador apasionado con más de 6 años de experiencia en desarrollo web. Especializado en tecnologías frontend modernas y arquitecturas escalables."
-        alignRight
-      />
     </div>
   );
 } 

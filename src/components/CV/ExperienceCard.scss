@@ -52,6 +52,7 @@
     transition: max-height 0.3s ease-out, padding 0.3s ease-out, opacity 0.3s ease-out;
     padding: 0 1rem;
     opacity: 0;
+    text-align: left;
 
     &.expanded {
       max-height: 500px;
@@ -63,10 +64,13 @@
     ul {
       margin: 0;
       padding-left: 1.2rem;
+      list-style-position: outside;
+      text-align: left;
 
       li {
         margin-bottom: 0.5rem;
         line-height: 1.6;
+        text-align: left;
         
         &:last-child {
           margin-bottom: 0;
