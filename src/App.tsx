@@ -6,11 +6,13 @@ import { Skills } from './components/Skills/Skills'
 import { Social } from './components/Social/Social'
 import { Footer } from './components/Footer/Footer'
 import { CV } from './components/CV/CV'
+import { MatrixBackground } from './components/MatrixBackground/MatrixBackground'
 
 function App() {
   return (
     <Router>
       <div className="app">
+        <MatrixBackground />
         <Header />
         <Routes>
           <Route path="/cv" element={<CV />} />
