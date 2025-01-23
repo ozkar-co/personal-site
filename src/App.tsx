@@ -8,11 +8,6 @@ import { Footer } from './components/Footer/Footer'
 import { CV } from './components/CV/CV'
 
 function App() {
-  const handleCVClick = () => {
-    // Aquí puedes agregar la lógica para descargar o mostrar tu CV
-    console.log('CV clicked')
-  }
-
   return (
     <Router>
       <div className="app">
@@ -21,7 +16,7 @@ function App() {
           <Route path="/cv" element={<CV />} />
           <Route path="/" element={
             <main>
-              <Hero onCVClick={handleCVClick} />
+              <Hero />
               <Skills />
               <Social />
             </main>

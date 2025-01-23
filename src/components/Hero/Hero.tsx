@@ -1,11 +1,8 @@
 import introImage from '../../assets/intro.jpeg'
 import './Hero.scss'
 
-interface HeroProps {
-  onCVClick: () => void;
-}
 
-export const Hero = ({ onCVClick }: HeroProps) => {
+export const Hero = () => {
   return (
     <section id="hero" className="hero">
       <div className="hero-background">
@@ -18,7 +15,7 @@ export const Hero = ({ onCVClick }: HeroProps) => {
           Python, Node.js, and open-source technologies. I love building efficient systems, exploring
           AI, and sharing my knowledge through projects and writing.
         </p>
-        <button className="cta-button" onClick={onCVClick}>
+        <button className="cta-button" onClick={() => window.location.href = '/cv'}>
           CHECK MY CV
         </button>
       </div>
