@@ -1,4 +1,4 @@
-import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa'
+import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope, FaWhatsapp } from 'react-icons/fa'
 import './Social.scss'
 
 export const Social = () => {
@@ -25,6 +25,10 @@ export const Social = () => {
             <a href="https://www.instagram.com/ozcodx/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
               <FaInstagram size={32} />
               <span>Instagram</span>
+            </a>
+            <a href="https://wa.me/573006274400" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+              <FaWhatsapp size={32} />
+              <span>WhatsApp</span>
             </a>
           </div>
         </div>

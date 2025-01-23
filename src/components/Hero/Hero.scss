@@ -67,8 +67,8 @@
       flex-shrink: 0;
       
       .profile-image {
-        width: 150px;
-        height: 150px;
+        width: 200px;
+        height: 200px;
         border-radius: 50%;
         object-fit: cover;
         border: 3px solid $color-accent;
@@ -124,8 +124,8 @@
 
       .hero-image {
         .profile-image {
-          width: 120px;
-          height: 120px;
+          width: 150px;
+          height: 150px;
         }
       }
     }
