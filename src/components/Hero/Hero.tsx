@@ -1,7 +1,10 @@
 import introImage from '../../assets/intro.jpeg'
+import { useNavigate } from 'react-router-dom'
 import './Hero.scss'
 
 export const Hero = () => {
+  const navigate = useNavigate();
+
   return (
     <section id="hero" className="hero">
       <div className="hero-background">
@@ -18,7 +21,7 @@ export const Hero = () => {
               Python, Node.js, and open-source technologies. I love building efficient systems, exploring
               AI, and sharing my knowledge through projects and writing.
             </p>
-            <button className="cta-button" onClick={() => window.location.href = '/cv'}>
+            <button className="cta-button" onClick={() => navigate('/cv')}>
               CHECK MY CV
             </button>
           </div>
