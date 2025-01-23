@@ -1,68 +1,104 @@
 @use '../../styles/variables' as *;
 
 .hero {
-  min-height: 100vh;
   position: relative;
-  display: flex;
-  align-items: center;
+  height: 60vh;
   overflow: hidden;
 
-  &-background {
+  .hero-background {
     position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
-
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        to right,
-        rgba($color-background, 0.95) 0%,
-        rgba($color-background, 0.8) 20%,
-        rgba($color-background, 0.4) 50%
-      );
-    }
+    z-index: -1;
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: right;
+      filter: brightness(0.3);
     }
   }
 
-  &-content {
-    position: relative;
-    z-index: 2;
+  .hero-container {
     max-width: $container-max-width;
     margin: 0 auto;
-    padding: 4rem 2rem;
-    text-align: left;
-    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+  }
 
-    h1 {
-      font-size: clamp(2.5rem, 6vw, 4rem);
-      margin-bottom: 2rem;
-      line-height: 1.2;
-      color: $color-text;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-      max-width: 60%;
+  .hero-content {
+    background-color: rgba($color-background, 0.9);
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid $color-accent;
+    padding: 2.5rem 2rem;
+    max-width: 800px;
+    position: relative;
+    
+    .hero-title {
+      position: absolute;
+      top: -1.5rem;
+      left: 2rem;
+      background-color: $color-accent;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      z-index: 1;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+      h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: $color-text;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+      }
     }
 
-    p {
-      font-size: clamp(1rem, 3vw, 1.2rem);
-      line-height: 1.6;
-      margin-bottom: 2rem;
-      color: $color-text;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-      max-width: 50%;
+    .hero-text {
+      margin-top: 1rem;
+      
+      p {
+        margin: 0 0 1.5rem;
+        line-height: 1.6;
+        color: $color-text;
+      }
+    }
+  }
+
+  .cta-button {
+    background-color: $color-accent;
+    color: $color-text;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    height: 70vh;
+
+    .hero-content {
+      padding: 2rem 1.5rem;
+      margin: 0 1rem;
+
+      .hero-title {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        text-align: center;
+
+        h1 {
+          font-size: 1.2rem;
+        }
+      }
     }
   }
 }
@@ -74,23 +110,6 @@
   object-fit: cover;
   border: 3px solid $color-accent;
   box-shadow: 0 0 20px $color-accent-glow;
-}
-
-.cta-button {
-  background: transparent;
-  border: 2px solid $color-accent;
-  color: $color-text;
-  padding: 1rem 2rem;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: all 0.3s;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-
-  &:hover {
-    background: $color-accent;
-    color: $color-background;
-    text-shadow: none;
-  }
 }
 
 @media (max-width: $breakpoint-mobile) {
