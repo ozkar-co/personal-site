@@ -54,11 +54,6 @@ export const MatrixBackground = () => {
           matrix.columns[index] = y + matrix.fontSize;
         }
       });
-
-      if (Math.random() > 0.95) {
-        ctx.fillStyle = `rgba(0, 255, 0, ${Math.random() * 0.3})`;
-        ctx.fillRect(0, Math.random() * canvas.height, canvas.width, Math.random() * 5);
-      }
     }
 
     const intervalId = setInterval(drawMatrix, 50);
