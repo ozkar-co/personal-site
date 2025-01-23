@@ -28,12 +28,18 @@
     border-radius: 8px;
     z-index: 1;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: calc(100% - 2rem);
+    white-space: nowrap;
+    overflow: hidden;
 
     h2 {
       margin: 0;
       color: $color-text;
       font-size: 1.5rem;
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
@@ -68,6 +74,8 @@
 
   @media (max-width: $breakpoint-mobile) {
     width: 95%;
+    margin-left: auto !important;
+    margin-right: auto !important;
 
     &.align-right,
     &.align-left {
@@ -75,6 +83,7 @@
         left: 50%;
         transform: translateX(-50%);
         right: auto;
+        max-width: 80%;
       }
     }
   }
