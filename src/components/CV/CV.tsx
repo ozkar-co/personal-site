@@ -1,6 +1,13 @@
 import './CV.scss';
 import { CVCard } from './CVCard';
 import { ExperienceCard } from './ExperienceCard';
+import { SkillCard } from './SkillCard';
+import { 
+  SiNodedotjs, SiJavascript, SiTypescript, 
+  SiReact, SiMongodb, SiPostgresql, 
+  SiMysql, SiGooglecloud,  SiLinux,
+  SiDocker, SiLaravel, SiDjango,
+} from 'react-icons/si';
 
 export const CV = () => {
   return (
@@ -8,8 +15,49 @@ export const CV = () => {
       <h1>Curriculum Vitae</h1>
       <CVCard
         title="Sobre Mí"
-        content="Desarrollador apasionado con más de 6 años de experiencia en desarrollo web. Especializado en tecnologías frontend modernas y arquitecturas escalables."
+        content="Soy Oscar Eduardo Bernal Sánchez, ingeniero de sistemas y CTO en Forja de Código. Con más de 8 años de experiencia en desarrollo FullStack, me especializo en arquitectura de software, escalabilidad y tecnología en la nube. Apasionado por la innovación, la inteligencia artificial y la construcción de soluciones eficientes."
       />
+      
+      <h1>Habilidades Técnicas</h1>
+      
+      <SkillCard
+        alignRight
+        title="Desarrollo Backend"
+        skills={[
+          { name: "Node.js", experience: "5 años", icon: SiNodedotjs },
+          { name: "Laravel", experience: "3 años", icon: SiLaravel },
+          { name: "Django", experience: "1 año", icon: SiDjango }
+        ]}
+      />
+
+      <SkillCard
+        title="Desarrollo Frontend"
+        skills={[
+          { name: "JavaScript", experience: "6 años", icon: SiJavascript },
+          { name: "TypeScript", experience: "2 años", icon: SiTypescript },
+          { name: "React", experience: "1 año", icon: SiReact }
+        ]}
+      />
+
+      <SkillCard
+        alignRight
+        title="Bases de Datos"
+        skills={[
+          { name: "MongoDB", experience: "5 años", icon: SiMongodb },
+          { name: "PostgreSQL", experience: "3 años", icon: SiPostgresql },
+          { name: "MySQL", experience: "1 año", icon: SiMysql }
+        ]}
+      />
+
+      <SkillCard
+        title="DevOps"
+        skills={[
+          { name: "Linux", experience: "10 años", icon: SiLinux },
+          { name: "Cloud", experience: "5 años", icon: SiGooglecloud },
+          { name: "Docker", experience: "4 años", icon: SiDocker }
+        ]}
+      />
+
       <h1>Experiencia Laboral</h1>
       <ExperienceCard
         alignRight
@@ -52,6 +100,7 @@ export const CV = () => {
         ]}
       />
       <h1>Educación</h1>
+
       <ExperienceCard
         position="Maestría en Ciencias de la Computación"
         organization="Universidad Tech"
