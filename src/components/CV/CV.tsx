@@ -21,8 +21,8 @@ export const CV = () => {
       <h1>Habilidades Técnicas</h1>
       
       <SkillCard
-        alignRight
         title="Desarrollo Backend"
+        alignRight
         skills={[
           { name: "Node.js", experience: "5 años", icon: SiNodedotjs },
           { name: "Laravel", experience: "3 años", icon: SiLaravel },
@@ -40,8 +40,8 @@ export const CV = () => {
       />
 
       <SkillCard
-        alignRight
         title="Bases de Datos"
+        alignRight
         skills={[
           { name: "MongoDB", experience: "5 años", icon: SiMongodb },
           { name: "PostgreSQL", experience: "3 años", icon: SiPostgresql },
@@ -61,7 +61,7 @@ export const CV = () => {
       <h1>Experiencia Laboral</h1>
       
       <ExperienceCard
-        title="Forja de Código"
+        alignRight
         position="CTO"
         organization="Forja de Código"
         location="Pereira, Colombia"
@@ -74,8 +74,6 @@ export const CV = () => {
       />
 
       <ExperienceCard
-        alignRight
-        title="BTi Lab"
         position="Desarrollador Backend"
         organization="BTi Lab"
         location="Remoto, Colombia"
@@ -88,7 +86,7 @@ export const CV = () => {
       />
 
       <ExperienceCard
-        title="DevSavant"
+        alignRight
         position="Desarrollador Backend"
         organization="DevSavant"
         location="Remoto, Colombia"
@@ -101,10 +99,8 @@ export const CV = () => {
       />
 
       <ExperienceCard
-        alignRight
-        title="S4N"
         position="Desarrollador Backend"
-        organization="S4N"
+        organization="Seven4N"
         location="Remoto, Colombia"
         period="Ago 2019 – Dic 2021"
         achievements={[
@@ -115,9 +111,9 @@ export const CV = () => {
       />
 
       <ExperienceCard
-        title="Digital Product School"
+        alignRight
         position="Ingeniero de Software"
-        organization="Digital Product School by UnternehmerTUM"
+        organization="Münchner Verkehrsgesellschaft mbH"
         location="Múnich, Alemania"
         period="May 2019 – Jul 2019"
         achievements={[
@@ -128,8 +124,6 @@ export const CV = () => {
       />
 
       <ExperienceCard
-        alignRight
-        title="Konecta Software Factory"
         position="Analista Desarrollador"
         organization="Konecta Software Factory"
         location="Medellín, Colombia"
@@ -142,7 +136,7 @@ export const CV = () => {
       />
 
       <ExperienceCard
-        title="Tecnología Digital 7"
+        alignRight
         position="Desarrollador Backend"
         organization="Tecnología Digital 7"
         location="Pereira, Colombia"
@@ -155,8 +149,6 @@ export const CV = () => {
       />
 
       <ExperienceCard
-        alignRight
-        title="Universidad Tecnológica de Pereira"
         position="Asistente de Desarrollo de Software"
         organization="Universidad Tecnológica de Pereira"
         location="Pereira, Colombia"
@@ -170,16 +162,55 @@ export const CV = () => {
 
       <h1>Educación</h1>
       <ExperienceCard
-        title="Universidad Tecnológica de Pereira"
-        position="Ingeniería de Sistemas y Computación"
+        alignRight
         organization="Universidad Tecnológica de Pereira"
+        position="Ingeniería de Sistemas y Computación"
         location="Pereira, Colombia"
-        period="2012-2017"
+        period="Agosto 2018"
         achievements={[
-          "Graduado con distinción",
-          "Participación en semillero de investigación en Inteligencia Artificial",
-          "Desarrollo de proyectos de software libre",
-          "Monitor académico en programación y estructuras de datos"
+          "Ciclo completo del desarrollo de software, análisis, diseño, desarrollo, despliegue y mantenimiento",
+          "Liderazgo de equipos multidisciplinarios para crear soluciones tecnológicas adaptadas a organizaciones",
+          "Diseño de modelos inteligentes para optimizar procesos y mejorar la eficiencia",
+          "Investigación en tecnologías y compromiso con el aprendizaje continuo"
+        ]}
+      />
+
+      <ExperienceCard
+        organization="Digital Product School (DPS) by UnternehmerTUM"
+        position="Beca en Ingeniería de Software"
+        location="Múnich, Alemania"
+        period="May 2019 - Jul 2019"
+        achievements={[
+          "Programa intensivo de tres meses enfocado en el desarrollo de productos digitales en un entorno multidisciplinario",
+          "Aplicación de metodologías ágiles como Scrum y Design Thinking",
+          "Aplicación de la metodología Lean para la validación rápida de ideas y desarrollo de productos con enfoque en la eficiencia"
+        ]}
+      />
+
+      <h1>Extra Curriculares</h1>
+      <ExperienceCard
+        alignRight
+        organization="Domus Galilea Monastery"
+        position="Voluntariado"
+        location="HaGalil, Israel"
+        period="Sep 2023 – Sep 2024"
+        achievements={[
+          "Mejora de habilidades de comunicación e interculturales sirviendo a peregrinos de todo el mundo.",
+          "Desarrollo de habilidades técnicas en mantenimiento de computadoras, carpintería y servicio de atención.",
+          "Adaptabilidad, perseverancia y resolución de problemas a través de diversas tareas y experiencias de voluntariado."
+        ]}
+      />
+
+      <ExperienceCard
+        organization="Exile (Videogame)"
+        position="Contribuidor Open-Source"
+        location="Remoto, Colombia"
+        period="Sep 2021, Jun 2022"
+        achievements={[
+          "Contribución al desarrollo de Exile, un juego de supervivencia en la naturaleza construido en el motor Minetest",
+          "Adición de un nuevos objetos y mecánicas para mejorar la experiencia de juego",
+          "Asistencia con la traducción al español, expandiendo la accesibilidad del juego a un público más amplio",
+          "Mejora de la documentación del juego, asegurando instrucciones más claras y una mejor usabilidad general"
         ]}
       />
     </div>

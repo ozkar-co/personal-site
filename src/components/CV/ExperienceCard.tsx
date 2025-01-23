@@ -3,9 +3,8 @@ import { CVCard } from './CVCard';
 import './ExperienceCard.scss';
 
 interface ExperienceCardProps {
-  title: string;
-  position: string;
   organization: string;
+  position: string;
   location: string;
   period: string;
   achievements: string[];
@@ -13,9 +12,8 @@ interface ExperienceCardProps {
 }
 
 export const ExperienceCard = ({
-  title,
-  position,
   organization,
+  position,
   location,
   period,
   achievements,
@@ -54,7 +52,7 @@ export const ExperienceCard = ({
 
   return (
     <CVCard
-      title={title}
+      title={organization}
       content={
         <div className="experience-card-content">
           {mainContent}
