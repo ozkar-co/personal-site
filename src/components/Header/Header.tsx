@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import './Header.scss'
 
@@ -16,8 +17,8 @@ export const Header = ({ onMenuToggle }: HeaderProps) => {
   return (
     <header className="header">
       <nav className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
-        <a href="#home">HOME</a>
-        <a href="#cv">CV</a>
+        <Link to="/">HOME</Link>
+        <Link to="/cv">CV</Link>
       </nav>
       <button 
         className="menu-toggle"
