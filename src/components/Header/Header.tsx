@@ -26,6 +26,7 @@ export const Header = ({ onMenuToggle }: HeaderProps) => {
       <nav className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
         <Link to="/" onClick={handleLinkClick}>OZ</Link>
         <Link to="/cv" onClick={handleLinkClick}>CV</Link>
+        <Link to="/blog" onClick={handleLinkClick}>BLOG</Link>
       </nav>
       <button 
         className="menu-toggle"

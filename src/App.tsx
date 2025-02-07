@@ -7,7 +7,7 @@ import { Social } from './components/Social/Social'
 import { Footer } from './components/Footer/Footer'
 import { CV } from './components/CV/CV'
 import { MatrixBackground } from './components/MatrixBackground/MatrixBackground'
-
+import { Blog } from './components/Blog/Blog'
 function App() {
   return (
     <Router>
@@ -16,6 +16,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/cv" element={<CV />} />
+          <Route path="/blog" element={<Blog />} />
           <Route path="/" element={
             <main>
               <Hero />
