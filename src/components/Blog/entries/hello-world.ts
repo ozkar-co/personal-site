@@ -16,7 +16,7 @@ const helloWorld: BlogEntryType = {
     </p>
     <h3>¿Qué encontrarás aquí?</h3>
     <ul>
-      <li>Tutoriales técnicos</li>
+      <li>Ideas, planes y pensamientos</li>
       <li>Experiencias en proyectos</li>
       <li>Mejores prácticas de desarrollo</li>
       <li>Reflexiones sobre la industria tech</li>

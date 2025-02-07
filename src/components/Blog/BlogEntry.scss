@@ -1,5 +1,6 @@
 .blog-entry {
   color: #fff;
+  text-align: left;
 
   header {
     margin-bottom: 2rem;
@@ -43,16 +44,18 @@
     ul {
       margin: 1rem 0;
       padding-left: 2rem;
+      list-style: none;
 
       li {
         margin-bottom: 0.5rem;
         position: relative;
+        padding-left: 1rem;
 
         &::before {
           content: '>';
           color: #0F0;
           position: absolute;
-          left: -1.5rem;
+          left: -1rem;
         }
       }
     }
