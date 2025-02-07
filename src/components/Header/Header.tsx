@@ -14,14 +14,18 @@ export const Header = ({ onMenuToggle }: HeaderProps) => {
     onMenuToggle?.();
   }
 
+  const handleLinkClick = () => {
+    setIsMenuOpen(false); // Cierra el menú al seleccionar un enlace
+  }
+
   return (
     <header className="header">
       <div className="header-title">
         <Link to="/">OzCodx</Link>
       </div>
       <nav className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
-        <Link to="/">OZ</Link>
-        <Link to="/cv">CV</Link>
+        <Link to="/" onClick={handleLinkClick}>OZ</Link>
+        <Link to="/cv" onClick={handleLinkClick}>CV</Link>
       </nav>
       <button 
         className="menu-toggle"
