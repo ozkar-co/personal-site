@@ -34,12 +34,12 @@ const emprendimiento: BlogEntryType = {
     </p>
     `,
 
-  tags: ['Emprendimiento',
+  tags: [
+    'Emprendimiento',
     'TomaDeDecisiones',
     'Autogestión',
     'DesarrolloProfesional',
     'CambioDeMentalidad',
-    'DesarrolloProfesional',
     'TransiciónLaboral',
     'Innovación',
     'Determinación',
@@ -48,7 +48,8 @@ const emprendimiento: BlogEntryType = {
     'CrecimientoEconómico',
     'MiedoAlFracaso',
     'ResponsabilidadEmpresarial',
-    'EstrategiaDeNegocio']
+    'EstrategiaDeNegocio'
+  ]
 };
 
 export default emprendimiento; 

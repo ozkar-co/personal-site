@@ -25,7 +25,16 @@ const helloWorld: BlogEntryType = {
       ¡Mantente atento para más contenido interesante!
     </p>
   `,
-  tags: ['bienvenida', 'blog', 'desarrollo', 'tecnología']
+  tags: [
+    'BlogPersonal',
+    'Desarrollo',
+    'Tecnología',
+    'HolaMundo',
+    'ExperienciasTech',
+    'MejoresPrácticas',
+    'IndustriaTech',
+    'CompartirConocimiento'
+  ]
 };
 
 export default helloWorld; 
