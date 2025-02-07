@@ -3,7 +3,7 @@ import { BlogEntryType } from '../types';
 const helloWorld: BlogEntryType = {
   id: 'hello-world',
   title: '¡Hola Mundo!',
-  date: '2024-03-19',
+  date: '2025-02-07',
   content: `
     <h2>Bienvenidos a mi Blog</h2>
     <p>
