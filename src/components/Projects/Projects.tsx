@@ -40,7 +40,6 @@ export const Projects = () => {
             <div key={index} className="project-item">
               <a 
                 href={project.link} 
-                target="_blank" 
                 rel="noopener noreferrer" 
                 className="project-link"
               >
