@@ -8,6 +8,7 @@ import { Footer } from './components/Footer/Footer'
 import { CV } from './components/CV/CV'
 import { MatrixBackground } from './components/MatrixBackground/MatrixBackground'
 import { Blog } from './components/Blog/Blog'
+import { Projects } from './components/Projects/Projects'
 function App() {
   return (
     <Router>
@@ -17,6 +18,7 @@ function App() {
         <Routes>
           <Route path="/cv" element={<CV />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/projects" element={<Projects />} />
           <Route path="/" element={
             <main>
               <Hero />
