@@ -1,6 +1,7 @@
 import './Projects.scss';
 import placeholderImage from '../../assets/placeholder.png';
 import project1 from '../../assets/proy1.png';
+import project2 from '../../assets/proy2.png';
 
 
 interface Project {
@@ -11,13 +12,20 @@ interface Project {
 }
 
 const projects: Project[] = [
+
+  {
+    title: 'Sitio web de Oz',
+    description: 'Mi propio sitio web personal, con mi información, mi blog y mis proyectos.',
+    link: '/#',
+    image: project1,
+  },
   {
     title: 'Oz RO',
     description:'Servidor privado de Ragnarok Online',
     link: 'https://oz-ragnarok.web.app/',
-    image: project1,
+    image: project2,
   },
-  // Agrega más proyectos según sea necesario
+
 ];
 
 
@@ -28,8 +36,14 @@ export const Projects = () => {
         <h1>Mis Proyectos</h1>
         <p>Estos son algunos de mis proyectos, que he realizado en mi tiempo libre.</p>
         <div className="projects-grid">
-            {projects.map((project, index) => (
-                <div key={index} className="project-item">
+          {projects.map((project, index) => (
+            <div key={index} className="project-item">
+              <a 
+                href={project.link} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="project-link"
+              >
                 <img 
                   src={project.image} 
                   alt={project.title} 
@@ -38,9 +52,9 @@ export const Projects = () => {
                 />
                 <h2>{project.title}</h2>
                 <p>{project.description}</p>
-                <a href={project.link} target="_blank" rel="noopener noreferrer">Ver Proyecto</a>
+              </a>
             </div>
-            ))}
+          ))}
         </div>
       </div>
     </div>

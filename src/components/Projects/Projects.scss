@@ -74,21 +74,28 @@
     p {
       margin: 0.5rem 0;
     }
-
-    a {
-      color: #007bff;
-      text-decoration: none;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
   }
 }
 
 .project-image {
   width: 100%;
-  height: auto;
+  height: 200px;
+  object-fit: cover;
   border-radius: 8px;
   margin-bottom: 1rem;
+}
+
+.project-item {
+  cursor: pointer;
+}
+
+.project-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+
+  &:hover {
+    text-decoration: none;
+  }
 }
