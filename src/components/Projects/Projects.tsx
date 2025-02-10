@@ -8,7 +8,7 @@ interface Project {
 
 const projects: Project[] = [
   {
-    title: 'Proyecto 1',
+    title: '',
     description: 'Descripción del Proyecto 1.',
     link: 'https://ejemplo1.com',
   },
@@ -22,21 +22,30 @@ const projects: Project[] = [
     description: 'Descripción del Proyecto 3.',
     link: 'https://ejemplo3.com',
   },
+  {
+    title: 'Proyecto 4',
+    description: 'Descripción del Proyecto 4.',
+    link: 'https://ejemplo4.com',
+  },
   // Agrega más proyectos según sea necesario
 ];
+
 
 export const Projects = () => {
   return (
     <div className="projects">
       <div className="projects-container">
         <h1>Mis Proyectos</h1>
-        {projects.map((project, index) => (
-          <div key={index} className="project-item">
-            <h2>{project.title}</h2>
-            <p>{project.description}</p>
-            <a href={project.link} target="_blank" rel="noopener noreferrer">Ver Proyecto</a>
-          </div>
-        ))}
+        <p>Estos son algunos de mis proyectos, que he realizado en mi tiempo libre.</p>
+        <div className="projects-grid">
+            {projects.map((project, index) => (
+                <div key={index} className="project-item">
+                <h2>{project.title}</h2>
+                <p>{project.description}</p>
+                <a href={project.link} target="_blank" rel="noopener noreferrer">Ver Proyecto</a>
+            </div>
+            ))}
+        </div>
       </div>
     </div>
   );

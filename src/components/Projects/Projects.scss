@@ -9,8 +9,7 @@
   color: #fff;
 
   .projects-container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: 2rem;
     width: 100%;
     max-width: 1200px;
@@ -30,44 +29,59 @@
       text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
     }
 
-    .project-item {
-      padding: 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border: 1px solid transparent;
-
-      &:hover {
-        background-color: rgba(0, 255, 0, 0.1);
-        border-color: rgba(0, 255, 0, 0.2);
-      }
-
-      h2 {
-        color: #fff;
-        margin: 0 0 0.5rem;
-        font-size: 1.5rem;
-      }
-
-      p {
-        margin: 0.5rem 0;
-      }
-
-      a {
-        color: #007bff;
-        text-decoration: none;
-
-        &:hover {
-          text-decoration: underline;
-        }
-      }
+    p {
+      text-align: center;
+      color: #fff;
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
     }
   }
 
   @media (max-width: $breakpoint-mobile) {
     padding: 1rem;
 
+
     .projects-container {
       padding: 1rem;
+    }
+  }
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+
+  .project-item {
+    padding: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+    background-color: rgba(0, 0, 0, 0.85);
+
+    &:hover {
+      background-color: rgba(0, 255, 0, 0.1);
+      border-color: rgba(0, 255, 0, 0.2);
+    }
+
+    h2 {
+      color: #fff;
+      margin: 0 0 0.5rem;
+      font-size: 1.5rem;
+    }
+
+    p {
+      margin: 0.5rem 0;
+    }
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }
