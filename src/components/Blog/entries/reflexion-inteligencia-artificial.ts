@@ -3,7 +3,7 @@ import { BlogEntryType } from '../types';
 const reflexionInteligenciaArtificial: BlogEntryType = {
   id: 'reflexion-inteligencia-artificial',
   title: 'Una reflexión sobre la inteligencia artificial',
-  date: '2025-02-09',
+  date: '2025-02-11',
   content: `
     <p>
       El internet está plagado de artículos sobre la inteligencia artificial, inundados de entusiasmo, miedo y expectativas. Podría haberme quedado al margen, o podría haber intentado ser diferente evitando hablar del tema. Pero, en definitiva, siento que tengo algo que decir. Quizás no sea una idea completamente nueva, quizás muchos ya la hayan expresado de distintas formas, pero aquí la dejo.
