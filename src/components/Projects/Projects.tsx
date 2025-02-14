@@ -2,6 +2,7 @@ import './Projects.scss';
 import placeholderImage from '../../assets/placeholder.png';
 import project1 from '../../assets/proy1.png';
 import project2 from '../../assets/proy2.png';
+import project3 from '../../assets/proy3.png';
 
 
 interface Project {
@@ -24,6 +25,12 @@ const projects: Project[] = [
     description:'Servidor privado de Ragnarok Online',
     link: 'https://oz-ragnarok.web.app/',
     image: project2,
+  },
+  {
+    title: 'Oz Cuentas',
+    description: 'Sitio web para la gestion de finanzas personales',
+    link: 'https://oz-cuentas.web.app/about',
+    image: project3,
   },
 
 ];
