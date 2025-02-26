@@ -4,6 +4,11 @@ const hoyMeDesperteExistencialista: BlogEntryType = {
   id: 'hoy-me-desperte-existencialista',
   title: 'Hoy me desperté existencialista',
   date: '2025-02-12',
+  abstract: `
+    <p>
+      Una reflexión personal sobre el <b>despertar existencialista</b> y la liberación que surge al aceptar que la vida no tiene un plan predeterminado. Este artículo explora cómo abandonar la idea de una <b>justicia universal</b> o un <b>destino preestablecido</b> puede ser el primer paso hacia una existencia más auténtica y significativa.
+    </p>
+  `,
   content: `
     <p>
       Hoy me desperté con la cabeza dando vueltas, con ideas que aunque familiares, aún me sacuden un poco y me dejan con una sensación de inquietud y melancolía.

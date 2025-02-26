@@ -4,6 +4,11 @@ const reflexionInteligenciaArtificial: BlogEntryType = {
   id: 'reflexion-inteligencia-artificial',
   title: 'Una reflexión sobre la inteligencia artificial',
   date: '2025-02-11',
+  abstract: `
+    <p>
+      Una perspectiva personal sobre la IA como <b>herramienta transformadora</b> y no como amenaza. Este artículo analiza los <b>temores comunes</b> sobre la inteligencia artificial (dominación, pérdida de empleos, impacto en la educación) y propone una visión más <b>optimista</b> basada en la capacidad humana de adaptación y evolución ante los cambios tecnológicos.
+    </p>
+  `,
   content: `
     <p>
       El internet está plagado de artículos sobre la inteligencia artificial, inundados de entusiasmo, miedo y expectativas. Podría haberme quedado al margen, o podría haber intentado ser diferente evitando hablar del tema. Pero, en definitiva, siento que tengo algo que decir. Quizás no sea una idea completamente nueva, quizás muchos ya la hayan expresado de distintas formas, pero aquí la dejo.

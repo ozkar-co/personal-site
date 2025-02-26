@@ -4,6 +4,11 @@ const volverAEmpezar: BlogEntryType = {
   id: 'volver-a-empezar',
   title: 'El valor de volver a empezar',
   date: '2025-02-15',
+  abstract: `
+    <p>
+      A veces nos aferramos a soluciones que no funcionan por miedo a "perder el tiempo invertido". Este artículo explora, a través de una experiencia personal con un proyecto de desarrollo, cómo <b>aprender a soltar</b> y <b>volver a empezar</b> no es un fracaso sino una oportunidad para construir algo mejor sobre los cimientos del aprendizaje adquirido.
+    </p>
+  `,
   content: `
     <p>
       Aprender a soltar y reconstruir sobre el aprendizaje. A menudo, cuando nos comprometemos con una idea, nos aferramos a ella con fuerza. Pensamos que debemos hacer que funcione a toda costa, incluso cuando hay opciones mejores. Nos cuesta soltar porque sentimos que, al hacerlo, estaríamos desperdiciando el tiempo invertido y restando valor a lo que ya hemos construido. Pero aprender a soltar es fundamental.

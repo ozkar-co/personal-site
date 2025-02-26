@@ -4,6 +4,11 @@ const emprendimiento: BlogEntryType = {
   id: 'emprendimiento',
   title: 'Enfrentando el miedo al emprendimiento',
   date: '2025-02-08',
+  abstract: `
+    <p>
+      Una reflexión personal sobre la <b>transición</b> de empleado a emprendedor y los <b>desafíos emocionales</b> que conlleva. Este artículo explora el <b>miedo a lo desconocido</b>, la <b>lucha interna</b> contra la incertidumbre y cómo el emprendimiento transforma nuestra perspectiva sobre el éxito, el fracaso y la realización personal.
+    </p>
+  `,
   content: `
     <p>
       Emprender no es solo una decisión financiera o profesional; es un salto al vacío cargado de incertidumbre y responsabilidad. Durante años, mi vida estuvo marcada por la seguridad de recibir un salario, por la comodidad de saber que, pase lo que pase, alguien más asumiría las consecuencias de los errores o fracasos. Pero ahora, en este camino de independencia, me enfrento a algo completamente distinto: el peso absoluto de la responsabilidad.

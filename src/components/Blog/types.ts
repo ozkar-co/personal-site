@@ -3,5 +3,6 @@ export interface BlogEntryType {
   title: string;
   date: string;
   content: string;
+  abstract: string;
   tags: string[];
 } 
