@@ -4,6 +4,7 @@ import emprendimiento from './emprendimiento.ts';
 import reflexionInteligenciaArtificial from './reflexion-inteligencia-artificial.ts';
 import hoyMeDesperteExistencialista from './existencialista.ts';
 import volverAEmpezar from './volver-a-empezar.ts';
+import reflexionesProfundas from './reflexiones-profundas.ts';
 
 export const entries: BlogEntryType[] = [
   helloWorld,
@@ -11,4 +12,5 @@ export const entries: BlogEntryType[] = [
   reflexionInteligenciaArtificial,
   hoyMeDesperteExistencialista,
   volverAEmpezar,
+  reflexionesProfundas,
 ]; 
