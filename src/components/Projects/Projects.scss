@@ -5,97 +5,91 @@
   padding: 2rem;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   color: #fff;
 
   .projects-container {
-    display: grid;
-    gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    max-width: 1200px;
-    margin-top: 4rem;
-    background-color: rgba(0, 0, 0, 0.85);
-    border-radius: 15px;
-    padding: 2rem;
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    max-width: 800px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    padding: 3rem;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 
     h1 {
       text-align: center;
       color: #0F0;
-      font-size: 2.5rem;
+      font-size: 3rem;
       margin-bottom: 2rem;
       text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+      font-family: 'Courier New', monospace;
     }
 
-    p {
+    .company-description {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
-      color: #fff;
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
+      
+      p {
+        color: #fff;
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+        max-width: 600px;
+      }
+      
+      .company-slogan {
+        color: rgba(255, 255, 255, 0.8);
+        font-style: italic;
+        margin-top: 1rem;
+        font-size: 1.1rem;
+      }
+    }
+
+    .company-link-main {
+      color: #0F0;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 2rem;
+      position: relative;
+      transition: all 0.3s ease;
+      margin: 1.5rem 0;
+      padding: 0.5rem 2rem;
+      border: 1px solid #0F0;
+      border-radius: 4px;
+      background-color: rgba(0, 255, 0, 0.05);
+      font-family: 'Courier New', monospace;
+      
+      &:hover {
+        text-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+        background-color: rgba(0, 255, 0, 0.1);
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 255, 0, 0.2);
+      }
     }
   }
 
   @media (max-width: $breakpoint-mobile) {
     padding: 1rem;
 
-
     .projects-container {
-      padding: 1rem;
+      padding: 2rem 1rem;
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .company-link-main {
+        font-size: 1.5rem;
+        padding: 0.5rem 1.5rem;
+      }
     }
-  }
-}
-
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
-
-  .project-item {
-    padding: 1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 1px solid transparent;
-    background-color: rgba(0, 0, 0, 0.85);
-
-    &:hover {
-      background-color: rgba(0, 255, 0, 0.1);
-      border-color: rgba(0, 255, 0, 0.2);
-    }
-
-    h2 {
-      color: #fff;
-      margin: 0 0 0.5rem;
-      font-size: 1.5rem;
-    }
-
-    p {
-      margin: 0.5rem 0;
-    }
-  }
-}
-
-.project-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-}
-
-.project-item {
-  cursor: pointer;
-}
-
-.project-link {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  height: 100%;
-
-  &:hover {
-    text-decoration: none;
   }
 }
