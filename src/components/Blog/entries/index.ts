@@ -5,8 +5,10 @@ import reflexionInteligenciaArtificial from './reflexion-inteligencia-artificial
 import hoyMeDesperteExistencialista from './existencialista.ts';
 import volverAEmpezar from './volver-a-empezar.ts';
 import reflexionesProfundas from './reflexiones-profundas.ts';
+import manifiestoDepresion from './manifiesto-depresion.ts';
 
 export const entries: BlogEntryType[] = [
+  manifiestoDepresion,
   helloWorld,
   emprendimiento,
   reflexionInteligenciaArtificial,
