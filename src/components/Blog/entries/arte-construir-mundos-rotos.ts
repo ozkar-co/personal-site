@@ -10,7 +10,6 @@ const arteConstruirMundosRotos: BlogEntryType = {
     </p>
   `,
   content: `
-    <h2>El arte de construir mundos rotos</h2>
     <p>
       Hoy, mientras perseguía un sueño de hace muchos años: crear mi propio videojuego, he descubierto cómo he ido plasmando en la historia de mi mundo una marca de mi propio ser, un reflejo de mi mundo interior. No fue intencional. No hubo un plan maestro, ni una hoja de ruta emocional. Pero, paso a paso, mientras le daba vida a cada rincón de este universo llamado Ashwake, me di cuenta de que también estaba tratando de darle forma a mis propias heridas.
     </p>
