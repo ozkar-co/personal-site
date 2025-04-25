@@ -8,8 +8,10 @@ import reflexionesProfundas from './reflexiones-profundas.ts';
 import manifiestoDepresion from './manifiesto-depresion.ts';
 import identidadPerdida from './identidad-perdida.ts';
 import arteConstruirMundosRotos from './arte-construir-mundos-rotos.ts';
+import propiedadDigital from './propiedad-digital.ts';
 
 export const entries: BlogEntryType[] = [
+  propiedadDigital,            // 2025-04-24
   arteConstruirMundosRotos,    // 2025-04-22
   identidadPerdida,            // 2025-04-16
   manifiestoDepresion,         // 2025-03-31
