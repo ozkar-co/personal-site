@@ -21,7 +21,7 @@ export const Header = ({ onMenuToggle }: HeaderProps) => {
   return (
     <header className="header">
       <div className="header-title">
-        <Link to="/">OzCodx</Link>
+        <Link to="/">Ozkar</Link>
       </div>
       <nav className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
         <Link to="/" onClick={handleLinkClick}>OZ</Link>
@@ -31,7 +31,6 @@ export const Header = ({ onMenuToggle }: HeaderProps) => {
       </nav>
       <button 
         className="menu-toggle"
-
         onClick={handleMenuToggle}
         aria-label="Toggle menu"
       >
@@ -41,4 +40,4 @@ export const Header = ({ onMenuToggle }: HeaderProps) => {
       </button>
     </header>
   )
-} 
+}
