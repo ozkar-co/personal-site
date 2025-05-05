@@ -22,7 +22,7 @@ export const Social = () => {
               <FaLinkedin size={32} />
               <span>LinkedIn</span>
             </a>
-            <a href="https://www.instagram.com/ozcodx/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <a href="https://www.instagram.com/ozkar.co/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
               <FaInstagram size={32} />
               <span>Instagram</span>
             </a>

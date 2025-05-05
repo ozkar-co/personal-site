@@ -6,7 +6,8 @@ import {
   SiNodedotjs, SiJavascript, SiTypescript, 
   SiReact, SiMongodb, SiPostgresql, 
   SiMysql, SiGooglecloud, SiLinux,
-  SiDocker, SiLaravel, SiDjango,
+  SiDocker, SiLaravel,
+  SiPython,
 } from 'react-icons/si';
 
 export const CV = () => {
@@ -26,7 +27,7 @@ export const CV = () => {
         skills={[
           { name: "Node.js", experience: "5 años", icon: SiNodedotjs },
           { name: "Laravel", experience: "3 años", icon: SiLaravel },
-          { name: "Django", experience: "1 año", icon: SiDjango }
+          { name: "Python", experience: "1 año", icon: SiPython }
         ]}
       />
 
@@ -62,10 +63,10 @@ export const CV = () => {
       
       <ExperienceCard
         alignRight
-        position="CTO"
+        position="Co-Founder & CTO"
         organization="Forja de Código"
         location="Pereira, Colombia"
-        period="Dic 2024 - Presente"
+        period="Ene 2025 - Presente"
         achievements={[
           "Tomar decisiones sobre arquitectura, tecnologías, escalabilidad e innovación tecnológica de la startup",
           "Liderar y gestionar el equipo técnico, asegurando la calidad del código y la eficiencia del desarrollo",

@@ -21,7 +21,7 @@ export const Header = ({ onMenuToggle }: HeaderProps) => {
   return (
     <header className="header">
       <div className="header-title">
-        <Link to="/">Ozkar</Link>
+        <Link to="/">Ozkar.co</Link>
       </div>
       <nav className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
         <Link to="/" onClick={handleLinkClick}>OZ</Link>
