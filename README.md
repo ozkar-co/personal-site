@@ -16,14 +16,13 @@ Este es mi sitio web personal, construido con React y TypeScript. El sitio prese
 - TypeScript
 - Vite
 - CSS Moderno (Flexbox, Grid, Variables CSS)
-- GitHub Actions para CI/CD
-- GitHub Pages para hosting
+- Firebase Hosting
 
 ## Desarrollo Local
 
 1. Clona el repositorio:
 ```bash
-git clone https://github.com/oscoobs/personal-site.git
+git clone https://github.com/ozcodx/personal-site.git
 cd personal-site
 ```
 
@@ -39,22 +38,11 @@ npm run dev
 
 4. Abre [http://localhost:5173](http://localhost:5173) en tu navegador.
 
-## Despliegue
-
-El sitio se despliega automáticamente en GitHub Pages cuando se hace push a la rama `main`. El proceso de despliegue está automatizado usando GitHub Actions.
-
-Para desplegar manualmente:
-
-```bash
-npm run deploy
-```
-
 ## Scripts Disponibles
 
 - `npm run dev`: Inicia el servidor de desarrollo
 - `npm run build`: Construye el sitio para producción
 - `npm run preview`: Vista previa local de la versión de producción
-- `npm run deploy`: Despliega el sitio en GitHub Pages
 
 ## Licencia
 
