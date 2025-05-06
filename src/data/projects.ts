@@ -44,7 +44,7 @@ export const projects: Record<string, Project> = {
       { "name": "React", "icon": "fa-brands fa-react" },
       { "name": "Firebase", "icon": "fa-solid fa-fire" },
       { "name": "PropTypes", "icon": "fa-solid fa-code" }
-    ],
+    ],i
     "caracteristicas": [
       "Interfaz de usuario intuitiva: Diseño moderno y fácil de navegar.",
       "Integración con Firebase: Gestión de datos en tiempo real y almacenamiento en la nube.",
@@ -93,26 +93,5 @@ export const projects: Record<string, Project> = {
     "imagen": "proyecto2.jpg",
     "url": "https://oz-ragnarok.web.app/",
     "fecha": "2025-01-23T05:00:00.332Z"
-  },
-  "SzYQhr3OVR0TWJF5NfFm": {
-    "id": "SzYQhr3OVR0TWJF5NfFm",
-    "titulo": "Sitio Web Personal",
-    "descripcion": "Este proyecto es un sitio web personal construido con React y TypeScript, diseñado para mostrar experiencia profesional, habilidades técnicas y formas de contacto. Incluye secciones para proyectos, un currículum vitae, un blog y una presentación personal, todo con un diseño moderno y responsivo.",
-    "tecnologias": [
-      { "name": "React", "icon": "fa-brands fa-react" },
-      { "name": "Typescript", "icon": "fa-brands fa-js" },
-      { "name": "SASS", "icon": "fa-brands fa-sass" },
-      { "name": "GH Pages", "icon": "fa-brands fa-github" },
-      { "name": "CI/CD", "icon": "fa-solid fa-arrows-rotate" }
-    ],
-    "caracteristicas": [
-      "Diseño moderno y responsivo",
-      "Optimizado para dispositivos móviles",
-      "Despliegue automático",
-      "Fondo animado generado dinamicamente"
-    ],
-    "imagen": "proyecto3.jpg",
-    "url": "https://ozkar.co",
-    "fecha": "2025-01-21T05:00:00.607Z"
   }
 }; 
