@@ -1,94 +1,173 @@
 @use '../../styles/variables' as *;
 
 .projects {
+  padding: 6rem 2rem 2rem;
   min-height: 100vh;
-  padding: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
+  background-color: var(--background-color);
 
   .projects-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    max-width: 800px;
-    background-color: rgba(0, 0, 0, 0.7);
-    border-radius: 10px;
-    padding: 3rem;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 1200px;
+    margin: 0 auto;
 
     h1 {
       text-align: center;
-      color: #0F0;
-      font-size: 3rem;
       margin-bottom: 2rem;
-      text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-      font-family: 'Courier New', monospace;
+      color: var(--text-color);
+      font-size: 2.5rem;
     }
 
-    .company-description {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      
-      p {
-        color: #fff;
-        font-size: 1.2rem;
-        margin-bottom: 1.5rem;
-        line-height: 1.6;
-        max-width: 600px;
-      }
-      
-      .company-slogan {
-        color: rgba(255, 255, 255, 0.8);
-        font-style: italic;
-        margin-top: 1rem;
-        font-size: 1.1rem;
-      }
-    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4rem;
+      padding: 1rem;
 
-    .company-link-main {
-      color: #0F0;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 2rem;
-      position: relative;
-      transition: all 0.3s ease;
-      margin: 1.5rem 0;
-      padding: 0.5rem 2rem;
-      border: 1px solid #0F0;
-      border-radius: 4px;
-      background-color: rgba(0, 255, 0, 0.05);
-      font-family: 'Courier New', monospace;
-      
-      &:hover {
-        text-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
-        background-color: rgba(0, 255, 0, 0.1);
-        transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(0, 255, 0, 0.2);
+      .project-card {
+        position: relative;
+        background-color: rgba($color-background, 0.9);
+        border-radius: 12px;
+        overflow: visible;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        border: 1px solid $color-accent;
+        transition: transform 0.3s ease;
+
+        &:hover {
+          transform: translateY(-5px);
+        }
+
+        .project-image {
+          width: 100%;
+          height: 200px;
+          overflow: hidden;
+          border-radius: 12px 12px 0 0;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+
+        .project-content {
+          padding: 2.5rem 2rem 2rem;
+          color: var(--text-color);
+
+          .project-card-title {
+            position: absolute;
+            top: -1.5rem;
+            left: 2rem;
+            background-color: $color-accent;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            z-index: 2;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: calc(100% - 4rem);
+            white-space: nowrap;
+            overflow: visible;
+
+            h2 {
+              margin: 0;
+              color: $color-text;
+              font-size: 1.5rem;
+              text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+              white-space: nowrap;
+              overflow: visible;
+              text-overflow: clip;
+            }
+          }
+
+          .project-description {
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            line-height: 1.5;
+          }
+
+          .project-technologies {
+            margin-bottom: 1.5rem;
+
+            .tech-icons {
+              display: flex;
+              flex-wrap: wrap;
+              gap: 0.5rem;
+
+              .tech-icon {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                background-color: rgba(255, 255, 255, 0.1);
+                color: var(--accent-color);
+                padding: 0.3rem 0.8rem;
+                border-radius: 15px;
+                font-size: 0.8rem;
+                border: 1px solid var(--accent-color);
+                transition: all 0.3s ease;
+
+                .tech-icon-icon {
+                  font-size: 0.8rem;
+                }
+
+                &:hover {
+                  background-color: var(--accent-color);
+                  color: $color-text;
+                }
+              }
+            }
+          }
+
+          .project-features {
+            margin-bottom: 1.5rem;
+
+            ul {
+              list-style-type: none;
+              padding: 0;
+              margin: 0;
+              text-align: left;
+
+              li {
+                position: relative;
+                padding-left: 1.5rem;
+                margin-bottom: 0.5rem;
+                font-size: 0.9rem;
+
+                &::before {
+                  content: "•";
+                  color: var(--accent-color);
+                  position: absolute;
+                  left: 0;
+                }
+              }
+            }
+          }
+
+          .project-link {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: $color-text;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 1px solid var(--accent-color);
+
+            &:hover {
+              background-color: transparent;
+              color: var(--accent-color);
+            }
+          }
+        }
       }
     }
   }
+}
 
-  @media (max-width: $breakpoint-mobile) {
-    padding: 1rem;
-
+// Responsive design
+@media (max-width: 1024px) {
+  .projects {
     .projects-container {
-      padding: 2rem 1rem;
-      
-      h1 {
-        font-size: 2rem;
-      }
-      
-      .company-link-main {
-        font-size: 1.5rem;
-        padding: 0.5rem 1.5rem;
+      .projects-grid {
+        grid-template-columns: 1fr;
       }
     }
   }
