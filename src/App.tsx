@@ -9,6 +9,8 @@ import { CV } from './components/CV/CV'
 import { MatrixBackground } from './components/MatrixBackground/MatrixBackground'
 import { Blog } from './components/Blog/Blog'
 import { Projects } from './components/Projects/Projects'
+import { GenealogyPage } from './components/Genealogy/GenealogyPage'
+
 function App() {
   return (
     <Router>
@@ -19,6 +21,7 @@ function App() {
           <Route path="/cv" element={<CV />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/gen" element={<GenealogyPage />} />
           <Route path="/" element={
             <main>
               <Hero />

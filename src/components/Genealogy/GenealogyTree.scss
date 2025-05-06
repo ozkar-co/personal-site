@@ -1,0 +1,82 @@
+.react-flow__node-default {
+  background: #fff;
+  border: 2px solid #bbb;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  width: 120px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: visible;
+}
+.genealogy-person-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+  border: 3px solid #eee;
+  filter: blur(0px);
+  transition: filter 0.3s;
+}
+.genealogy-person-img.blurred {
+  filter: blur(8px) grayscale(0.7);
+}
+.genealogy-person-nombre {
+  font-weight: bold;
+  background: rgba(255,255,255,0.9);
+  border-radius: 0.5rem;
+  padding: 0.2rem 0.6rem;
+  margin-top: 0.2rem;
+  font-size: 1rem;
+  text-align: center;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.genealogy-person-flags {
+  display: flex;
+  gap: 0.3rem;
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.genealogy-flag, .genealogy-gender {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+.genealogy-gender {
+  color: #fff;
+  font-size: 1.2rem;
+}
+.genealogy-person-tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: -2.2rem;
+  transform: translateX(-50%);
+  background: #222;
+  color: #fff;
+  padding: 0.3rem 0.7rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  z-index: 10;
+}
+.react-flow__node-default:hover .genealogy-person-tooltip {
+  opacity: 1;
+} 

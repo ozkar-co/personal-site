@@ -1,0 +1,49 @@
+{
+  "personas": [
+    {
+      "id": "1",
+      "nombre": "Ju*** Pérez",
+      "nombreCompleto": "Juan Pérez",
+      "foto": "juan.jpg",
+      "nacionalidad": "mx",
+      "genero": "masculino",
+      "colorGenero": "#3498db",
+      "fechaNacimiento": "1950-01-01",
+      "fechaDefuncion": "2020-01-01"
+    },
+    {
+      "id": "2",
+      "nombre": "Ma*** López",
+      "nombreCompleto": "Maria López",
+      "foto": "maria.jpg",
+      "nacionalidad": "mx",
+      "genero": "femenino",
+      "colorGenero": "#e84393",
+      "fechaNacimiento": "1952-05-10",
+      "fechaDefuncion": null
+    },
+    {
+      "id": "3",
+      "nombre": "Pe*** Pérez",
+      "nombreCompleto": "Pedro Pérez",
+      "foto": "pedro.jpg",
+      "nacionalidad": "mx",
+      "genero": "masculino",
+      "colorGenero": "#3498db",
+      "fechaNacimiento": "1980-03-15",
+      "fechaDefuncion": null
+    }
+  ],
+  "relaciones": [
+    {
+      "tipo": "matrimonio",
+      "personas": ["1", "2"]
+    },
+    {
+      "tipo": "hijo",
+      "padres": ["1", "2"],
+      "hijo": "3",
+      "subtipo": "natural"
+    }
+  ]
+} 
