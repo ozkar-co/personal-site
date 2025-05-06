@@ -44,7 +44,7 @@ export const projects: Record<string, Project> = {
       { "name": "React", "icon": "fa-brands fa-react" },
       { "name": "Firebase", "icon": "fa-solid fa-fire" },
       { "name": "PropTypes", "icon": "fa-solid fa-code" }
-    ],i
+    ],
     "caracteristicas": [
       "Interfaz de usuario intuitiva: Diseño moderno y fácil de navegar.",
       "Integración con Firebase: Gestión de datos en tiempo real y almacenamiento en la nube.",
