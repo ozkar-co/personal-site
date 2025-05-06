@@ -6,7 +6,7 @@ function censurarNombre(nombre: string) {
 }
 
 export function buildGenealogyGraph(data: any, unlocked: boolean): { nodes: Node[]; edges: Edge[] } {
-  const nodes: Node[] = data.personas.map((p: any) => ({
+  const nodes: Node[] = data.personas.map((p: any, idx: number) => ({
     id: p.id,
     type: 'default',
     data: {
@@ -19,7 +19,7 @@ export function buildGenealogyGraph(data: any, unlocked: boolean): { nodes: Node
       fechaDefuncion: p.fechaDefuncion,
       unlocked,
     },
-    position: { x: Math.random() * 600, y: Math.random() * 400 }, // Mejorar con layout real
+    position: { x: 200 + idx * 220, y: 200 },
   }));
 
   const edges: Edge[] = data.relaciones.map((r: any, i: number) => {
