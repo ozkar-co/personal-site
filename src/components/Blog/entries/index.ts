@@ -10,9 +10,11 @@ import identidadPerdida from './identidad-perdida.ts';
 import arteConstruirMundosRotos from './arte-construir-mundos-rotos.ts';
 import propiedadDigital from './propiedad-digital.ts';
 import aLlorarALaLloreria from './a-llorar-a-la-lloreria.ts';
+import seguimosCaminando from './seguimos-caminando.ts';
 
 export const entries: BlogEntryType[] = [
-  aLlorarALaLloreria,         // 2024-04-27
+  seguimosCaminando,           // 2025-05-05
+  aLlorarALaLloreria,          // 2024-04-27
   propiedadDigital,            // 2025-04-24
   arteConstruirMundosRotos,    // 2025-04-22
   identidadPerdida,            // 2025-04-16
