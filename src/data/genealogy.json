@@ -2,35 +2,35 @@
   "personas": [
     {
       "id": "1",
-      "nombre": "Ju*** Pérez",
-      "nombreCompleto": "Juan Pérez",
-      "foto": "juan.jpg",
-      "nacionalidad": "mx",
+      "nombre": "Lu*** Bernal",
+      "nombreCompleto": "Luis Crisanto Bernal Cardenas",
+      "foto": "luis.jpg",
+      "nacionalidad": "co",
       "genero": "masculino",
       "colorGenero": "#3498db",
-      "fechaNacimiento": "1950-01-01",
-      "fechaDefuncion": "2020-01-01"
+      "fechaNacimiento": "1965-09-28",
+      "fechaDefuncion": null
     },
     {
       "id": "2",
-      "nombre": "Ma*** López",
-      "nombreCompleto": "Maria López",
-      "foto": "maria.jpg",
-      "nacionalidad": "mx",
+      "nombre": "Be*** Sánchez",
+      "nombreCompleto": "Beatriz Cecilia Sánchez Suescún",
+      "foto": "beatriz.jpg",
+      "nacionalidad": "co",
       "genero": "femenino",
       "colorGenero": "#e84393",
-      "fechaNacimiento": "1952-05-10",
+      "fechaNacimiento": "1966-10-10",
       "fechaDefuncion": null
     },
     {
       "id": "3",
-      "nombre": "Pe*** Pérez",
-      "nombreCompleto": "Pedro Pérez",
-      "foto": "pedro.jpg",
-      "nacionalidad": "mx",
+      "nombre": "Os*** Bernal",
+      "nombreCompleto": "Oscar Eduardo Bernal Sánchez",
+      "foto": "oscar.jpg",
+      "nacionalidad": "co",
       "genero": "masculino",
       "colorGenero": "#3498db",
-      "fechaNacimiento": "1980-03-15",
+      "fechaNacimiento": "1993-01-08",
       "fechaDefuncion": null
     }
   ],
