@@ -11,8 +11,10 @@ import arteConstruirMundosRotos from './arte-construir-mundos-rotos.ts';
 import propiedadDigital from './propiedad-digital.ts';
 import aLlorarALaLloreria from './a-llorar-a-la-lloreria.ts';
 import seguimosCaminando from './seguimos-caminando.ts';
+import laLlaveQueNoSePuedeCambiar from './la-llave-que-no-se-puede-cambiar.ts';
 
 export const entries: BlogEntryType[] = [
+  laLlaveQueNoSePuedeCambiar,  // 2025-05-08
   seguimosCaminando,           // 2025-05-05
   aLlorarALaLloreria,          // 2024-04-27
   propiedadDigital,            // 2025-04-24
