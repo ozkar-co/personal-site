@@ -9,6 +9,7 @@ import { CV } from './components/CV/CV'
 import { MatrixBackground } from './components/MatrixBackground/MatrixBackground'
 import { Blog } from './components/Blog/Blog'
 import { Projects } from './components/Projects/Projects'
+import { Wizz } from './components/Wizz/Wizz'
 import { Admin } from './components/Admin/Admin'
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/cv" element={<CV />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/wizz" element={<Wizz />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/" element={
             <main>
