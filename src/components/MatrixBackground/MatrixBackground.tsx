@@ -16,6 +16,7 @@ const SYMBOL_GROUPS = {
   vikingRunes: "ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ",
   greek: "αβγδεζηθικλμνξοπρστυφχψω",
   japanese: "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん",
+  math: "∑∏∫∂√∞≠≈≤≥±×÷",
   arrows: "↑↓←→↖↗↘↙",
   stars: "★☆✦✧✩✪✫✬✭✮✯✰",
   cards: "♠♣♥♦",
@@ -31,6 +32,8 @@ interface MatrixBackgroundProps {
 
 export const MatrixBackground = ({ symbolGroup = "binary" }: MatrixBackgroundProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const matrixRef = useRef<Matrix | null>(null);
+  const intervalIdRef = useRef<number | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -47,15 +50,24 @@ export const MatrixBackground = ({ symbolGroup = "binary" }: MatrixBackgroundPro
 
     updateCanvasSize();
 
-    const symbols = SYMBOL_GROUPS[symbolGroup];
-    const matrix: Matrix = {
-      chars: symbols.split(""),
-      fontSize: 16,
-      columns: Array(Math.floor(canvas.width / 16)).fill(0)
-    };
+    // Solo inicializar las columnas si no existen
+    if (!matrixRef.current) {
+      const symbols = SYMBOL_GROUPS[symbolGroup];
+      matrixRef.current = {
+        chars: symbols.split(""),
+        fontSize: 16,
+        columns: Array(Math.floor(canvas.width / 16)).fill(0)
+      };
+    } else {
+      // Solo actualizar los caracteres, mantener las posiciones de las columnas
+      const symbols = SYMBOL_GROUPS[symbolGroup];
+      matrixRef.current.chars = symbols.split("");
+    }
 
     function drawMatrix() {
-      if (!ctx || !canvas) return;
+      if (!ctx || !canvas || !matrixRef.current) return;
+      
+      const matrix = matrixRef.current;
       
       ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -76,21 +88,34 @@ export const MatrixBackground = ({ symbolGroup = "binary" }: MatrixBackgroundPro
       });
     }
 
-    const intervalId = setInterval(drawMatrix, 50);
+    // Solo crear el intervalo si no existe
+    if (!intervalIdRef.current) {
+      intervalIdRef.current = setInterval(drawMatrix, 50);
+    }
 
     const handleResize = () => {
-      if (!canvas) return;
+      if (!canvas || !matrixRef.current) return;
       updateCanvasSize();
-      matrix.columns = Array(Math.floor(canvas.width / matrix.fontSize)).fill(0);
+      // Reinicializar columnas solo en resize
+      matrixRef.current.columns = Array(Math.floor(canvas.width / matrixRef.current.fontSize)).fill(0);
     };
 
     window.addEventListener("resize", handleResize);
 
     return () => {
-      clearInterval(intervalId);
       window.removeEventListener("resize", handleResize);
     };
   }, [symbolGroup]);
+
+  // Cleanup del intervalo solo cuando el componente se desmonta
+  useEffect(() => {
+    return () => {
+      if (intervalIdRef.current) {
+        clearInterval(intervalIdRef.current);
+        intervalIdRef.current = null;
+      }
+    };
+  }, []);
 
   return <canvas ref={canvasRef} className="matrix-background" />;
 }; 
