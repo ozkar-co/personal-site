@@ -36,7 +36,7 @@
     position: relative;
     z-index: 2;
 
-    @media (max-width: $breakpoint-mobile) {
+    @media (max-width: 992px) {
       grid-template-columns: 1fr;
       gap: 2rem;
       text-align: center;
@@ -46,7 +46,7 @@
   .quote-section {
     .quote-content {
       position: relative;
-      padding: 2rem;
+      padding: 3rem;
       background: rgba($color-background, 0.8);
       border: 2px solid rgba($color-accent, 0.3);
       border-radius: 15px;
@@ -89,7 +89,7 @@
         color: $color-accent;
         position: absolute;
         top: -1rem;
-        left: -1rem;
+        left: -2rem;
         text-shadow: 0 0 15px rgba($color-accent, 0.8);
       }
 
@@ -100,25 +100,41 @@
         color: $color-accent;
         position: absolute;
         bottom: -2rem;
-        right: -1rem;
+        right: -2rem;
         text-shadow: 0 0 15px rgba($color-accent, 0.8);
       }
 
-      @media (max-width: $breakpoint-mobile) {
+      @media (max-width: 992px) {
         font-size: 1.4rem;
         text-align: center;
         padding: 0 1rem;
 
         &::before {
           top: -0.5rem;
-          left: 50%;
-          transform: translateX(-50%);
+          left: -1.5rem;
+          transform: none;
         }
 
         &::after {
           bottom: -1.5rem;
-          right: 50%;
-          transform: translateX(50%);
+          right: -1.5rem;
+          transform: none;
+        }
+      }
+
+      @media (max-width: $breakpoint-mobile) {
+        font-size: 1.2rem;
+
+        &::before {
+          font-size: 2.5rem;
+          top: -0.3rem;
+          left: -1rem;
+        }
+
+        &::after {
+          font-size: 2.5rem;
+          bottom: -1.2rem;
+          right: -1rem;
         }
       }
     }
@@ -172,6 +188,10 @@
           transform: scale(0.95);
         }
 
+        @media (max-width: 992px) {
+          width: 350px;
+        }
+
         @media (max-width: $breakpoint-mobile) {
           width: 300px;
         }
@@ -189,6 +209,11 @@
         animation: wizardGlow 4s ease-in-out infinite;
         pointer-events: none;
         z-index: -1;
+
+        @media (max-width: 992px) {
+          width: 400px;
+          height: 400px;
+        }
 
         @media (max-width: $breakpoint-mobile) {
           width: 350px;
