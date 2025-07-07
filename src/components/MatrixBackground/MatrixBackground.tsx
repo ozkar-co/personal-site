@@ -10,7 +10,26 @@ type Matrix = {
   columns: MatrixColumn[];
 };
 
-export const MatrixBackground = () => {
+// Diccionario de grupos de símbolos disponibles
+const SYMBOL_GROUPS = {
+  binary: "01",
+  vikingRunes: "ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ",
+  greek: "αβγδεζηθικλμνξοπρστυφχψω",
+  japanese: "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん",
+  arrows: "↑↓←→↖↗↘↙",
+  stars: "★☆✦✧✩✪✫✬✭✮✯✰",
+  cards: "♠♣♥♦",
+  chess: "♔♕♖♗♘♙♚♛♜♝♞♟",
+  music: "♪♫♬♩♭♮♯"
+} as const;
+
+type SymbolGroup = keyof typeof SYMBOL_GROUPS;
+
+interface MatrixBackgroundProps {
+  symbolGroup?: SymbolGroup;
+}
+
+export const MatrixBackground = ({ symbolGroup = "binary" }: MatrixBackgroundProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -28,8 +47,9 @@ export const MatrixBackground = () => {
 
     updateCanvasSize();
 
+    const symbols = SYMBOL_GROUPS[symbolGroup];
     const matrix: Matrix = {
-      chars: "01".split(""),
+      chars: symbols.split(""),
       fontSize: 16,
       columns: Array(Math.floor(canvas.width / 16)).fill(0)
     };
@@ -70,7 +90,7 @@ export const MatrixBackground = () => {
       clearInterval(intervalId);
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [symbolGroup]);
 
   return <canvas ref={canvasRef} className="matrix-background" />;
 }; 
