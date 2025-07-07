@@ -40,12 +40,21 @@ export const Wizz = () => {
               </div>
             ) : (
               <blockquote className="ancient-quote">
-                {currentQuote.split(';').map((part, index) => (
-                  <span key={index}>
-                    {part.trim()}
-                    {index < currentQuote.split(';').length - 1 && <br />}
-                  </span>
-                ))}
+                {currentQuote.split(/([;.])/).map((part, index, array) => {
+                  const isPunctuation = part === ';' || part === '.';
+                  const isLastPart = index === array.length - 1;
+                  const nextPart = array[index + 1];
+                  
+                  // Añadir salto de línea después de ; o . (excepto si es el final)
+                  const shouldAddBreak = isPunctuation && !isLastPart && nextPart && nextPart.trim() !== '';
+                  
+                  return (
+                    <span key={index}>
+                      {part}
+                      {shouldAddBreak && <br />}
+                    </span>
+                  );
+                })}
               </blockquote>
             )}
           </div>
