@@ -221,7 +221,19 @@ extracurricular:
       - "Adaptabilidad, perseverancia y resolución de problemas a través de diversas tareas y experiencias de voluntariado."
 
   - alignRight: false
-    organization: "Exile (Videogame)"
+    organization: "Digital Product School - UnternehmerTUM"
+    position: "Profesor voluntario de español"
+    location: "Múnich, Alemania"
+    period: "Jun 2019"
+    achievements:
+      - "Creé e impartí un curso básico de español como iniciativa espontánea surgida del interés de compañeros internacionales"
+      - "La experiencia nació en un contexto de intercambio cultural, donde identifiqué la oportunidad de compartir mi lengua nativa"
+      - "Diseñé clases dinámicas en inglés, superando la barrera del idioma mediante estrategias de comunicación intuitiva"
+      - "Fomenté la curiosidad y motivación de los estudiantes, quienes solicitaron continuar el curso de forma entusiasta"
+      - "Esta experiencia fortaleció mis habilidades pedagógicas y demostró mi iniciativa y vocación docente, incluso fuera de mi campo técnico"
+
+  - alignRight: true
+    organization: "Exile (Videojuego Open-Source)"
     position: "Contribuidor Open-Source"
     location: "Remoto, Colombia"
     period: "Sep 2021, Jun 2022"
@@ -229,4 +241,24 @@ extracurricular:
       - "Contribución al desarrollo de Exile, un juego de supervivencia en la naturaleza construido en el motor Minetest"
       - "Adición de un nuevos objetos y mecánicas para mejorar la experiencia de juego"
       - "Asistencia con la traducción al español, expandiendo la accesibilidad del juego a un público más amplio"
-      - "Mejora de la documentación del juego, asegurando instrucciones más claras y una mejor usabilidad general" 
+      - "Mejora de la documentación del juego, asegurando instrucciones más claras y una mejor usabilidad general"
+
+  - alignRight: false
+    organization: "Banco de la República - Grupo de Investigación ALFA ORIÓN"
+    position: "Conferencista"
+    location: "Pereira, Colombia"
+    period: "Nov 2014"
+    achievements:
+      - "Conferencia: *'Astronomía, un largo camino que comenzó con una mirada al cielo'*"
+      - "Ciclo de charlas 'Descubriendo el universo', organizado por el Banco de la República y el grupo ALFA ORIÓN"
+      - "Duración: 2 horas. Público general e instituciones educativas"
+
+  - alignRight: true
+    organization: "Universidad Tecnológica de Pereira - Grupo ORIÓN"
+    position: "Coordinador de Grupo de Astronomía"
+    location: "Pereira, Colombia"
+    period: "Feb 2012 – Sep 2015"
+    achievements:
+      - "Organización y orientación de reuniones, charlas y eventos de divulgación científica"
+      - "Gestión de salidas de campo y visitas educativas a colegios y museos"
+      - "Desarrollo de contenido y actividades de astronomía para diferentes públicos" 
