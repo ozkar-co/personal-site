@@ -84,6 +84,38 @@ skills:
         experience: "4 años"
         icon: "SiDocker"
 
+  - title: "Habilidades Pedagógicas"
+    alignRight: true
+    skills:
+      - name: "Diseño de experiencias educativas"
+        experience: "3 años"
+        icon: "HiAcademicCap"
+      - name: "Aprendizaje activo"
+        experience: "5 años"
+        icon: "HiLightBulb"
+      - name: "Mentoría y facilitación"
+        experience: "2 años"
+        icon: "HiUserGroup"
+      - name: "Comunicación efectiva"
+        experience: "8 años"
+        icon: "HiChatAlt2"
+
+  - title: "Habilidades Blandas"
+    alignRight: false
+    skills:
+      - name: "Liderazgo y coordinación"
+        experience: "3 años"
+        icon: "HiUser"
+      - name: "Escucha activa"
+        experience: "8 años"
+        icon: "HiSpeakerphone"
+      - name: "Pensamiento analítico"
+        experience: "10 años"
+        icon: "HiCog"
+      - name: "Adaptabilidad intercultural"
+        experience: "5 años"
+        icon: "HiGlobe"
+
 experience:
   - alignRight: true
     position: "Co-Founder & CTO"

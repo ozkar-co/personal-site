@@ -11,6 +11,13 @@ import {
   SiDocker, SiLaravel,
   SiPython,
 } from 'react-icons/si';
+import { 
+  HiAcademicCap, HiLightBulb, HiUserGroup, HiChatAlt2,
+  HiUser, HiSpeakerphone, HiCog, HiGlobe,
+} from 'react-icons/hi';
+import { 
+  FiUsers, FiMessageCircle, FiTarget, FiGlobe,
+} from 'react-icons/fi';
 import { loadCVData, CVData, SkillSection, Experience, Education, Extracurricular } from '../../services/cvService';
 
 type TabType = 'about' | 'skills' | 'experience' | 'education' | 'extracurricular';
@@ -34,6 +41,20 @@ export const CV = () => {
     SiDocker,
     SiLaravel,
     SiPython,
+    // Habilidades Pedagógicas
+    HiAcademicCap,
+    HiLightBulb,
+    HiUserGroup,
+    HiChatAlt2,
+    // Habilidades Blandas
+    HiUser,
+    HiSpeakerphone,
+    HiCog,
+    HiGlobe,
+    FiUsers,
+    FiMessageCircle,
+    FiTarget,
+    FiGlobe,
   };
 
   useEffect(() => {
