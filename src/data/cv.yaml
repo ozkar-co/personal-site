@@ -185,9 +185,9 @@ experience:
     location: "Remoto, Colombia"
     period: "Ago 2019 – Dic 2021"
     achievements:
-      - "Desarrollo de una herramienta en TypeScript para la carga automática y extracción de información de currículums"
-      - "Mejora de la estabilidad del sistema en un entorno de alta disponibilidad, asegurando 100% de cobertura en pruebas"
-      - "Automatización de procesos del equipo mediante la implementación de un bot de Slack para encuestas"
+      - "Implementación de Snowflake y Kafka para manejar el crecimiento exponencial de la plataforma, reduciendo los tiempos de procesamiento de datos en un 30%."
+      - "Integración de Locust en nuestro flujo de trabajo, incrementando la cobertura de pruebas de un 48% a un 85%, permitiendonos prevenir fallas críticas."
+      - "Liderazgo en la automatización de procesos del equipo mediante la implementación de un bot de Slack para monitorear el estado de las tareas, mejorando la eficiencia operativa en un 25%."
 
   - alignRight: true
     position: "Ingeniero de Software"
@@ -205,9 +205,9 @@ experience:
     location: "Medellín, Colombia"
     period: "Sep 2018 – Abr 2019"
     achievements:
-      - "Refactorización de código legado y resolución de problemas en proyectos con PHP, SQL y JavaScript"
-      - "Gestión de una migración de base de datos para un cliente"
-      - "Creación y supervisión de pruebas técnicas para nuevos analistas"
+      - "Refactorización de código legacy y resolución de problemas en proyectos con PHP, SQL y JavaScript"
+      - "Gestión de una migración de base de datos para un cliente, asegurando la integridad y seguridad de los datos con una efectividad del 99%"
+      - "Creación y supervisión de pruebas técnicas para nuevos analistas, asi como la capacitación de los mismos"
 
   - alignRight: true
     position: "Desarrollador Backend"
@@ -339,7 +339,7 @@ extracurricular:
     period: "Sep 2021, Jun 2022"
     achievements:
       - "Contribución al desarrollo de Exile, un juego de supervivencia en la naturaleza construido en el motor Minetest"
-      - "Adición de un nuevos objetos y mecánicas para mejorar la experiencia de juego"
+      - "Adición de nuevos objetos y mecánicas para mejorar la experiencia de juego"
       - "Asistencia con la traducción al español, expandiendo la accesibilidad del juego a un público más amplio"
       - "Mejora de la documentación del juego, asegurando instrucciones más claras y una mejor usabilidad general"
 
