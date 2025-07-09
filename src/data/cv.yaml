@@ -233,6 +233,18 @@ extracurricular:
       - "Esta experiencia fortaleció mis habilidades pedagógicas y demostró mi iniciativa y vocación docente, incluso fuera de mi campo técnico"
 
   - alignRight: true
+    organization: "Diversas comunidades de juegos de rol"
+    position: "Dungeon Master (Director de juego)"
+    location: "Presencial, Colombia, Israel"
+    period: "2016 – Actualidad"
+    achievements:
+      - "Diseño y dirección de campañas de rol narrativo en mundos de fantasía e historia alternativa"
+      - "Desarrollo de habilidades blandas como liderazgo, escucha activa, comunicación asertiva y resolución de conflictos"
+      - "Fomento del trabajo en equipo, la empatía y la toma de decisiones colaborativas"
+      - "Adaptación de estilos de dirección según los jugadores, gestionando dinámicas grupales diversas"
+      - "Uso del juego como herramienta pedagógica y de motivación, lo cual ha enriquecido mi enfoque como docente"
+
+  - alignRight: false
     organization: "Exile (Videojuego Open-Source)"
     position: "Contribuidor Open-Source"
     location: "Remoto, Colombia"
