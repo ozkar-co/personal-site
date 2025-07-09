@@ -50,6 +50,7 @@ export const CV = () => {
     SiRedis,
     SiAmazon,
     SiFirebase,
+    SiSnowflake,
     // Habilidades Pedagógicas
     HiAcademicCap,
     HiLightBulb,
