@@ -9,7 +9,9 @@ import {
   SiReact, SiMongodb, SiPostgresql, 
   SiMysql, SiGooglecloud, SiLinux,
   SiDocker, SiLaravel,
-  SiPython,
+  SiPython, SiGo, SiPhp, SiHtml5, SiSass,
+  SiRedis, SiAmazon, SiFirebase,
+  SiSnowflake,
 } from 'react-icons/si';
 import { 
   HiAcademicCap, HiLightBulb, HiUserGroup, HiChatAlt2,
@@ -41,6 +43,13 @@ export const CV = () => {
     SiDocker,
     SiLaravel,
     SiPython,
+    SiGo,
+    SiPhp,
+    SiHtml5,
+    SiSass,
+    SiRedis,
+    SiAmazon,
+    SiFirebase,
     // Habilidades Pedagógicas
     HiAcademicCap,
     HiLightBulb,

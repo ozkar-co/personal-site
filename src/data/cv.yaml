@@ -44,6 +44,12 @@ skills:
       - name: "Python"
         experience: "1 año"
         icon: "SiPython"
+      - name: "Go"
+        experience: "1 año"
+        icon: "SiGo"
+      - name: "PHP"
+        experience: "3 años"
+        icon: "SiPhp"
 
   - title: "Desarrollo Frontend"
     alignRight: false
@@ -57,6 +63,12 @@ skills:
       - name: "React"
         experience: "1 año"
         icon: "SiReact"
+      - name: "HTML/CSS"
+        experience: "8 años"
+        icon: "SiHtml5"
+      - name: "Sass/SCSS"
+        experience: "3 años"
+        icon: "SiSass"
 
   - title: "Bases de Datos"
     alignRight: true
@@ -70,6 +82,12 @@ skills:
       - name: "MySQL"
         experience: "1 año"
         icon: "SiMysql"
+      - name: "Snowflake"
+        experience: "6 años"
+        icon: "SiSnowflake"
+      - name: "Redis"
+        experience: "2 años"
+        icon: "SiRedis"
 
   - title: "DevOps"
     alignRight: false
@@ -77,12 +95,18 @@ skills:
       - name: "Linux"
         experience: "10 años"
         icon: "SiLinux"
-      - name: "Cloud"
+      - name: "Google Cloud"
         experience: "5 años"
         icon: "SiGooglecloud"
       - name: "Docker"
         experience: "4 años"
         icon: "SiDocker"
+      - name: "AWS"
+        experience: "3 años"
+        icon: "SiAmazon"
+      - name: "Firebase"
+        experience: "2 años"
+        icon: "SiFirebase"
 
   - title: "Habilidades Pedagógicas"
     alignRight: true
@@ -99,6 +123,9 @@ skills:
       - name: "Comunicación efectiva"
         experience: "8 años"
         icon: "HiChatAlt2"
+      - name: "Capacitación técnica"
+        experience: "2 años"
+        icon: "HiCog"
 
   - title: "Habilidades Blandas"
     alignRight: false
@@ -115,6 +142,9 @@ skills:
       - name: "Adaptabilidad intercultural"
         experience: "5 años"
         icon: "HiGlobe"
+      - name: "Resolución de conflictos"
+        experience: "6 años"
+        icon: "HiLightBulb"
 
 experience:
   - alignRight: true
