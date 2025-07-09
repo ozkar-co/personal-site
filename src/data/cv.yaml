@@ -167,15 +167,17 @@ experience:
 
 education:
   - alignRight: true
-    organization: "Universidad Tecnológica de Pereira"
-    position: "Ingeniería de Sistemas y Computación"
-    location: "Pereira, Colombia"
-    period: "Agosto 2018"
+    organization: "Pontificia Universidad Javeriana"
+    position: "Diplomado en Docencia Universitaria"
+    location: "Colombia (Virtual)"
+    period: "Mayo 2025 – Julio 2025"
     achievements:
-      - "Ciclo completo del desarrollo de software, análisis, diseño, desarrollo, despliegue y mantenimiento"
-      - "Liderazgo de equipos multidisciplinarios para crear soluciones tecnológicas adaptadas a organizaciones"
-      - "Diseño de modelos inteligentes para optimizar procesos y mejorar la eficiencia"
-      - "Investigación en tecnologías y compromiso con el aprendizaje continuo"
+      - "Mejoré mi perfil en el ámbito de la enseñanza y el aprendizaje en educación superior mediante un enfoque pedagógico sólido"
+      - "Aumenté el interés, la motivación y el desempeño de estudiantes en cursos universitarios"
+      - "Desarrollé pensamiento analítico e innovador aplicado a contextos educativos"
+      - "Diseñé experiencias de aprendizaje significativas y adaptadas al contexto actual"
+      - "Fortalecí habilidades de enseñanza con estrategias de aprendizaje activo"
+      - "Impulsé mi liderazgo e influencia social desde la docencia"
 
   - alignRight: false
     organization: "Digital Product School (DPS) by UnternehmerTUM"
@@ -188,17 +190,15 @@ education:
       - "Aplicación de la metodología Lean para la validación rápida de ideas y desarrollo de productos con enfoque en la eficiencia"
 
   - alignRight: true
-    organization: "Pontificia Universidad Javeriana"
-    position: "Diplomado en Docencia Universitaria"
-    location: "Colombia (Virtual)"
-    period: "Mayo 2025 – Julio 2025"
+    organization: "Universidad Tecnológica de Pereira"
+    position: "Ingeniería de Sistemas y Computación"
+    location: "Pereira, Colombia"
+    period: "Agosto 2018"
     achievements:
-      - "Mejoré mi perfil en el ámbito de la enseñanza y el aprendizaje en educación superior mediante un enfoque pedagógico sólido"
-      - "Aumenté el interés, la motivación y el desempeño de estudiantes en cursos universitarios"
-      - "Desarrollé pensamiento analítico e innovador aplicado a contextos educativos"
-      - "Diseñé experiencias de aprendizaje significativas y adaptadas al contexto actual"
-      - "Fortalecí habilidades de enseñanza con estrategias de aprendizaje activo"
-      - "Impulsé mi liderazgo e influencia social desde la docencia"
+      - "Ciclo completo del desarrollo de software, análisis, diseño, desarrollo, despliegue y mantenimiento"
+      - "Liderazgo de equipos multidisciplinarios para crear soluciones tecnológicas adaptadas a organizaciones"
+      - "Diseño de modelos inteligentes para optimizar procesos y mejorar la eficiencia"
+      - "Investigación en tecnologías y compromiso con el aprendizaje continuo"
 
   - alignRight: false
     organization: "Cisco Networking Academy"
