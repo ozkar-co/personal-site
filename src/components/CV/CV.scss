@@ -2,8 +2,9 @@
 
 .cv {
   padding: 4rem 2rem;
-  max-width: $container-max-width;
+  max-width: 1400px;
   margin: 0 auto;
+  width: 100%;
 
   h1 {
     font-size: 2.5rem;
@@ -16,5 +17,140 @@
   p {
     font-size: 1.2rem;
     line-height: 1.6;
+  }
+
+  // Estilos para las pestañas
+  .cv-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+
+    .cv-tab {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 1.5rem;
+      background: linear-gradient(135deg, rgba(0, 255, 0, 0.1), rgba(0, 255, 0, 0.05));
+      border: 2px solid rgba(0, 255, 0, 0.3);
+      border-radius: 12px;
+      color: $color-text;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 120px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 15px rgba(0, 255, 0, 0.1);
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 255, 0, 0.2);
+        border-color: rgba(0, 255, 0, 0.5);
+        background: linear-gradient(135deg, rgba(0, 255, 0, 0.2), rgba(0, 255, 0, 0.1));
+      }
+
+      &.active {
+        background: linear-gradient(135deg, rgba(0, 255, 0, 0.3), rgba(0, 255, 0, 0.15));
+        border-color: rgba(0, 255, 0, 0.8);
+        box-shadow: 0 8px 25px rgba(0, 255, 0, 0.3);
+        transform: translateY(-2px);
+
+        .tab-icon {
+          transform: scale(1.1);
+        }
+      }
+
+      .tab-icon {
+        font-size: 1.5rem;
+        transition: transform 0.3s ease;
+      }
+
+      .tab-label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+    }
+  }
+
+  // Contenido de las pestañas
+  .cv-content {
+    width: 100%;
+    max-width: 100%;
+
+    .tab-content {
+      animation: fadeIn 0.5s ease-in-out;
+      width: 100%;
+
+      .skills-section,
+      .experience-section,
+      .education-section,
+      .extracurricular-section {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        width: 100%;
+      }
+    }
+  }
+}
+
+// Animación de entrada
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .cv {
+    padding: 2rem 1rem;
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .cv-tabs {
+      gap: 0.5rem;
+
+      .cv-tab {
+        padding: 0.75rem 1rem;
+        min-width: 100px;
+
+        .tab-icon {
+          font-size: 1.2rem;
+        }
+
+        .tab-label {
+          font-size: 0.8rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .cv {
+    .cv-tabs {
+      flex-direction: column;
+      align-items: center;
+
+      .cv-tab {
+        width: 100%;
+        max-width: 200px;
+        flex-direction: row;
+        justify-content: center;
+        gap: 0.75rem;
+      }
+    }
   }
 } 

@@ -3,14 +3,48 @@
 .experience-card {
   &-content {
     cursor: pointer;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.5), transparent);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    &:hover {
+      background: linear-gradient(135deg, rgba(0, 255, 0, 0.05), rgba(0, 255, 0, 0.02));
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 255, 0, 0.1);
+
+      &::before {
+        transform: scaleX(1);
+      }
+
+      .experience-card-main {
+        .position {
+          color: $color-accent;
+        }
+      }
+    }
   }
 
   &-main {
-    padding: 0.5rem 0;
-    transition: background-color 0.3s ease;
+    padding: 1rem;
+    transition: all 0.3s ease;
+    border-radius: 12px;
+    position: relative;
 
     &:hover {
-      background-color: rgba($color-accent, 0.1);
+      background: linear-gradient(135deg, rgba(0, 255, 0, 0.08), rgba(0, 255, 0, 0.03));
     }
   }
 
@@ -18,62 +52,104 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
 
     .position {
-      font-size: 1.2rem;
-      font-weight: 600;
+      font-size: 1.3rem;
+      font-weight: 700;
       margin: 0;
       color: $color-text;
+      transition: color 0.3s ease;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
     }
 
     .organization {
-      font-weight: 500;
+      font-weight: 600;
       color: $color-accent;
+      font-size: 1.1rem;
     }
   }
 
   &-subheader {
     display: flex;
     justify-content: space-between;
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: rgba($color-text, 0.8);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
 
     .location {
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      padding: 0.3rem 0.8rem;
+      background: rgba(0, 255, 0, 0.1);
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+
+    .period {
+      padding: 0.3rem 0.8rem;
+      background: rgba(0, 255, 0, 0.1);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
     }
   }
 
   &-details {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease-out, padding 0.3s ease-out, opacity 0.3s ease-out;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     padding: 0 1rem;
     opacity: 0;
     text-align: left;
+    background: linear-gradient(135deg, rgba(0, 255, 0, 0.03), rgba(0, 255, 0, 0.01));
+    border-radius: 0 0 12px 12px;
+    margin: 0 1rem;
+    border-top: 1px solid transparent;
 
     &.expanded {
       max-height: 500px;
-      padding: 1rem;
+      padding: 1.5rem;
       opacity: 1;
-      border-top: 1px solid rgba($color-accent, 0.2);
+      border-top: 1px solid rgba(0, 255, 0, 0.2);
+      margin-top: 0.5rem;
+      animation: slideDown 0.4s ease-out;
     }
 
     ul {
       margin: 0;
-      padding-left: 1.2rem;
+      padding-left: 1.5rem;
       list-style-position: outside;
       text-align: left;
 
       li {
-        margin-bottom: 0.5rem;
-        line-height: 1.6;
+        margin-bottom: 0.8rem;
+        line-height: 1.7;
         text-align: left;
+        font-size: 1rem;
+        color: rgba($color-text, 0.9);
+        position: relative;
+        padding-left: 0.5rem;
+        
+        &::before {
+          content: '▸';
+          color: $color-accent;
+          font-weight: bold;
+          position: absolute;
+          left: -1.2rem;
+          top: 0;
+        }
         
         &:last-child {
           margin-bottom: 0;
+        }
+
+        &:hover {
+          color: $color-text;
+          transform: translateX(5px);
+          transition: all 0.3s ease;
         }
       }
     }
@@ -82,12 +158,61 @@
 
 .expand-arrow {
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: $color-accent;
-  transition: transform 0.3s ease;
-  margin-top: 0.5rem;
+  transition: all 0.3s ease;
+  margin-top: 0.8rem;
+  padding: 0.5rem;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 255, 0, 0.1);
+  border: 1px solid rgba(0, 255, 0, 0.2);
+
+  &:hover {
+    background: rgba(0, 255, 0, 0.2);
+    transform: scale(1.1);
+  }
 
   &.expanded {
-    transform: rotate(180deg);
+    transform: rotate(180deg) scale(1.1);
+    background: rgba(0, 255, 0, 0.2);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Animación de entrada para las tarjetas de experiencia
+.experience-card-content {
+  animation: fadeInUp 0.6s ease-out;
+  animation-fill-mode: both;
+
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.1}s;
+    }
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 } 
