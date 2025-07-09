@@ -1,0 +1,215 @@
+@use '../../styles/variables' as *;
+
+.profile-card {
+  position: relative;
+  margin: 3rem 0;
+  width: 100%;
+  max-width: 100%;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    
+    .profile-card-content {
+      box-shadow: 0 12px 30px rgba(0, 255, 0, 0.15);
+      border-color: rgba(0, 255, 0, 0.5);
+    }
+
+    .profile-card-header {
+      box-shadow: 0 8px 20px rgba(0, 255, 0, 0.2);
+      transform: translateY(-2px);
+    }
+  }
+
+  &.align-right {
+    margin-left: auto;
+    .profile-card-header {
+      right: -2rem;
+    }
+  }
+
+  &.align-left {
+    margin-right: auto;
+    .profile-card-header {
+      left: -2rem;
+    }
+  }
+
+  .profile-card-header {
+    position: absolute;
+    top: -1.5rem;
+    background: linear-gradient(135deg, rgba(0, 255, 0, 0.9), rgba(0, 255, 0, 0.7));
+    padding: 1.2rem 2.5rem;
+    border-radius: 12px;
+    z-index: 1;
+    box-shadow: 0 6px 15px rgba(0, 255, 0, 0.2);
+    max-width: calc(100% - 2rem);
+    white-space: nowrap;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(0, 255, 0, 0.3);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .profile-icon {
+      font-size: 1.8rem;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    }
+
+    .profile-title {
+      margin: 0;
+      color: $color-text;
+      font-size: 1.6rem;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  .profile-card-content {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6));
+    padding: 3rem 2.5rem 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(0, 255, 0, 0.2);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(15px);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.8), transparent);
+    }
+
+    .profile-description {
+      margin: 0 0 2rem 0;
+      line-height: 1.8;
+      color: $color-text;
+      font-size: 1.1rem;
+      font-weight: 400;
+    }
+
+    .profile-highlights {
+      .highlights-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        width: 100%;
+
+        @media (max-width: 768px) {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 0.8rem;
+        }
+
+        @media (max-width: 480px) {
+          grid-template-columns: 1fr;
+          gap: 0.6rem;
+        }
+
+        .highlight-item {
+          background: linear-gradient(135deg, rgba(0, 255, 0, 0.1), rgba(0, 255, 0, 0.05));
+          border: 1px solid rgba(0, 255, 0, 0.2);
+          border-radius: 8px;
+          padding: 1rem;
+          color: $color-text;
+          font-size: 0.9rem;
+          font-weight: 500;
+          line-height: 1.4;
+          text-align: center;
+          transition: all 0.3s ease;
+          backdrop-filter: blur(5px);
+          min-height: 60px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          word-wrap: break-word;
+          white-space: normal;
+
+          &:hover {
+            background: linear-gradient(135deg, rgba(0, 255, 0, 0.15), rgba(0, 255, 0, 0.08));
+            border-color: rgba(0, 255, 0, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 255, 0, 0.2);
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    width: 100%;
+    margin-left: auto !important;
+    margin-right: auto !important;
+
+    &.align-right,
+    &.align-left {
+      .profile-card-header {
+        left: 50%;
+        transform: translateX(-50%);
+        right: auto;
+        max-width: 80%;
+        padding: 1rem 2rem;
+        
+        .profile-icon {
+          font-size: 1.4rem;
+        }
+
+        .profile-title {
+          font-size: 1.4rem;
+        }
+      }
+    }
+
+    .profile-card-content {
+      padding: 2.5rem 2rem 2rem;
+      
+      .profile-description {
+        font-size: 1rem;
+      }
+
+      .profile-highlights {
+        .highlights-grid {
+          .highlight-item {
+            font-size: 0.85rem;
+            padding: 0.8rem;
+            min-height: 50px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Animación de entrada para las tarjetas de perfil
+.profile-card {
+  animation: slideInFromBottom 0.8s ease-out;
+  animation-fill-mode: both;
+
+  @for $i from 1 through 5 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.15}s;
+    }
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+} 

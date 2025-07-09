@@ -2,7 +2,33 @@
 
 about:
   title: "Sobre Mí"
-  content: "Soy Oscar Eduardo Bernal Sánchez, ingeniero de sistemas y CTO en Forja de Código. Con más de 8 años de experiencia en desarrollo FullStack, me especializo en arquitectura de software, escalabilidad y tecnología en la nube. Apasionado por la innovación, la inteligencia artificial y la construcción de soluciones eficientes."
+  profiles:
+    - title: "Desarrollador Senior"
+      icon: "💻"
+      content: "Con más de 8 años de experiencia en desarrollo FullStack, me especializo en arquitectura de software, escalabilidad y tecnología en la nube. Apasionado por la innovación, la inteligencia artificial y la construcción de soluciones eficientes. Experto en Node.js, React, Python y tecnologías cloud."
+      highlights:
+        - "Arquitectura de software escalable"
+        - "Desarrollo FullStack con tecnologías modernas"
+        - "Optimización de rendimiento y seguridad"
+        - "Integración de APIs y microservicios"
+
+    - title: "CTO & Líder Técnico"
+      icon: "🚀"
+      content: "Como CTO en Forja de Código, lidero la estrategia tecnológica y el equipo de desarrollo. Me enfoco en tomar decisiones sobre arquitectura, tecnologías y escalabilidad, asegurando la calidad del código y la eficiencia del desarrollo."
+      highlights:
+        - "Liderazgo de equipos técnicos"
+        - "Estrategia tecnológica y arquitectura"
+        - "Gestión de proyectos y recursos"
+        - "Innovación y adopción de nuevas tecnologías"
+
+    - title: "Docente & Mentor"
+      icon: "🎓"
+      content: "Apasionado por compartir conocimiento y formar a la próxima generación de desarrolladores. Experiencia en mentoring, capacitación técnica y desarrollo de contenido educativo para equipos y estudiantes."
+      highlights:
+        - "Mentoring y formación de desarrolladores"
+        - "Desarrollo de contenido educativo"
+        - "Capacitación técnica en empresas"
+        - "Compartir mejores prácticas y metodologías"
 
 skills:
   - title: "Desarrollo Backend"

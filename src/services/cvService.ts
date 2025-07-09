@@ -41,9 +41,16 @@ export interface Extracurricular {
   achievements: string[];
 }
 
+export interface Profile {
+  title: string;
+  icon: string;
+  content: string;
+  highlights: string[];
+}
+
 export interface About {
   title: string;
-  content: string;
+  profiles: Profile[];
 }
 
 export interface CVData {

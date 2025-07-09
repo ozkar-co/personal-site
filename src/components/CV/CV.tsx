@@ -3,6 +3,7 @@ import './CV.scss';
 import { CVCard } from './CVCard';
 import { ExperienceCard } from './ExperienceCard';
 import { SkillCard } from './SkillCard';
+import { ProfileCard } from './ProfileCard';
 import { 
   SiNodedotjs, SiJavascript, SiTypescript, 
   SiReact, SiMongodb, SiPostgresql, 
@@ -67,10 +68,18 @@ export const CV = () => {
       case 'about':
         return (
           <div className="tab-content">
-            <CVCard
-              title={cvData.about.title}
-              content={cvData.about.content}
-            />
+            <div className="profiles-section">
+              {cvData.about.profiles.map((profile, index) => (
+                <ProfileCard
+                  key={index}
+                  title={profile.title}
+                  icon={profile.icon}
+                  content={profile.content}
+                  highlights={profile.highlights}
+                  alignRight={index % 2 === 1}
+                />
+              ))}
+            </div>
           </div>
         );
 
