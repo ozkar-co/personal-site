@@ -5,7 +5,7 @@ about:
   profiles:
     - title: "Desarrollador Senior"
       icon: "💻"
-      content: "Con más de 8 años de experiencia en desarrollo FullStack, me especializo en arquitectura de software, escalabilidad y tecnología en la nube. Apasionado por la innovación, la inteligencia artificial y la construcción de soluciones eficientes. Experto en Node.js, React, Python y tecnologías cloud."
+      content: "Más de 8 años diseñando e implementando soluciones de software escalables, con enfoque en backend, arquitectura, rendimiento y tecnología en la nube. Me apasiona crear sistemas eficientes y robustos, resolver problemas complejos y mantenerme actualizado en nuevas herramientas, especialmente en inteligencia artificial aplicada."
       highlights:
         - "Arquitectura de software escalable"
         - "Desarrollo FullStack con tecnologías modernas"
@@ -14,7 +14,7 @@ about:
 
     - title: "CTO & Líder Técnico"
       icon: "🚀"
-      content: "Como CTO en Forja de Código, lidero la estrategia tecnológica y el equipo de desarrollo. Me enfoco en tomar decisiones sobre arquitectura, tecnologías y escalabilidad, asegurando la calidad del código y la eficiencia del desarrollo."
+      content: "Co-fundador y CTO de Forja de Código, donde lidero la visión tecnológica de la startup. Trazamos estrategias escalables, priorizamos calidad y buenas prácticas, e impulsamos la innovación constante. Coordino equipos multidisciplinarios y acompaño técnicamente en proyectos clave."
       highlights:
         - "Liderazgo de equipos técnicos"
         - "Estrategia tecnológica y arquitectura"
@@ -23,12 +23,13 @@ about:
 
     - title: "Docente & Mentor"
       icon: "🎓"
-      content: "Apasionado por compartir conocimiento y formar a la próxima generación de desarrolladores. Experiencia en mentoring, capacitación técnica y desarrollo de contenido educativo para equipos y estudiantes."
+      content: "He compartido conocimiento desde mis años como estudiante, dictando talleres, conferencias y mentorías. Tengo experiencia formando desarrolladores, liderando grupos académicos, y creando contenido técnico. Actualmente complemento mi carrera docente con estudios formales en educación universitaria, incluyendo un diplomado en docencia para la educación superior."
       highlights:
         - "Mentoring y formación de desarrolladores"
         - "Desarrollo de contenido educativo"
         - "Capacitación técnica en empresas"
-        - "Compartir mejores prácticas y metodologías"
+        - "Conferencias científicas y divulgación"
+        - "Organización de talleres y actividades de formación"
 
 skills:
   - title: "Desarrollo Backend"
@@ -185,6 +186,28 @@ education:
       - "Programa intensivo de tres meses enfocado en el desarrollo de productos digitales en un entorno multidisciplinario"
       - "Aplicación de metodologías ágiles como Scrum y Design Thinking"
       - "Aplicación de la metodología Lean para la validación rápida de ideas y desarrollo de productos con enfoque en la eficiencia"
+
+  - alignRight: true
+    organization: "Pontificia Universidad Javeriana"
+    position: "Diplomado en Docencia Universitaria"
+    location: "Colombia (Virtual)"
+    period: "Mayo 2025 – Julio 2025"
+    achievements:
+      - "Mejoré mi perfil en el ámbito de la enseñanza y el aprendizaje en educación superior mediante un enfoque pedagógico sólido"
+      - "Aumenté el interés, la motivación y el desempeño de estudiantes en cursos universitarios"
+      - "Desarrollé pensamiento analítico e innovador aplicado a contextos educativos"
+      - "Diseñé experiencias de aprendizaje significativas y adaptadas al contexto actual"
+      - "Fortalecí habilidades de enseñanza con estrategias de aprendizaje activo"
+      - "Impulsé mi liderazgo e influencia social desde la docencia"
+
+  - alignRight: false
+    organization: "Cisco Networking Academy"
+    position: "Curso CCNA Discovery"
+    location: "Pereira, Colombia"
+    period: "2008 – 2009"
+    achievements:
+      - "Curso completo de redes con una duración de 400 horas"
+      - "Fundamentos de redes, direccionamiento IP, protocolos y topologías"
 
 extracurricular:
   - alignRight: true
