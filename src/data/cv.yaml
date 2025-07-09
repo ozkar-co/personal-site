@@ -211,7 +211,7 @@ experience:
     position: "Desarrollador Backend"
     organization: "Tecnología Digital 7"
     location: "Pereira, Colombia"
-    period: "Sep 2018 – Abr 2019"
+    period: "Ene 2018 – Ago 2019"
     achievements:
       - "Desarrollo de un sistema web para el seguimiento del rendimiento de desarrolladores"
       - "Diseño de interfaces para un sistema de Blockchain orientado a objetos"
@@ -221,7 +221,7 @@ experience:
     position: "Asistente de Desarrollo de Software"
     organization: "Universidad Tecnológica de Pereira"
     location: "Pereira, Colombia"
-    period: "Feb 2015 – Dic 2016"
+    period: "Feb 2015 – Dic 2017"
     achievements:
       - "Mantenimiento y actualización de sitios web universitarios con PHP y Laravel"
       - "Diseño de un sistema de georreferenciación con PHP Laravel para planificar rutas accesibles en el campus"
@@ -264,6 +264,18 @@ education:
       - "Aplicación de la metodología Lean para la validación rápida de ideas y desarrollo de productos con enfoque en la eficiencia"
 
   - alignRight: true
+    organization: "University of Michigan"
+    position: "Internet History, Technology, and Security"
+    location: "Estados Unidos (Virtual)"
+    period: "Julio 2020"
+    achievements:
+      - "Comprensión profunda de las cuestiones tecnológicas importantes que enfrenta la sociedad actual"
+      - "Desarrollo de habilidades en TCP/IP, protocolos de red, arquitectura de red y redes informáticas"
+      - "Conocimientos avanzados en seguridad de red, cifrado y aplicaciones web"
+      - "Comprensión de cómo Internet y la web son espacios para la innovación tecnológica"
+      - "Fortalecimiento de competencias en servidores web y desarrollo de aplicaciones web"
+
+  - alignRight: false
     organization: "Universidad Tecnológica de Pereira"
     position: "Ingeniería de Sistemas y Computación"
     location: "Pereira, Colombia"
