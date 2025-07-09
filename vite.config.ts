@@ -16,5 +16,6 @@ export default defineConfig({
         api: 'modern-compiler'
       }
     }
-  }
+  },
+  assetsInclude: ['**/*.yaml', '**/*.yml']
 })
