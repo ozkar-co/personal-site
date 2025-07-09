@@ -14,7 +14,7 @@ export const Social = () => {
               <FaEnvelope size={32} />
               <span>Correo</span>
             </a>
-            <a href="https://github.com/ozcodx" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <a href="https://github.com/ozkar-co" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
               <FaGithub size={32} />
               <span>GitHub</span>
             </a>
