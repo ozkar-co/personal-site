@@ -221,11 +221,23 @@ experience:
     position: "Asistente de Desarrollo de Software"
     organization: "Universidad Tecnológica de Pereira"
     location: "Pereira, Colombia"
-    period: "Mar 2015 – Dic 2016"
+    period: "Feb 2015 – Dic 2016"
     achievements:
       - "Mantenimiento y actualización de sitios web universitarios con PHP y Laravel"
       - "Diseño de un sistema de georreferenciación con PHP Laravel para planificar rutas accesibles en el campus"
       - "Desarrollo de un motor de búsqueda para reglamentos estudiantiles y creación de una base de datos de referencias bibliográficas"
+
+  - alignRight: true
+    position: "Guía Educativo y Divulgador Científico"
+    organization: "Jardín Botánico - Universidad Tecnológica de Pereira"
+    location: "Pereira, Colombia"
+    period: "Feb 2013 – Dic 2014"
+    achievements:
+      - "Desarrollo de capacidades pedagógicas mediante la orientación de grupos diversos a través del jardín botánico"
+      - "Adaptación del contenido educativo según el perfil del grupo (estudiantes, turistas, investigadores)"
+      - "Investigación continua y actualización de conocimientos sobre flora, fauna y curiosidades científicas"
+      - "Fortalecimiento de habilidades de comunicación efectiva, manejo de grupos y transmisión de conocimiento"
+      - "Experiencia pionera en divulgación científica que sentó las bases de mi vocación docente"
 
 education:
   - alignRight: true
