@@ -120,8 +120,8 @@
 
     ul {
       margin: 0;
-      padding-left: 1.5rem;
-      list-style-position: outside;
+      padding-left: 0;
+      list-style: none;
       text-align: left;
 
       li {
@@ -131,14 +131,14 @@
         font-size: 1rem;
         color: rgba($color-text, 0.9);
         position: relative;
-        padding-left: 0.5rem;
+        padding-left: 1.5rem;
         
         &::before {
           content: '▸';
           color: $color-accent;
           font-weight: bold;
           position: absolute;
-          left: -1.2rem;
+          left: 0;
           top: 0;
         }
         
