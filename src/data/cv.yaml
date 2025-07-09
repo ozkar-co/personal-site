@@ -11,6 +11,7 @@ about:
         - "Desarrollo FullStack con tecnologías modernas"
         - "Optimización de rendimiento y seguridad"
         - "Integración de APIs y microservicios"
+        - "Desarrollo de soluciones cloud-native"
 
     - title: "CTO & Líder Técnico"
       icon: "🚀"
@@ -20,6 +21,7 @@ about:
         - "Estrategia tecnológica y arquitectura"
         - "Gestión de proyectos y recursos"
         - "Innovación y adopción de nuevas tecnologías"
+        - "Toma de decisiones técnicas estratégicas"
 
     - title: "Docente & Mentor"
       icon: "🎓"
@@ -341,7 +343,7 @@ extracurricular:
       - "Asistencia con la traducción al español, expandiendo la accesibilidad del juego a un público más amplio"
       - "Mejora de la documentación del juego, asegurando instrucciones más claras y una mejor usabilidad general"
 
-  - alignRight: false
+  - alignRight: true
     organization: "Banco de la República - Grupo de Investigación ALFA ORIÓN"
     position: "Conferencista"
     location: "Pereira, Colombia"
@@ -351,7 +353,7 @@ extracurricular:
       - "Ciclo de charlas 'Descubriendo el universo', organizado por el Banco de la República y el grupo ALFA ORIÓN"
       - "Duración: 2 horas. Público general e instituciones educativas"
 
-  - alignRight: true
+  - alignRight: false
     organization: "Universidad Tecnológica de Pereira - Grupo ORIÓN"
     position: "Coordinador de Grupo de Astronomía"
     location: "Pereira, Colombia"
