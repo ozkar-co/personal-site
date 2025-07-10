@@ -16,6 +16,31 @@ export interface Project {
 // NOTA: si se añaden iconos nuevos, se debe agregar en el archivo src/components/Projects/Projects.tsx
 
 export const projects: Record<string, Project> = {
+  "FollowTracker_Social": {
+    "id": "FollowTracker_Social",
+    "titulo": "FollowTracker - Gestor de Redes Sociales",
+    "descripcion": "Aplicación minimalista con interfaz gráfica escrita en Python para llevar un registro personal de interacciones en redes sociales. Permite registrar a quién sigues, si te dieron follow back, o si dejaste de seguir a alguien. Ideal para creadores de contenido, community managers o usuarios interesados en gestionar de forma consciente sus conexiones. Incluye buscador avanzado, historial cronológico y estadísticas detalladas.",
+    "tecnologias": [
+      { "name": "Python", "icon": "fa-brands fa-python" },
+      { "name": "Tkinter", "icon": "fa-solid fa-desktop" },
+      { "name": "YAML", "icon": "fa-solid fa-file-code" },
+      { "name": "GUI", "icon": "fa-solid fa-window-maximize" },
+      { "name": "Data Tracking", "icon": "fa-solid fa-chart-bar" }
+    ],
+    "caracteristicas": [
+      "Interfaz gráfica minimalista y fácil de usar",
+      "Registro de interacciones con botones intuitivos",
+      "Buscador avanzado con filtros por estado",
+      "Historial cronológico de eventos por cuenta",
+      "Enlaces directos a perfiles de redes sociales",
+      "Estadísticas detalladas de relaciones",
+      "Almacenamiento local en formato YAML",
+      "Ordenamiento por columnas (seguido, follow back, etc.)"
+    ],
+    "imagen": "proyecto9.png",
+    "url": "https://github.com/ozkar-co/followTracker",
+    "fecha": "2025-01-25T05:00:00.000Z"
+  },
   "FabriCalc_3D_Printing": {
     "id": "FabriCalc_3D_Printing",
     "titulo": "FabriCalc - Calculadora de Costos 3D",

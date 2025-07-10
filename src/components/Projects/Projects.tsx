@@ -3,12 +3,12 @@ import { projects, Project } from '../../data/projects';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faReact, faJs, faSass, faGithub, faGoogle, faPaypal, faPython } from '@fortawesome/free-brands-svg-icons';
-import { faMobileScreen, faDatabase, faGears, faFire, faCode, faMagnifyingGlass, faArrowsRotate, faCube, faCalculator, faFileCode, faDesktop, faLock, faChartLine, faServer, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faMobileScreen, faDatabase, faGears, faFire, faCode, faMagnifyingGlass, faArrowsRotate, faCube, faCalculator, faFileCode, faDesktop, faLock, faChartLine, faServer, faSearch, faWindowMaximize, faChartBar } from '@fortawesome/free-solid-svg-icons';
 
 // Add icons to library
 library.add(
   faReact, faJs, faSass, faGithub, faGoogle, faPaypal, faPython,
-  faMobileScreen, faDatabase, faGears, faFire, faCode, faMagnifyingGlass, faArrowsRotate, faLock, faChartLine, faServer, faSearch
+  faMobileScreen, faDatabase, faGears, faFire, faCode, faMagnifyingGlass, faArrowsRotate, faLock, faChartLine, faServer, faSearch, faWindowMaximize, faChartBar
 );
 
 const getIcon = (iconName: string) => {
@@ -34,6 +34,8 @@ const getIcon = (iconName: string) => {
     'fa-solid fa-chart-line': faChartLine,
     'fa-solid fa-server': faServer,
     'fa-solid fa-search': faSearch,
+    'fa-solid fa-window-maximize': faWindowMaximize,
+    'fa-solid fa-chart-bar': faChartBar,
     'fa-brands fa-python': faPython
   };
   return iconMap[iconName];
