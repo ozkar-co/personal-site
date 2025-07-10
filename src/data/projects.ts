@@ -12,7 +12,35 @@ export interface Project {
   fecha: string;
 }
 
+// NOTA: Los proyectos se deben agregar en orden cronológico, de más reciente a más antiguo.
+// NOTA: si se añaden iconos nuevos, se debe agregar en el archivo src/components/Projects/Projects.tsx
+
 export const projects: Record<string, Project> = {
+  "FabriCalc_3D_Printing": {
+    "id": "FabriCalc_3D_Printing",
+    "titulo": "FabriCalc - Calculadora de Costos 3D",
+    "descripcion": "FabriCalc es una herramienta de código abierto para calcular el costo real de una impresión 3D, considerando materiales, tiempo, electricidad, depreciación de máquina, envío y ganancia. Diseñada para makers, desarrolladores y emprendedores que desean estimar precios de forma técnica y ajustada a su realidad.",
+    "tecnologias": [
+      { "name": "Python", "icon": "fa-brands fa-python" },
+      { "name": "GUI", "icon": "fa-solid fa-desktop" },
+      { "name": "JSON", "icon": "fa-solid fa-file-code" },
+      { "name": "3D Printing", "icon": "fa-solid fa-cube" },
+      { "name": "Cost Analysis", "icon": "fa-solid fa-calculator" }
+    ],
+    "caracteristicas": [
+      "Cálculo detallado de costos: Material, tiempo, electricidad y depreciación",
+      "Configuración editable desde archivo externo (config.json)",
+      "Interfaz gráfica intuitiva en Python",
+      "Soporte para múltiples tipos de materiales (PLA, PETG, etc.)",
+      "Cálculo de costos de envío (local y nacional)",
+      "Margen de ganancia configurable",
+      "Estimación de tiempo de postprocesado",
+      "Pensado para uso personal o en talleres"
+    ],
+    "imagen": "proyecto8.png",
+    "url": "https://github.com/ozkar-co/fabricalc",
+    "fecha": "2025-01-20T05:00:00.000Z"
+  },
   "EMM4aX9bN2cP5qR8tY1z": {
     "id": "EMM4aX9bN2cP5qR8tY1z",
     "titulo": "Emma - Chatbot IA local",
@@ -122,8 +150,8 @@ export const projects: Record<string, Project> = {
   },
   "bwuUZZEcpubwsIYY6N6x": {
     "id": "bwuUZZEcpubwsIYY6N6x",
-    "titulo": "Pagina Web Videojuego",
-    "descripcion": "Sitio Web construido para un servidor privado de un videojuego integrando la informacion del videojuego con la pagina web.",
+    "titulo": "Servidor Privado de Ragnarok Online",
+    "descripcion": "Sitio Web construido para un servidor privado de Ragnarok Online integrando la informacion del servidor con la pagina web.",
     "tecnologias": [
       { "name": "React", "icon": "fa-brands fa-react" },
       { "name": "Firestore", "icon": "fa-solid fa-database" },

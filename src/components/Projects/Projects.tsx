@@ -2,12 +2,12 @@ import './Projects.scss';
 import { projects, Project } from '../../data/projects';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faReact, faJs, faSass, faGithub, faGoogle, faPaypal } from '@fortawesome/free-brands-svg-icons';
-import { faMobileScreen, faDatabase, faGears, faFire, faCode, faMagnifyingGlass, faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
+import { faReact, faJs, faSass, faGithub, faGoogle, faPaypal, faPython } from '@fortawesome/free-brands-svg-icons';
+import { faMobileScreen, faDatabase, faGears, faFire, faCode, faMagnifyingGlass, faArrowsRotate, faCube, faCalculator, faFileCode, faDesktop } from '@fortawesome/free-solid-svg-icons';
 
 // Add icons to library
 library.add(
-  faReact, faJs, faSass, faGithub, faGoogle, faPaypal,
+  faReact, faJs, faSass, faGithub, faGoogle, faPaypal, faPython,
   faMobileScreen, faDatabase, faGears, faFire, faCode, faMagnifyingGlass, faArrowsRotate
 );
 
@@ -25,7 +25,12 @@ const getIcon = (iconName: string) => {
     'fa-solid fa-fire': faFire,
     'fa-solid fa-code': faCode,
     'fa-solid fa-magnifying-glass': faMagnifyingGlass,
-    'fa-solid fa-arrows-rotate': faArrowsRotate
+    'fa-solid fa-arrows-rotate': faArrowsRotate,
+    'fa-solid fa-cube': faCube,
+    'fa-solid fa-calculator': faCalculator,
+    'fa-solid fa-file-code': faFileCode,
+    'fa-solid fa-desktop': faDesktop,
+    'fa-brands fa-python': faPython
   };
   return iconMap[iconName];
 };
