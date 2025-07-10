@@ -111,19 +111,23 @@ export const projects: Record<string, Project> = {
   },
   "oBZWTHk3gazBr6acjjbj": {
     "id": "oBZWTHk3gazBr6acjjbj",
-    "titulo": "Sitio Web Empresarial",
-    "descripcion": "plataforma dedicada al desarrollo de soluciones digitales personalizadas. El sitio ofrece una variedad de servicios de desarrollo de software, desde páginas web simples hasta soluciones empresariales completas. Los usuarios pueden explorar los servicios ofrecidos, conocer los proyectos realizados y contactar al equipo para solicitar servicios específicos.",
+    "titulo": "Forja de Código",
+    "descripcion": "Sitio web corporativo de Forja de Código, empresa especializada en desarrollo de software y soluciones digitales personalizadas. La plataforma presenta servicios de desarrollo web, aplicaciones móviles, sistemas empresariales y consultoría tecnológica. Incluye portafolio de proyectos, testimonios de clientes y formulario de contacto integrado para facilitar la comunicación con potenciales clientes.",
     "tecnologias": [
       { "name": "React", "icon": "fa-brands fa-react" },
       { "name": "Firebase", "icon": "fa-solid fa-fire" },
-      { "name": "PropTypes", "icon": "fa-solid fa-code" }
+      { "name": "PropTypes", "icon": "fa-solid fa-code" },
+      { "name": "SEO", "icon": "fa-solid fa-search" },
+      { "name": "Responsive Design", "icon": "fa-solid fa-mobile-screen" }
     ],
     "caracteristicas": [
-      "Interfaz de usuario intuitiva: Diseño moderno y fácil de navegar.",
-      "Integración con Firebase: Gestión de datos en tiempo real y almacenamiento en la nube.",
-      "Optimización para móviles: Diseño responsive que se adapta a diferentes dispositivos.",
-      "Formulario de contacto: Facilita la comunicación direct",
-      "SEO optimizado: Mejora la visibilidad en motores de búsqueda."
+      "Diseño moderno y profesional para empresa de tecnología",
+      "Integración con Firebase para gestión de datos en tiempo real",
+      "Diseño responsive optimizado para todos los dispositivos",
+      "Formulario de contacto integrado para captación de leads",
+      "SEO optimizado para mejorar visibilidad en motores de búsqueda",
+      "Portafolio de proyectos y testimonios de clientes",
+      "Sección de servicios detallada con casos de uso"
     ],
     "imagen": "proyecto4.png",
     "url": "https://forjadecodigo.com/",
@@ -132,17 +136,25 @@ export const projects: Record<string, Project> = {
   "LDvyVx88cnzmp1bZgtvO": {
     "id": "LDvyVx88cnzmp1bZgtvO",
     "titulo": "Finanzas Personales",
-    "descripcion": "Proyecto web personal creado para gestionar las finanzas personales con datos historicos, graficas y analisis.",
+    "descripcion": "Aplicación web personal para gestión completa de finanzas personales con autenticación segura mediante Google Auth. Permite registrar ingresos y gastos con categorías dinámicas, generar gráficos y reportes detallados, y exportar datos a Excel. Los datos financieros están cifrados en MongoDB y se gestionan a través de una API REST personalizada para máxima seguridad. Incluye análisis históricos, tendencias de gastos y herramientas de visualización.",
     "tecnologias": [
       { "name": "React", "icon": "fa-brands fa-react" },
       { "name": "Google Auth", "icon": "fa-brands fa-google" },
-      { "name": "Firestore", "icon": "fa-solid fa-database" }
+      { "name": "MongoDB", "icon": "fa-solid fa-database" },
+      { "name": "REST API", "icon": "fa-solid fa-server" },
+      { "name": "Data Encryption", "icon": "fa-solid fa-lock" },
+      { "name": "Charts", "icon": "fa-solid fa-chart-line" }
     ],
     "caracteristicas": [
-      "Diseño Web Responsive",
-      "Generacion de Graficos y Reportes",
-      "Exportacion de datos a Excel",
-      "Categorias creadas Dinamicamente"
+      "Diseño web responsive y moderno",
+      "Autenticación segura con Google Auth",
+      "API REST personalizada para gestión de datos",
+      "Datos cifrados en MongoDB para máxima seguridad",
+      "Generación de gráficos y reportes detallados",
+      "Exportación de datos a Excel",
+      "Categorías creadas dinámicamente",
+      "Análisis histórico y tendencias de gastos",
+      "Herramientas de visualización financiera"
     ],
     "imagen": "proyecto1.jpg",
     "url": "https://oz-cuentas.web.app/about",
@@ -151,17 +163,22 @@ export const projects: Record<string, Project> = {
   "bwuUZZEcpubwsIYY6N6x": {
     "id": "bwuUZZEcpubwsIYY6N6x",
     "titulo": "Servidor Privado de Ragnarok Online",
-    "descripcion": "Sitio Web construido para un servidor privado de Ragnarok Online integrando la informacion del servidor con la pagina web.",
+    "descripcion": "Sitio web construido para un servidor privado de Ragnarok Online que ofrece una experiencia de juego renovada y balanceada. El servidor funciona en el episodio 14.3 con rates ajustados (5x/5x/10x) para una progresión fluida, sin presión competitiva y diseñado para jugar solo o en pequeños grupos. Incluye NPCs personalizados, misiones únicas y una economía autosuficiente que no depende del comercio masivo. El sitio web integra información del servidor con funcionalidades de búsqueda avanzada y datos reales del videojuego.",
     "tecnologias": [
       { "name": "React", "icon": "fa-brands fa-react" },
       { "name": "Firestore", "icon": "fa-solid fa-database" },
       { "name": "FullSearch", "icon": "fa-solid fa-magnifying-glass" },
-      { "name": "Paypal", "icon": "fa-brands fa-paypal" }
+      { "name": "Paypal", "icon": "fa-brands fa-paypal" },
+      { "name": "Game Server", "icon": "fa-solid fa-server" }
     ],
     "caracteristicas": [
       "Diseño responsivo y moderno",
-      "Sistema de busquedas avanzadas",
-      "Integracion con datos reales del videojuego"
+      "Sistema de búsquedas avanzadas",
+      "Integración con datos reales del videojuego",
+      "Servidor Renewal con mecánicas balanceadas",
+      "Experiencia autosuficiente sin dependencia del mercado",
+      "Rates ajustados para progresión fluida (5x/5x/10x)",
+      "NPCs personalizados y misiones únicas"
     ],
     "imagen": "proyecto2.jpg",
     "url": "https://oz-ragnarok.web.app/",
