@@ -1,0 +1,291 @@
+@use '../../styles/variables' as *;
+
+.time {
+  padding: 6rem 2rem 2rem;
+  min-height: 100vh;
+  background-color: var(--background-color);
+  color: var(--text-color);
+
+  .time-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 3rem;
+      color: var(--accent-color);
+      text-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.2em;
+    }
+
+    .time-content {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+      margin-bottom: 3rem;
+
+      .time-lived,
+      .time-remaining {
+        h2 {
+          font-size: 1.8rem;
+          margin-bottom: 2rem;
+          color: var(--text-color);
+          font-family: 'Courier New', monospace;
+        }
+
+        .time-display {
+          position: relative;
+          display: flex;
+          justify-content: center;
+          gap: 2rem;
+          flex-wrap: wrap;
+          padding: 2rem;
+          background: rgba($color-background, 0.8);
+          border: 2px solid rgba($color-accent, 0.3);
+          border-radius: 15px;
+          backdrop-filter: blur(10px);
+          box-shadow: 
+            0 0 20px rgba($color-accent, 0.2),
+            inset 0 0 20px rgba($color-accent, 0.05);
+
+          &::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, transparent, rgba($color-accent, 0.3), transparent);
+            border-radius: 15px;
+            z-index: -1;
+          }
+
+          &.lived {
+            border-color: rgba($color-accent, 0.5);
+            box-shadow: 
+              0 0 20px rgba($color-accent, 0.3),
+              inset 0 0 20px rgba($color-accent, 0.1);
+
+            .number {
+              color: $color-accent;
+              text-shadow: 0 0 5px rgba($color-accent, 0.5);
+            }
+          }
+
+          &.remaining {
+            border-color: rgba(255, 107, 107, 0.5);
+            box-shadow: 
+              0 0 20px rgba(255, 107, 107, 0.3),
+              inset 0 0 20px rgba(255, 107, 107, 0.1);
+
+            &::before {
+              background: linear-gradient(45deg, transparent, rgba(255, 107, 107, 0.3), transparent);
+            }
+
+            .number {
+              color: #ff6b6b;
+              text-shadow: 0 0 5px rgba(255, 107, 107, 0.5);
+            }
+
+            &.negative {
+              border-color: rgba(255, 71, 87, 0.7);
+              box-shadow: 
+                0 0 30px rgba(255, 71, 87, 0.4),
+                inset 0 0 20px rgba(255, 71, 87, 0.2);
+
+              &::before {
+                background: linear-gradient(45deg, transparent, rgba(255, 71, 87, 0.3), transparent);
+              }
+
+              .number {
+                color: #ff4757;
+                text-shadow: 0 0 5px rgba(255, 71, 87, 0.5);
+              }
+            }
+          }
+
+          .time-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 80px;
+
+            .number {
+              font-size: 2.5rem;
+              font-weight: bold;
+              font-family: 'Courier New', monospace;
+              margin-bottom: 0.5rem;
+            }
+
+            .label {
+              font-size: 0.9rem;
+              color: var(--text-color);
+              font-family: 'Courier New', monospace;
+              opacity: 0.8;
+            }
+          }
+        }
+
+        .over-expectancy {
+          margin-top: 1rem;
+          padding: 1rem;
+          background-color: rgba(0, 255, 0, 0.1);
+          border: 1px solid #0F0;
+          border-radius: 8px;
+          animation: glow 2s ease-in-out infinite alternate;
+
+          p {
+            color: #0F0;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+          }
+        }
+      }
+
+      .time-quote {
+        position: relative;
+        padding: 2rem;
+        background: rgba($color-background, 0.8);
+        border: 2px solid rgba($color-accent, 0.3);
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+        box-shadow: 
+          0 0 20px rgba($color-accent, 0.2),
+          inset 0 0 20px rgba($color-accent, 0.05);
+        margin: 2rem 0;
+
+        blockquote {
+          font-size: 1.5rem;
+          font-style: italic;
+          color: var(--accent-color);
+          margin: 0 0 1rem 0;
+          font-family: 'Courier New', monospace;
+          text-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+        }
+
+        p {
+          font-size: 1rem;
+          color: var(--text-color);
+          opacity: 0.8;
+          font-family: 'Courier New', monospace;
+          margin: 0;
+        }
+      }
+    }
+
+    .time-disclaimer {
+      padding: 1.5rem;
+      background-color: rgba(26, 26, 26, 0.9);
+      border: 1px solid rgba(255, 107, 107, 0.3);
+      border-radius: 10px;
+      max-width: 800px;
+      margin: 0 auto;
+
+      p {
+        font-size: 0.9rem;
+        color: var(--text-color);
+        line-height: 1.6;
+        margin: 0;
+        font-family: 'Courier New', monospace;
+
+        strong {
+          color: #ff6b6b;
+        }
+      }
+    }
+  }
+}
+
+// Animaciones
+@keyframes glow {
+  from {
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+  }
+  to {
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .time {
+    padding: 4rem 1rem 1rem;
+
+    .time-container {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .time-content {
+        gap: 2rem;
+
+        .time-lived,
+        .time-remaining {
+          h2 {
+            font-size: 1.4rem;
+          }
+
+          .time-display {
+            gap: 1rem;
+            padding: 1rem;
+
+            .time-unit {
+              min-width: 60px;
+
+              .number {
+                font-size: 1.8rem;
+              }
+
+              .label {
+                font-size: 0.8rem;
+              }
+            }
+          }
+        }
+
+        .time-quote {
+          padding: 1.5rem;
+
+          blockquote {
+            font-size: 1.2rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .time {
+    .time-container {
+      .time-content {
+        .time-lived,
+        .time-remaining {
+          .time-display {
+            flex-direction: column;
+            gap: 1rem;
+
+            .time-unit {
+              flex-direction: row;
+              justify-content: space-between;
+              min-width: auto;
+              width: 100%;
+
+              .number {
+                font-size: 1.5rem;
+                margin-bottom: 0;
+              }
+
+              .label {
+                font-size: 0.9rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+} 

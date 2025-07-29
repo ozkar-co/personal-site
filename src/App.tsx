@@ -10,6 +10,7 @@ import { MatrixBackground } from './components/MatrixBackground/MatrixBackground
 import { Blog } from './components/Blog/Blog'
 import { Projects } from './components/Projects/Projects'
 import { Wizz } from './components/Wizz/Wizz'
+import { Time } from './components/Time/Time'
 import { Admin } from './components/Admin/Admin'
 
 // Componente para determinar el tipo de fondo según la ruta
@@ -33,6 +34,7 @@ const AppContent = () => {
         <Route path="/blog" element={<Blog />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/wizz" element={<Wizz />} />
+        <Route path="/time" element={<Time />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/" element={
           <main>
