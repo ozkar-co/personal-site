@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /
+Allow: /blog-entries/
+Allow: /blog-pages/
+
+# Allow Wayback Machine to archive all content
+User-agent: ia_archiver
+Allow: /
 
 Sitemap: https://ozkar.co/sitemap.xml 

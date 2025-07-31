@@ -45,7 +45,12 @@ export const BlogEntry = ({ entry }: BlogEntryProps) => {
             TL;DR
           </button>
         </div>
-        <time dateTime={entry.date}>{entry.date}</time>
+        <time dateTime={entry.date}>{new Date(entry.date).toLocaleDateString('es-ES', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        })}</time>
       </header>
       <div className="blog-entry-content" dangerouslySetInnerHTML={{ __html: entry.content }} />
       <footer>

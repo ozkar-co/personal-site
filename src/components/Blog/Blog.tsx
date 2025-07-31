@@ -2,6 +2,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { BlogEntry } from './BlogEntry';
 import { BlogEntryType } from './types';
 import { blogService } from '../../services/blogService';
+import { staticBlogService } from '../../services/staticBlogService';
 import { useState, useEffect, useRef } from 'react';
 import './Blog.scss';
 
@@ -15,24 +16,37 @@ export const Blog = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
-  // Cargar entradas desde la API
+  // Cargar entradas en dos pasos: estático primero, luego API
   useEffect(() => {
     const loadEntries = async () => {
       try {
         setLoading(true);
         setError(null);
-        const blogEntries = await blogService.getBlogEntries();
         
-        // Ordenar por fecha (más reciente primero)
-        const sortedEntries = blogEntries.sort((a, b) => 
-          new Date(b.date).getTime() - new Date(a.date).getTime()
-        );
+        // Paso 1: Cargar y mostrar contenido estático inmediatamente
+        console.log('📚 Loading static blog entries...');
+        const staticEntries = await staticBlogService.getStaticEntries();
+        setEntries(staticEntries);
+        setLoading(false); // Mostrar contenido estático inmediatamente
         
-        setEntries(sortedEntries);
+        // Paso 2: Verificar API para contenido más nuevo (en segundo plano)
+        console.log('🔄 Checking API for newer entries...');
+        try {
+          const newerEntries = await staticBlogService.getNewerEntries();
+          if (newerEntries.length > 0) {
+            console.log(`🆕 Found ${newerEntries.length} newer entries from API`);
+            const allEntries = [...staticEntries, ...newerEntries];
+            allEntries.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+            setEntries(allEntries);
+          }
+        } catch (apiError) {
+          console.warn('⚠️ Could not fetch newer entries from API:', apiError);
+          // No mostrar error al usuario, ya tenemos contenido estático
+        }
+        
       } catch (err) {
-        console.error('Error loading blog entries:', err);
+        console.error('Error loading static blog entries:', err);
         setError('Error al cargar las entradas del blog. Por favor, intenta de nuevo más tarde.');
-      } finally {
         setLoading(false);
       }
     };
@@ -139,7 +153,12 @@ export const Blog = () => {
                 onClick={() => handleEntrySelect(entry)}
               >
                 <h3>{entry.title}</h3>
-                <span className="entry-date">{entry.date}</span>
+                <span className="entry-date">{new Date(entry.date).toLocaleDateString('es-ES', {
+                    weekday: 'short',
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                })}</span>
               </li>
             ))}
           </ul>
