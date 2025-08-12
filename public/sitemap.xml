@@ -2,37 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://ozkar.co/</loc>
-    <lastmod>2025-07-31</lastmod>
+    <lastmod>2025-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://ozkar.co/cv</loc>
-    <lastmod>2025-07-31</lastmod>
+    <lastmod>2025-08-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ozkar.co/blog</loc>
-    <lastmod>2025-07-31</lastmod>
+    <lastmod>2025-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ozkar.co/projects</loc>
-    <lastmod>2025-07-31</lastmod>
+    <lastmod>2025-08-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://ozkar.co/wizz</loc>
-    <lastmod>2025-07-31</lastmod>
+    <lastmod>2025-08-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://ozkar.co/time</loc>
-    <lastmod>2025-07-31</lastmod>
+    <lastmod>2025-08-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -153,6 +153,12 @@
   <url>
     <loc>https://ozkar.co/blog/reflexiones-sobre-mi-muerte</loc>
     <lastmod>2025-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ozkar.co/blog/una-bella-alucinacion</loc>
+    <lastmod>2025-08-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
