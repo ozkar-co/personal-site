@@ -70,14 +70,40 @@ export const formatDateWithoutTimezone = (
     year: 'numeric'
   }
 ): string => {
-  // Extraer solo la parte de la fecha (YYYY-MM-DD) sin la hora
-  const dateOnly = dateString.split('T')[0];
-  const [year, month, day] = dateOnly.split('-').map(Number);
-  
-  // Crear fecha usando UTC para evitar conversiones de timezone
-  const date = new Date(Date.UTC(year, month - 1, day));
-  
-  return date.toLocaleDateString('es-ES', options);
+  try {
+    console.log('🔍 Input date:', dateString, typeof dateString);
+    
+    // Verificar que dateString sea un string válido
+    if (!dateString || typeof dateString !== 'string') {
+      console.warn('Invalid input:', dateString);
+      return 'Fecha inválida';
+    }
+    
+    // Extraer solo la parte de la fecha (YYYY-MM-DD) sin la hora
+    const dateOnly = dateString.split('T')[0];
+    console.log('Date only:', dateOnly);
+    
+    // Crear fecha local (no UTC) para evitar conversiones de timezone
+    const [year, month, day] = dateOnly.split('-').map(Number);
+    console.log('Components:', { year, month, day });
+    
+    // Crear fecha local, no UTC
+    const date = new Date(year, month - 1, day);
+    console.log('Created date:', date);
+    
+    // Validar que la fecha sea válida
+    if (isNaN(date.getTime())) {
+      console.warn('Invalid date:', dateString);
+      return 'Fecha inválida';
+    }
+    
+    const result = date.toLocaleDateString('es-ES', options);
+    console.log('Result:', result);
+    return result;
+  } catch (error) {
+    console.error('Error:', error);
+    return 'Fecha inválida';
+  }
 };
 
 /**
