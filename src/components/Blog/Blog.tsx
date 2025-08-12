@@ -4,6 +4,7 @@ import { BlogEntryType } from './types';
 import { blogService } from '../../services/blogService';
 import { staticBlogService } from '../../services/staticBlogService';
 import { useState, useEffect, useRef } from 'react';
+import { formatShortDateWithoutTimezone } from '../../utils/dateUtils';
 import './Blog.scss';
 
 export const Blog = () => {
@@ -153,12 +154,7 @@ export const Blog = () => {
                 onClick={() => handleEntrySelect(entry)}
               >
                 <h3>{entry.title}</h3>
-                <span className="entry-date">{new Date(entry.date).toLocaleDateString('es-ES', {
-                    weekday: 'short',
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric'
-                })}</span>
+                <span className="entry-date">{formatShortDateWithoutTimezone(entry.date)}</span>
               </li>
             ))}
           </ul>

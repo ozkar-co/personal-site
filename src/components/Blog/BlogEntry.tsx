@@ -1,6 +1,7 @@
 import { BlogEntryType } from './types.ts';
 import './BlogEntry.scss';
 import { useState, useRef, useEffect } from 'react';
+import { formatDateWithoutTimezone } from '../../utils/dateUtils';
 
 interface BlogEntryProps {
   entry: BlogEntryType;
@@ -45,12 +46,7 @@ export const BlogEntry = ({ entry }: BlogEntryProps) => {
             TL;DR
           </button>
         </div>
-        <time dateTime={entry.date}>{new Date(entry.date).toLocaleDateString('es-ES', {
-            weekday: 'long',
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric'
-        })}</time>
+        <time dateTime={entry.date}>{formatDateWithoutTimezone(entry.date)}</time>
       </header>
       <div className="blog-entry-content" dangerouslySetInnerHTML={{ __html: entry.content }} />
       <footer>
