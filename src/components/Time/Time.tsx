@@ -1,4 +1,12 @@
 import { useState, useEffect } from 'react';
+import { 
+  getOzkarClock, 
+  getOzkarCalendar, 
+  getDayProgress, 
+  getYearProgress,
+  OzkarClockTime, 
+  OzkarCalendarDate 
+} from '../../utils/ozkarTime';
 import './Time.scss';
 
 export const Time = () => {
@@ -19,6 +27,30 @@ export const Time = () => {
     minutes: 0,
     seconds: 0
   });
+
+  // Estado para OzkarTime
+  const [ozkarClock, setOzkarClock] = useState<OzkarClockTime>({
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+    formatted: '0:00:00',
+    period: 'Aurora'
+  });
+
+  const [ozkarCalendar, setOzkarCalendar] = useState<OzkarCalendarDate>({
+    year: 0,
+    month: 1,
+    monthName: 'Genesis',
+    day: 1,
+    dayOfWeek: 0,
+    dayName: 'Solis',
+    isSpecialDay: false,
+    formatted: '1 de Genesis, Año 0',
+    season: 'Tempus Initium'
+  });
+
+  const [dayProgress, setDayProgress] = useState(0);
+  const [yearProgress, setYearProgress] = useState(0);
 
   // Fecha de nacimiento: 8 de enero de 1993, 10:30 PM, Bogotá/Colombia
   const birthDate = new Date('1993-01-08T22:30:00-05:00');
@@ -66,6 +98,14 @@ export const Time = () => {
         minutes: remainingMinutes,
         seconds: remainingSeconds
       });
+
+      // Actualizar OzkarTime
+      const clock = getOzkarClock(now);
+      const calendar = getOzkarCalendar(now);
+      setOzkarClock(clock);
+      setOzkarCalendar(calendar);
+      setDayProgress(getDayProgress(now));
+      setYearProgress(getYearProgress(calendar));
     };
 
     updateTime();
@@ -163,6 +203,79 @@ export const Time = () => {
             Si llega a valores negativos y aún estoy vivo, es porque he superado mi esperanza de vida (¡caso ideal!). 
             Si he muerto y el reloj sigue corriendo, es porque quien dejé encargado de actualizar este sitio no hizo su trabajo.
           </p>
+        </div>
+
+        {/* OzkarTime - Sistema de Tiempo Personalizado */}
+        <div className="ozkar-time-section">
+          <h2 className="ozkar-title">⏳ OzkarTime</h2>
+          <p className="ozkar-subtitle">Mi sistema personal de medición del tiempo</p>
+
+          <div className="ozkar-time-grid">
+            {/* Reloj Decimal */}
+            <div className="ozkar-clock">
+              <h3>🕐 Reloj Decimal</h3>
+              <div className="clock-display">
+                <span className="clock-time">{ozkarClock.formatted}</span>
+                <span className="clock-period">{ozkarClock.period}</span>
+              </div>
+              <div className="progress-bar">
+                <div 
+                  className="progress-fill day-progress" 
+                  style={{ width: `${dayProgress}%` }}
+                />
+              </div>
+              <span className="progress-label">Progreso del día: {dayProgress.toFixed(1)}%</span>
+              <div className="clock-info">
+                <p>10 horas • 100 minutos • 100 segundos</p>
+                <p className="clock-detail">Un día = 100,000 ozk-segundos</p>
+              </div>
+            </div>
+
+            {/* Calendario Personal */}
+            <div className="ozkar-calendar">
+              <h3>📅 Calendario Personal</h3>
+              <div className="calendar-display">
+                <span className="calendar-date">{ozkarCalendar.formatted}</span>
+                <span className="calendar-day">{ozkarCalendar.dayName}</span>
+              </div>
+              <div className="calendar-details">
+                <div className="detail-item">
+                  <span className="detail-label">Estación</span>
+                  <span className="detail-value">{ozkarCalendar.season}</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Mes</span>
+                  <span className="detail-value">{ozkarCalendar.month > 0 ? `${ozkarCalendar.month}/13` : 'Especial'}</span>
+                </div>
+              </div>
+              <div className="progress-bar">
+                <div 
+                  className="progress-fill year-progress" 
+                  style={{ width: `${yearProgress}%` }}
+                />
+              </div>
+              <span className="progress-label">Progreso del año: {yearProgress.toFixed(1)}%</span>
+              {ozkarCalendar.isSpecialDay && (
+                <div className="special-day-badge">
+                  ✨ {ozkarCalendar.specialDayName}
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="ozkar-explanation">
+            <h4>¿Cómo funciona?</h4>
+            <div className="explanation-grid">
+              <div className="explanation-item">
+                <strong>Reloj Decimal:</strong> El día se divide en 10 horas de 100 minutos cada una. 
+                Más intuitivo y alineado con nuestro sistema numérico base-10.
+              </div>
+              <div className="explanation-item">
+                <strong>Calendario Personal:</strong> El Año 0 comienza en mi nacimiento (8 de enero de 1993). 
+                13 meses de 28 días perfectos, más 1-2 días especiales llamados "Días del Mago".
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
