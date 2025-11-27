@@ -1,206 +1,345 @@
 /**
  * OzkarTime - Sistema de tiempo personalizado
  * 
- * Este módulo implementa un sistema de medición de tiempo alternativo,
- * creado como experimento filosófico sobre cómo medimos nuestras vidas.
+ * Este módulo implementa un sistema de medición de tiempo alternativo basado en:
  * 
- * RELOJ DECIMAL (OzkarClock):
- * - 10 horas por día (en lugar de 24)
- * - 100 minutos por hora (en lugar de 60)
- * - 100 segundos por minuto
- * - Total: 100,000 "ozk-segundos" por día
- * - Un "ozk-segundo" = 0.864 segundos reales
+ * 1. SISTEMA NUMÉRICO DOZENAL (Base-12)
+ *    - Dígitos: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, X (10), W (11)
+ *    - Se usa 'z' al inicio para indicar números dozenales
  * 
- * CALENDARIO PERSONAL (OzkarCalendar):
- * - Año 0 comienza en el nacimiento (8 de enero de 1993)
- * - 13 meses de 28 días cada uno = 364 días
- * - 1-2 días especiales al final del año ("Días del Mago")
- * - Nombres de meses inspirados en conceptos personales
+ * 2. SISTEMA DE TIEMPO (Base-12)
+ *    - 1 jorno (día) = z20 horo (24 horo decimal)
+ *    - 1 horo = z10 temo (12 temo)
+ *    - 1 temo = z10 mino (12 mino)  
+ *    - 1 mino = z10 tiko (12 tiko)
+ *    - Dos mitades: matino (mañana) y vespero (tarde/noche)
+ * 
+ * 3. CALENDARIO SOLAR PERSONAL ("Sol Calendar")
+ *    - Sol = año solar personal (desde solsticio de junio)
+ *    - Lunato = mes lunar (luna nueva a luna nueva)
+ *    - Jorno = día dentro del lunato actual
  */
 
-// Fecha de nacimiento - Año 0 del calendario personal
+// Fecha de nacimiento para cálculo de Sol
 const BIRTHDATE = new Date('1993-01-08T22:30:00-05:00');
 
-// Nombres de los 13 meses del calendario OzkarTime
-export const MONTH_NAMES = [
-  'Genesis',      // Mes del nacimiento y nuevos comienzos
-  'Codex',        // Mes del conocimiento y aprendizaje
-  'Ignis',        // Mes del fuego y la pasión
-  'Terra',        // Mes de la tierra y la estabilidad
-  'Aqua',         // Mes del agua y la adaptabilidad
-  'Ventus',       // Mes del viento y el cambio
-  'Lumen',        // Mes de la luz y la claridad
-  'Umbra',        // Mes de la sombra y la introspección
-  'Nexus',        // Mes de las conexiones y relaciones
-  'Arcanum',      // Mes de los misterios y lo oculto
-  'Tempus',       // Mes del tiempo y la reflexión
-  'Virtus',       // Mes de la virtud y el crecimiento
-  'Infinitum'     // Mes del infinito y las posibilidades
+// Dígitos dozenales
+const DOZENAL_DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'X', 'W'];
+
+// Fases lunares (orientativo)
+export const LUNAR_PHASES = [
+  'Nov-luno',   // Luna nueva
+  'Pre-plena',  // Creciente
+  'Plena',      // Luna llena
+  'Pre-nova'    // Menguante
 ];
 
-// Nombres de los días de la semana (4 semanas de 7 días por mes)
-export const DAY_NAMES = [
-  'Solis',    // Día del Sol
-  'Lunae',    // Día de la Luna
-  'Martis',   // Día de Marte
-  'Mercurii', // Día de Mercurio
-  'Iovis',    // Día de Júpiter
-  'Veneris',  // Día de Venus
-  'Saturni'   // Día de Saturno
-];
-
+// Interfaces
 export interface OzkarClockTime {
-  hours: number;        // 0-9
-  minutes: number;      // 0-99
-  seconds: number;      // 0-99
-  formatted: string;    // "H:MM:SS"
-  period: string;       // Descripción del período del día
+  horo: number;           // 0-23 (z0-z1W en dozenal)
+  temo: number;           // 0-11 (z0-zW)
+  mino: number;           // 0-11 (z0-zW)
+  tiko: number;           // 0-11 (z0-zW)
+  formatted: string;      // "horo.temo.mino" en dozenal
+  formattedFull: string;  // Incluye tiko
+  period: string;         // matino o vespero
+  periodHoro: number;     // Hora dentro del período (0-11)
 }
 
 export interface OzkarCalendarDate {
-  year: number;         // Año personal (0 = nacimiento)
-  month: number;        // 1-13
-  monthName: string;    // Nombre del mes
-  day: number;          // 1-28 (o día especial)
-  dayOfWeek: number;    // 0-6
-  dayName: string;      // Nombre del día
-  isSpecialDay: boolean;// Si es un "Día del Mago"
-  specialDayName?: string;
-  formatted: string;    // "DD MonthName, Year X"
-  season: string;       // Estación personal
+  sol: number;            // Año solar personal (0 = primer año)
+  solDozenal: string;     // Sol en dozenal
+  lunato: number;         // Número del lunato (1-13)
+  jorno: number;          // Día dentro del lunato (1-30)
+  lunatoStartDate: Date;  // Fecha de inicio del lunato actual
+  lunarPhase: string;     // Fase lunar aproximada
+  formatted: string;      // "Sol z## · Lunato # · Jorno #"
 }
 
 /**
- * Convierte el tiempo actual a OzkarClock (tiempo decimal)
- * Un día tiene 100,000 "ozk-segundos"
+ * Convierte un número decimal a notación dozenal
+ */
+export const toDozenal = (decimal: number): string => {
+  if (decimal === 0) return '0';
+  
+  let result = '';
+  let num = Math.abs(Math.floor(decimal));
+  
+  while (num > 0) {
+    result = DOZENAL_DIGITS[num % 12] + result;
+    num = Math.floor(num / 12);
+  }
+  
+  return decimal < 0 ? '-' + result : result;
+};
+
+/**
+ * Convierte dozenal a decimal
+ */
+export const fromDozenal = (dozenal: string): number => {
+  let result = 0;
+  const str = dozenal.toUpperCase().replace(/^Z/, '');
+  
+  for (let i = 0; i < str.length; i++) {
+    const digit = str[i];
+    let value: number;
+    if (digit === 'X') value = 10;
+    else if (digit === 'W') value = 11;
+    else value = parseInt(digit, 10);
+    
+    result = result * 12 + value;
+  }
+  
+  return result;
+};
+
+/**
+ * Obtiene la fecha del solsticio de junio para un año dado
+ * Aproximación: alrededor del 21 de junio
+ */
+const getJuneSolstice = (year: number): Date => {
+  // El solsticio de junio ocurre típicamente entre el 20-22 de junio
+  // Usamos el 21 como aproximación
+  return new Date(year, 5, 21, 0, 0, 0); // Mes 5 = Junio (0-indexed)
+};
+
+/**
+ * Calcula las fases lunares aproximadas
+ * Usando el algoritmo simplificado basado en el ciclo sinódico
+ */
+const getNewMoonDates = (year: number): Date[] => {
+  // Ciclo sinódico lunar ≈ 29.53059 días
+  const SYNODIC_MONTH = 29.53059;
+  
+  // Luna nueva de referencia conocida: 6 de enero de 2000 a las 18:14 UTC
+  const REFERENCE_NEW_MOON = new Date('2000-01-06T18:14:00Z');
+  
+  const newMoons: Date[] = [];
+  const startDate = new Date(year, 0, 1);
+  const endDate = new Date(year + 1, 11, 31);
+  
+  // Calcular la primera luna nueva del año
+  const daysSinceReference = (startDate.getTime() - REFERENCE_NEW_MOON.getTime()) / (24 * 60 * 60 * 1000);
+  const cyclesSinceReference = daysSinceReference / SYNODIC_MONTH;
+  const nextCycleStart = Math.ceil(cyclesSinceReference);
+  
+  // Generar todas las lunas nuevas del año
+  for (let i = nextCycleStart; ; i++) {
+    const newMoonTime = REFERENCE_NEW_MOON.getTime() + (i * SYNODIC_MONTH * 24 * 60 * 60 * 1000);
+    const newMoon = new Date(newMoonTime);
+    
+    if (newMoon > endDate) break;
+    if (newMoon >= startDate) {
+      newMoons.push(newMoon);
+    }
+  }
+  
+  return newMoons;
+};
+
+/**
+ * Obtiene el lunato actual y el jorno dentro de él
+ */
+const getLunatoInfo = (date: Date, solstice: Date): { lunato: number; jorno: number; lunatoStart: Date } => {
+  const year = date.getFullYear();
+  const newMoons = getNewMoonDates(year);
+  
+  // Encontrar la primera luna nueva después del solsticio de junio
+  let lunatoStartIndex = 0;
+  for (let i = 0; i < newMoons.length; i++) {
+    if (newMoons[i] >= solstice) {
+      lunatoStartIndex = i;
+      break;
+    }
+  }
+  
+  // Si el solsticio es del año anterior, buscar la luna nueva correspondiente
+  const prevYearNewMoons = getNewMoonDates(year - 1);
+  const prevYearSolstice = getJuneSolstice(year - 1);
+  
+  // Combinar las lunas nuevas relevantes
+  let allNewMoons: Date[] = [];
+  
+  // Agregar lunas nuevas del año anterior después del solsticio
+  for (const nm of prevYearNewMoons) {
+    if (nm >= prevYearSolstice) {
+      allNewMoons.push(nm);
+    }
+  }
+  
+  // Agregar lunas nuevas del año actual
+  allNewMoons = allNewMoons.concat(newMoons);
+  
+  // También agregar del próximo año si es necesario
+  const nextYearNewMoons = getNewMoonDates(year + 1);
+  allNewMoons = allNewMoons.concat(nextYearNewMoons.slice(0, 3));
+  
+  // Encontrar el solsticio relevante para la fecha actual
+  let relevantSolstice: Date;
+  const currentYearSolstice = getJuneSolstice(year);
+  
+  if (date < currentYearSolstice) {
+    relevantSolstice = prevYearSolstice;
+  } else {
+    relevantSolstice = currentYearSolstice;
+  }
+  
+  // Encontrar la primera luna nueva después del solsticio relevante
+  let firstLunatoStart: Date | null = null;
+  for (const nm of allNewMoons) {
+    if (nm >= relevantSolstice) {
+      firstLunatoStart = nm;
+      break;
+    }
+  }
+  
+  if (!firstLunatoStart) {
+    firstLunatoStart = relevantSolstice;
+  }
+  
+  // Contar lunatos y encontrar el actual
+  let lunato = 1;
+  let lunatoStart = firstLunatoStart;
+  
+  for (let i = 0; i < allNewMoons.length - 1; i++) {
+    if (allNewMoons[i] >= firstLunatoStart && allNewMoons[i] <= date) {
+      if (allNewMoons[i + 1] > date) {
+        lunatoStart = allNewMoons[i];
+        break;
+      }
+      lunato++;
+      lunatoStart = allNewMoons[i];
+    }
+  }
+  
+  // Calcular jorno (día dentro del lunato)
+  const daysSinceLunatoStart = Math.floor((date.getTime() - lunatoStart.getTime()) / (24 * 60 * 60 * 1000));
+  const jorno = daysSinceLunatoStart + 1;
+  
+  return { lunato, jorno, lunatoStart };
+};
+
+/**
+ * Obtiene la fase lunar aproximada basada en el jorno
+ */
+const getLunarPhase = (jorno: number): string => {
+  // Ciclo lunar ≈ 29.5 días, dividido en 4 fases de ~7.4 días cada una
+  if (jorno <= 7) return LUNAR_PHASES[0];      // Nov-luno
+  if (jorno <= 15) return LUNAR_PHASES[1];     // Pre-plena
+  if (jorno <= 22) return LUNAR_PHASES[2];     // Plena
+  return LUNAR_PHASES[3];                       // Pre-nova
+};
+
+/**
+ * Convierte el tiempo actual a OzkarClock (tiempo dozenal)
+ * - 1 jorno = z20 horo (24 horo)
+ * - 1 horo = z10 temo (12 temo) ≈ 5 minutos civiles cada uno
+ * - 1 temo = z10 mino (12 mino) ≈ 25 segundos civiles cada uno
+ * - 1 mino = z10 tiko (12 tiko) ≈ 2.08 segundos civiles cada uno
  */
 export const getOzkarClock = (date: Date = new Date()): OzkarClockTime => {
-  // Calcular segundos transcurridos desde medianoche
   const hours = date.getHours();
   const minutes = date.getMinutes();
   const seconds = date.getSeconds();
   const milliseconds = date.getMilliseconds();
   
-  const totalRealSeconds = hours * 3600 + minutes * 60 + seconds + milliseconds / 1000;
-  const secondsInDay = 24 * 60 * 60;
+  // Total de segundos desde medianoche
+  const totalSeconds = hours * 3600 + minutes * 60 + seconds + milliseconds / 1000;
   
-  // Convertir a tiempo decimal (100,000 unidades por día)
-  const totalOzkarSeconds = (totalRealSeconds / secondsInDay) * 100000;
+  // 1 horo = 1 hora civil (24 horo por día, igual que 24 horas)
+  const horo = hours;
   
-  const ozkarHours = Math.floor(totalOzkarSeconds / 10000);
-  const remainingAfterHours = totalOzkarSeconds % 10000;
-  const ozkarMinutes = Math.floor(remainingAfterHours / 100);
-  const ozkarSeconds = Math.floor(remainingAfterHours % 100);
+  // 1 temo = 1/12 de horo = 5 minutos civiles
+  // Calcular temo, mino, tiko basados en los minutos y segundos
+  const secondsIntoHour = minutes * 60 + seconds + milliseconds / 1000;
+  const secondsPerTemo = 300; // 5 minutos = 300 segundos
+  const temo = Math.floor(secondsIntoHour / secondsPerTemo);
+  
+  const secondsIntoTemo = secondsIntoHour % secondsPerTemo;
+  const secondsPerMino = 25; // 300/12 = 25 segundos
+  const mino = Math.floor(secondsIntoTemo / secondsPerMino);
+  
+  const secondsIntoMino = secondsIntoTemo % secondsPerMino;
+  const secondsPerTiko = 25 / 12; // ≈ 2.083 segundos
+  const tiko = Math.floor(secondsIntoMino / secondsPerTiko);
   
   // Determinar período del día
-  let period: string;
-  if (ozkarHours < 2) {
-    period = 'Aurora';       // 0-2: Amanecer
-  } else if (ozkarHours < 4) {
-    period = 'Prima Lux';    // 2-4: Primera luz
-  } else if (ozkarHours < 5) {
-    period = 'Meridiem';     // 4-5: Mediodía
-  } else if (ozkarHours < 7) {
-    period = 'Sol Cadens';   // 5-7: Sol cayendo
-  } else if (ozkarHours < 9) {
-    period = 'Crepusculum';  // 7-9: Crepúsculo
-  } else {
-    period = 'Nox';          // 9-10: Noche
-  }
+  const period = horo < 12 ? 'matino' : 'vespero';
+  const periodHoro = horo < 12 ? horo : horo - 12;
   
-  const formatted = `${ozkarHours}:${ozkarMinutes.toString().padStart(2, '0')}:${ozkarSeconds.toString().padStart(2, '0')}`;
+  // Formatear en dozenal
+  const horoDozenal = toDozenal(horo);
+  const temoDozenal = toDozenal(temo);
+  const minoDozenal = toDozenal(mino);
+  const tikoDozenal = toDozenal(tiko);
+  
+  const formatted = `${horoDozenal}.${temoDozenal}${minoDozenal}`;
+  const formattedFull = `${horoDozenal}.${temoDozenal}${minoDozenal}.${tikoDozenal}`;
   
   return {
-    hours: ozkarHours,
-    minutes: ozkarMinutes,
-    seconds: ozkarSeconds,
+    horo,
+    temo,
+    mino,
+    tiko,
     formatted,
-    period
+    formattedFull,
+    period,
+    periodHoro
   };
 };
 
 /**
- * Convierte una fecha a OzkarCalendar
- * - Año 0 = fecha de nacimiento
- * - 13 meses de 28 días
- * - Días especiales al final del año
+ * Convierte una fecha al Calendario Solar Personal
+ * - Sol = año solar desde el nacimiento (basado en solsticios de junio)
+ * - Lunato = mes lunar (luna nueva a luna nueva)
+ * - Jorno = día dentro del lunato
  */
 export const getOzkarCalendar = (date: Date = new Date()): OzkarCalendarDate => {
-  // Calcular días transcurridos desde el nacimiento
-  const msPerDay = 24 * 60 * 60 * 1000;
-  const totalDays = Math.floor((date.getTime() - BIRTHDATE.getTime()) / msPerDay);
+  const birthYear = BIRTHDATE.getFullYear();
+  const currentYear = date.getFullYear();
   
-  // 13 meses de 28 días = 364 días, más 1-2 días especiales (365 o 366)
-  const daysPerMonth = 28;
-  const regularDays = 13 * daysPerMonth; // 364 días
-  const daysPerYear = 365; // 364 días regulares + 1-2 días especiales
+  // Calcular Sol (año solar personal)
+  // Sol 0 comienza en el primer solsticio de junio después del nacimiento
+  const firstSolstice = getJuneSolstice(birthYear);
+  let sol: number;
   
-  // Calcular año personal
-  const year = Math.floor(totalDays / daysPerYear);
-  const dayOfYear = ((totalDays % daysPerYear) + daysPerYear) % daysPerYear; // Manejar negativos
+  // Encontrar el solsticio más reciente antes de la fecha actual
+  let recentSolstice: Date;
+  const currentYearSolstice = getJuneSolstice(currentYear);
   
-  let month: number;
-  let day: number;
-  let isSpecialDay = false;
-  let specialDayName: string | undefined;
-  
-  if (dayOfYear >= regularDays) {
-    // Días especiales al final del año (día 364 = día especial 1, día 365+ = día especial 2)
-    isSpecialDay = true;
-    const specialDayNumber = dayOfYear - regularDays;
-    if (specialDayNumber === 0) {
-      specialDayName = 'Dies Arcana'; // Día del Mago
-      day = 1;
-    } else {
-      specialDayName = 'Dies Infiniti'; // Día del Infinito (año bisiesto)
-      day = 2;
-    }
-    month = 0;
+  if (date >= currentYearSolstice) {
+    recentSolstice = currentYearSolstice;
   } else {
-    month = Math.floor(dayOfYear / daysPerMonth) + 1;
-    day = (dayOfYear % daysPerMonth) + 1;
+    recentSolstice = getJuneSolstice(currentYear - 1);
   }
   
-  // Día de la semana (basado en días totales desde el nacimiento)
-  const dayOfWeek = ((totalDays % 7) + 7) % 7; // Manejar negativos
-  
-  // Determinar estación personal (basada en el mes)
-  let season: string;
-  if (month >= 1 && month <= 3) {
-    season = 'Tempus Initium';     // Tiempo de Inicio
-  } else if (month >= 4 && month <= 6) {
-    season = 'Tempus Crescendo';   // Tiempo de Crecimiento
-  } else if (month >= 7 && month <= 9) {
-    season = 'Tempus Plenum';      // Tiempo de Plenitud
-  } else if (month >= 10 && month <= 13) {
-    season = 'Tempus Reflectionis';// Tiempo de Reflexión
-  } else {
-    season = 'Tempus Arcanum';     // Tiempo Arcano (días especiales, month === 0)
+  // Calcular cuántos solsticios han pasado desde el nacimiento
+  sol = recentSolstice.getFullYear() - firstSolstice.getFullYear();
+  if (BIRTHDATE > firstSolstice) {
+    sol--; // Ajustar si nació después del solsticio de su año de nacimiento
   }
   
-  // Para días especiales (month === 0), usamos specialDayName directamente
-  // Para días regulares, accedemos al array con índice válido (month - 1 donde month >= 1)
-  const monthName = isSpecialDay ? (specialDayName || 'Dies Specialis') : MONTH_NAMES[month - 1];
-  const dayName = DAY_NAMES[dayOfWeek];
+  // Asegurar que sol no sea negativo
+  if (sol < 0) sol = 0;
   
-  let formatted: string;
-  if (isSpecialDay) {
-    formatted = `${specialDayName}, Año ${year}`;
-  } else {
-    formatted = `${day} de ${monthName}, Año ${year}`;
-  }
+  // Obtener información del lunato
+  const { lunato, jorno, lunatoStart } = getLunatoInfo(date, recentSolstice);
+  
+  // Obtener fase lunar
+  const lunarPhase = getLunarPhase(jorno);
+  
+  // Formatear
+  const solDozenal = toDozenal(sol);
+  const formatted = `Sol z${solDozenal} · Lunato ${lunato} · Jorno ${jorno}`;
   
   return {
-    year,
-    month,
-    monthName,
-    day,
-    dayOfWeek,
-    dayName,
-    isSpecialDay,
-    specialDayName,
-    formatted,
-    season
+    sol,
+    solDozenal,
+    lunato,
+    jorno,
+    lunatoStartDate: lunatoStart,
+    lunarPhase,
+    formatted
   };
 };
 
@@ -219,20 +358,12 @@ export const getDayProgress = (date: Date = new Date()): number => {
 };
 
 /**
- * Obtiene el progreso del año en porcentaje
- * El año tiene 365 días: 364 regulares (13 meses x 28 días) + 1-2 días especiales
+ * Obtiene el progreso del lunato actual (aproximado, ~29.5 días)
  */
-export const getYearProgress = (calendar: OzkarCalendarDate): number => {
-  const daysPerYear = 365; // 364 días regulares + 1 día especial mínimo
-  let dayOfYear: number;
-  
-  if (calendar.month > 0) {
-    // Día regular: (meses completos * 28) + día actual
-    dayOfYear = (calendar.month - 1) * 28 + calendar.day;
-  } else {
-    // Día especial: 364 días regulares + número del día especial
-    dayOfYear = 364 + calendar.day;
-  }
-  
-  return Math.min((dayOfYear / daysPerYear) * 100, 100);
+export const getLunatoProgress = (calendar: OzkarCalendarDate): number => {
+  const SYNODIC_MONTH = 29.53; // días
+  return Math.min((calendar.jorno / SYNODIC_MONTH) * 100, 100);
 };
+
+// Re-exportar para compatibilidad
+export { toDozenal as formatDozenal };

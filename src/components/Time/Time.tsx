@@ -3,9 +3,10 @@ import {
   getOzkarClock, 
   getOzkarCalendar, 
   getDayProgress, 
-  getYearProgress,
+  getLunatoProgress,
   OzkarClockTime, 
-  OzkarCalendarDate 
+  OzkarCalendarDate,
+  LUNAR_PHASES
 } from '../../utils/ozkarTime';
 import './Time.scss';
 
@@ -30,27 +31,28 @@ export const Time = () => {
 
   // Estado para OzkarTime
   const [ozkarClock, setOzkarClock] = useState<OzkarClockTime>({
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-    formatted: '0:00:00',
-    period: 'Aurora'
+    horo: 0,
+    temo: 0,
+    mino: 0,
+    tiko: 0,
+    formatted: '0.00',
+    formattedFull: '0.00.0',
+    period: 'matino',
+    periodHoro: 0
   });
 
   const [ozkarCalendar, setOzkarCalendar] = useState<OzkarCalendarDate>({
-    year: 0,
-    month: 1,
-    monthName: 'Genesis',
-    day: 1,
-    dayOfWeek: 0,
-    dayName: 'Solis',
-    isSpecialDay: false,
-    formatted: '1 de Genesis, Año 0',
-    season: 'Tempus Initium'
+    sol: 0,
+    solDozenal: '0',
+    lunato: 1,
+    jorno: 1,
+    lunatoStartDate: new Date(),
+    lunarPhase: LUNAR_PHASES[0],
+    formatted: 'Sol z0 · Lunato 1 · Jorno 1'
   });
 
   const [dayProgress, setDayProgress] = useState(0);
-  const [yearProgress, setYearProgress] = useState(0);
+  const [lunatoProgress, setLunatoProgress] = useState(0);
 
   // Fecha de nacimiento: 8 de enero de 1993, 10:30 PM, Bogotá/Colombia
   const birthDate = new Date('1993-01-08T22:30:00-05:00');
@@ -105,7 +107,7 @@ export const Time = () => {
       setOzkarClock(clock);
       setOzkarCalendar(calendar);
       setDayProgress(getDayProgress(now));
-      setYearProgress(getYearProgress(calendar));
+      setLunatoProgress(getLunatoProgress(calendar));
     };
 
     updateTime();
@@ -208,15 +210,33 @@ export const Time = () => {
         {/* OzkarTime - Sistema de Tiempo Personalizado */}
         <div className="ozkar-time-section">
           <h2 className="ozkar-title">⏳ OzkarTime</h2>
-          <p className="ozkar-subtitle">Mi sistema personal de medición del tiempo</p>
+          <p className="ozkar-subtitle">Mi sistema personal de medición del tiempo (Base-12 / Dozenal)</p>
 
           <div className="ozkar-time-grid">
-            {/* Reloj Decimal */}
+            {/* Reloj Dozenal */}
             <div className="ozkar-clock">
-              <h3>🕐 Reloj Decimal</h3>
+              <h3>🕐 Reloj Dozenal</h3>
               <div className="clock-display">
                 <span className="clock-time">{ozkarClock.formatted}</span>
                 <span className="clock-period">{ozkarClock.period}</span>
+              </div>
+              <div className="clock-breakdown">
+                <div className="time-part">
+                  <span className="value">{ozkarClock.horo}</span>
+                  <span className="unit">horo</span>
+                </div>
+                <div className="time-part">
+                  <span className="value">{ozkarClock.temo}</span>
+                  <span className="unit">temo</span>
+                </div>
+                <div className="time-part">
+                  <span className="value">{ozkarClock.mino}</span>
+                  <span className="unit">mino</span>
+                </div>
+                <div className="time-part">
+                  <span className="value">{ozkarClock.tiko}</span>
+                  <span className="unit">tiko</span>
+                </div>
               </div>
               <div className="progress-bar">
                 <div 
@@ -224,42 +244,41 @@ export const Time = () => {
                   style={{ width: `${dayProgress}%` }}
                 />
               </div>
-              <span className="progress-label">Progreso del día: {dayProgress.toFixed(1)}%</span>
+              <span className="progress-label">Progreso del jorno: {dayProgress.toFixed(1)}%</span>
               <div className="clock-info">
-                <p>10 horas • 100 minutos • 100 segundos</p>
-                <p className="clock-detail">Un día = 100,000 ozk-segundos</p>
+                <p>z20 horo · z10 temo · z10 mino · z10 tiko</p>
+                <p className="clock-detail">1 horo = 1 hora civil | 1 temo ≈ 5 min | 1 mino ≈ 25 seg</p>
               </div>
             </div>
 
-            {/* Calendario Personal */}
+            {/* Calendario Solar */}
             <div className="ozkar-calendar">
-              <h3>📅 Calendario Personal</h3>
+              <h3>📅 Calendario Solar</h3>
               <div className="calendar-display">
                 <span className="calendar-date">{ozkarCalendar.formatted}</span>
-                <span className="calendar-day">{ozkarCalendar.dayName}</span>
+                <span className="calendar-day">{ozkarCalendar.lunarPhase}</span>
               </div>
               <div className="calendar-details">
                 <div className="detail-item">
-                  <span className="detail-label">Estación</span>
-                  <span className="detail-value">{ozkarCalendar.season}</span>
+                  <span className="detail-label">Sol</span>
+                  <span className="detail-value">z{ozkarCalendar.solDozenal}</span>
                 </div>
                 <div className="detail-item">
-                  <span className="detail-label">Mes</span>
-                  <span className="detail-value">{ozkarCalendar.month > 0 ? `${ozkarCalendar.month}/13` : 'Especial'}</span>
+                  <span className="detail-label">Lunato</span>
+                  <span className="detail-value">{ozkarCalendar.lunato}</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Jorno</span>
+                  <span className="detail-value">{ozkarCalendar.jorno}</span>
                 </div>
               </div>
               <div className="progress-bar">
                 <div 
                   className="progress-fill year-progress" 
-                  style={{ width: `${yearProgress}%` }}
+                  style={{ width: `${lunatoProgress}%` }}
                 />
               </div>
-              <span className="progress-label">Progreso del año: {yearProgress.toFixed(1)}%</span>
-              {ozkarCalendar.isSpecialDay && (
-                <div className="special-day-badge">
-                  ✨ {ozkarCalendar.specialDayName}
-                </div>
-              )}
+              <span className="progress-label">Progreso del lunato: {lunatoProgress.toFixed(1)}%</span>
             </div>
           </div>
 
@@ -267,12 +286,12 @@ export const Time = () => {
             <h4>¿Cómo funciona?</h4>
             <div className="explanation-grid">
               <div className="explanation-item">
-                <strong>Reloj Decimal:</strong> El día se divide en 10 horas de 100 minutos cada una. 
-                Más intuitivo y alineado con nuestro sistema numérico base-10.
+                <strong>Sistema Dozenal:</strong> Base-12 con dígitos 0-9, X (10), W (11). 
+                Tiempo dividido: 1 jorno = z20 horo, cada unidad subdividida por 12.
               </div>
               <div className="explanation-item">
-                <strong>Calendario Personal:</strong> El Año 0 comienza en mi nacimiento (8 de enero de 1993). 
-                13 meses de 28 días perfectos, más 1-2 días especiales llamados "Días del Mago".
+                <strong>Calendario Solar:</strong> Sol = año solar desde el nacimiento (solsticio de junio).
+                Lunato = mes lunar (~29.5 días). Jorno = día dentro del lunato.
               </div>
             </div>
           </div>

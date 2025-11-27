@@ -282,10 +282,42 @@
           opacity: 0.8;
           font-style: italic;
           margin-top: 0.5rem;
+          text-transform: capitalize;
+        }
+
+        .clock-breakdown {
+          display: flex;
+          justify-content: center;
+          gap: 1.5rem;
+          margin: 1rem 0;
+          padding: 1rem;
+          background: rgba($color-accent, 0.05);
+          border-radius: 8px;
+
+          .time-part {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .value {
+              font-size: 1.5rem;
+              font-weight: bold;
+              color: $color-accent;
+              font-family: 'Courier New', monospace;
+            }
+
+            .unit {
+              font-size: 0.75rem;
+              color: var(--text-color);
+              opacity: 0.6;
+              text-transform: uppercase;
+              letter-spacing: 0.05em;
+            }
+          }
         }
 
         .calendar-date {
-          font-size: 1.8rem;
+          font-size: 1.5rem;
           font-weight: bold;
           color: $color-accent;
           font-family: 'Courier New', monospace;
@@ -293,7 +325,7 @@
         }
 
         .calendar-day {
-          font-size: 1.2rem;
+          font-size: 1.1rem;
           color: var(--text-color);
           opacity: 0.8;
           font-style: italic;
