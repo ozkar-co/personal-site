@@ -130,14 +130,14 @@ export const getOzkarCalendar = (date: Date = new Date()): OzkarCalendarDate => 
   const msPerDay = 24 * 60 * 60 * 1000;
   const totalDays = Math.floor((date.getTime() - BIRTHDATE.getTime()) / msPerDay);
   
-  // Calcular año personal (365 días por año para simplificar)
-  const daysPerYear = 365;
-  const year = Math.floor(totalDays / daysPerYear);
-  const dayOfYear = totalDays % daysPerYear;
-  
-  // 13 meses de 28 días = 364 días, más 1-2 días especiales
+  // 13 meses de 28 días = 364 días, más 1-2 días especiales (365 o 366)
   const daysPerMonth = 28;
   const regularDays = 13 * daysPerMonth; // 364 días
+  const daysPerYear = 365; // 364 días regulares + 1-2 días especiales
+  
+  // Calcular año personal
+  const year = Math.floor(totalDays / daysPerYear);
+  const dayOfYear = ((totalDays % daysPerYear) + daysPerYear) % daysPerYear; // Manejar negativos
   
   let month: number;
   let day: number;
@@ -145,23 +145,24 @@ export const getOzkarCalendar = (date: Date = new Date()): OzkarCalendarDate => 
   let specialDayName: string | undefined;
   
   if (dayOfYear >= regularDays) {
-    // Días especiales al final del año
+    // Días especiales al final del año (día 364 = día especial 1, día 365+ = día especial 2)
     isSpecialDay = true;
     const specialDayNumber = dayOfYear - regularDays;
     if (specialDayNumber === 0) {
       specialDayName = 'Dies Arcana'; // Día del Mago
+      day = 1;
     } else {
       specialDayName = 'Dies Infiniti'; // Día del Infinito (año bisiesto)
+      day = 2;
     }
     month = 0;
-    day = specialDayNumber + 1;
   } else {
     month = Math.floor(dayOfYear / daysPerMonth) + 1;
     day = (dayOfYear % daysPerMonth) + 1;
   }
   
   // Día de la semana (basado en días totales desde el nacimiento)
-  const dayOfWeek = totalDays % 7;
+  const dayOfWeek = ((totalDays % 7) + 7) % 7; // Manejar negativos
   
   // Determinar estación personal (basada en el mes)
   let season: string;
@@ -174,9 +175,11 @@ export const getOzkarCalendar = (date: Date = new Date()): OzkarCalendarDate => 
   } else if (month >= 10 && month <= 13) {
     season = 'Tempus Reflectionis';// Tiempo de Reflexión
   } else {
-    season = 'Tempus Arcanum';     // Tiempo Arcano (días especiales)
+    season = 'Tempus Arcanum';     // Tiempo Arcano (días especiales, month === 0)
   }
   
+  // Para días especiales (month === 0), usamos specialDayName directamente
+  // Para días regulares, accedemos al array con índice válido (month - 1 donde month >= 1)
   const monthName = isSpecialDay ? (specialDayName || 'Dies Specialis') : MONTH_NAMES[month - 1];
   const dayName = DAY_NAMES[dayOfWeek];
   
@@ -217,9 +220,19 @@ export const getDayProgress = (date: Date = new Date()): number => {
 
 /**
  * Obtiene el progreso del año en porcentaje
+ * El año tiene 365 días: 364 regulares (13 meses x 28 días) + 1-2 días especiales
  */
 export const getYearProgress = (calendar: OzkarCalendarDate): number => {
-  const totalDays = 365;
-  const dayOfYear = (calendar.month > 0 ? (calendar.month - 1) * 28 : 364) + calendar.day;
-  return (dayOfYear / totalDays) * 100;
+  const daysPerYear = 365; // 364 días regulares + 1 día especial mínimo
+  let dayOfYear: number;
+  
+  if (calendar.month > 0) {
+    // Día regular: (meses completos * 28) + día actual
+    dayOfYear = (calendar.month - 1) * 28 + calendar.day;
+  } else {
+    // Día especial: 364 días regulares + número del día especial
+    dayOfYear = 364 + calendar.day;
+  }
+  
+  return Math.min((dayOfYear / daysPerYear) * 100, 100);
 };
