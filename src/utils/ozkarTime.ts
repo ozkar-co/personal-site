@@ -152,8 +152,8 @@ const getLunatoInfo = (date: Date, solstice: Date): { lunato: number; jorno: num
   const prevYearNewMoons = getNewMoonDates(year - 1);
   const nextYearNewMoons = getNewMoonDates(year + 1);
   
-  // Combinar todas las lunas nuevas relevantes
-  let allNewMoons: Date[] = [...prevYearNewMoons, ...newMoons, ...nextYearNewMoons.slice(0, 6)];
+  // Combinar todas las lunas nuevas relevantes de forma eficiente
+  const allNewMoons = prevYearNewMoons.concat(newMoons, nextYearNewMoons.slice(0, 6));
   
   // Ordenar por fecha
   allNewMoons.sort((a, b) => a.getTime() - b.getTime());

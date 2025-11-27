@@ -132,7 +132,7 @@ export const OzkarTime = () => {
           <div className="explanation-grid">
             <div className="explanation-item">
               <strong>Sistema Numérico Dozenal (Base-12):</strong> Usa los dígitos 0-9, X (10), W (11). 
-              Se prefija con 'z' para indicar notación dozenal (ej: z1X = 22 decimal).
+              Se prefija con 'z' para indicar notación dozenal. Ejemplo: z1X = 1×12 + 10 = 22 en decimal.
             </div>
             <div className="explanation-item">
               <strong>Reloj Dozenal:</strong> 1 jorno = z20 horo (24), cada unidad subdividida por 12.
