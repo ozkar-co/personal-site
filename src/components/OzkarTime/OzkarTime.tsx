@@ -94,10 +94,6 @@ export const OzkarTime = () => {
               />
             </div>
             <span className="progress-label">Progreso del jorno: {dayProgress.toFixed(1)}%</span>
-            <div className="clock-info">
-              <p>z20 horo · z10 temo · z10 mino · z10 tiko</p>
-              <p className="clock-detail">1 horo = 1 hora civil | 1 temo ≈ 5 min | 1 mino ≈ 25 seg</p>
-            </div>
           </div>
 
           {/* Calendario Solar */}
@@ -135,12 +131,21 @@ export const OzkarTime = () => {
           <h3>¿Cómo funciona?</h3>
           <div className="explanation-grid">
             <div className="explanation-item">
-              <strong>Sistema Dozenal:</strong> Base-12 con dígitos 0-9, X (10), W (11). 
-              Tiempo dividido: 1 jorno = z20 horo, cada unidad subdividida por 12.
+              <strong>Sistema Numérico Dozenal (Base-12):</strong> Usa los dígitos 0-9, X (10), W (11). 
+              Se prefija con 'z' para indicar notación dozenal (ej: z1X = 22 decimal).
             </div>
             <div className="explanation-item">
-              <strong>Calendario Solar:</strong> Sol = año solar desde el nacimiento (solsticio de junio).
-              Lunato = mes lunar (~29.5 días). Jorno = día dentro del lunato.
+              <strong>Reloj Dozenal:</strong> 1 jorno = z20 horo (24), cada unidad subdividida por 12.
+              1 horo = 1 hora civil, 1 temo ≈ 5 min, 1 mino ≈ 25 seg, 1 tiko ≈ 2 seg.
+            </div>
+            <div className="explanation-item">
+              <strong>Calendario Solar:</strong> Sol = año solar personal desde el solsticio de invierno de diciembre 1992 (Sol 1).
+              Cada Sol va de un solsticio de invierno al siguiente.
+            </div>
+            <div className="explanation-item">
+              <strong>Lunatos:</strong> Meses lunares (~29.5 días) que comienzan en luna nueva.
+              Lunato 0 = transición entre años solares. Lunato 1 = primera luna nueva después del solsticio.
+              Un Sol tiene 12 o 13 lunatos de forma natural.
             </div>
           </div>
         </div>

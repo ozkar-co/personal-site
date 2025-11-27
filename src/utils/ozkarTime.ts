@@ -15,13 +15,15 @@
  *    - Dos mitades: matino (mañana) y vespero (tarde/noche)
  * 
  * 3. CALENDARIO SOLAR PERSONAL ("Sol Calendar")
- *    - Sol = año solar personal (desde solsticio de junio)
+ *    - Sol = año solar personal (desde solsticio de invierno - diciembre)
+ *    - Sol 1 comienza en el solsticio de invierno de diciembre 1992
  *    - Lunato = mes lunar (luna nueva a luna nueva)
- *    - Jorno = día dentro del lunato actual
+ *    - Lunato 0 = lunato de transición entre años solares
+ *    - Jorno = día dentro del lunato actual (1-30)
  */
 
-// Fecha de nacimiento para cálculo de Sol
-const BIRTHDATE = new Date('1993-01-08T22:30:00-05:00');
+// Solsticio de invierno de diciembre 1992 - inicio del Sol 1
+const FIRST_SOL_START = new Date('1992-12-21T00:00:00-05:00');
 
 // Dígitos dozenales
 const DOZENAL_DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'X', 'W'];
@@ -47,9 +49,9 @@ export interface OzkarClockTime {
 }
 
 export interface OzkarCalendarDate {
-  sol: number;            // Año solar personal (0 = primer año)
+  sol: number;            // Año solar personal (1 = primer año desde diciembre 1992)
   solDozenal: string;     // Sol en dozenal
-  lunato: number;         // Número del lunato (1-13)
+  lunato: number;         // Número del lunato (0-13, donde 0 es lunato de transición)
   jorno: number;          // Día dentro del lunato (1-30)
   lunatoStartDate: Date;  // Fecha de inicio del lunato actual
   lunarPhase: string;     // Fase lunar aproximada
@@ -94,13 +96,13 @@ export const fromDozenal = (dozenal: string): number => {
 };
 
 /**
- * Obtiene la fecha del solsticio de junio para un año dado
- * Aproximación: alrededor del 21 de junio
+ * Obtiene la fecha del solsticio de invierno (diciembre) para un año dado
+ * Aproximación: alrededor del 21 de diciembre
  */
-const getJuneSolstice = (year: number): Date => {
-  // El solsticio de junio ocurre típicamente entre el 20-22 de junio
+const getWinterSolstice = (year: number): Date => {
+  // El solsticio de invierno ocurre típicamente entre el 20-22 de diciembre
   // Usamos el 21 como aproximación
-  return new Date(year, 5, 21, 0, 0, 0); // Mes 5 = Junio (0-indexed)
+  return new Date(year, 11, 21, 0, 0, 0); // Mes 11 = Diciembre (0-indexed)
 };
 
 /**
@@ -116,7 +118,7 @@ const getNewMoonDates = (year: number): Date[] => {
   
   const newMoons: Date[] = [];
   const startDate = new Date(year, 0, 1);
-  const endDate = new Date(year + 1, 11, 31);
+  const endDate = new Date(year, 11, 31, 23, 59, 59); // End of the requested year
   
   // Calcular la primera luna nueva del año
   const daysSinceReference = (startDate.getTime() - REFERENCE_NEW_MOON.getTime()) / (24 * 60 * 60 * 1000);
@@ -139,76 +141,65 @@ const getNewMoonDates = (year: number): Date[] => {
 
 /**
  * Obtiene el lunato actual y el jorno dentro de él
+ * Lunato 0 es el lunato de transición (el último del año anterior que se extiende al nuevo)
+ * Lunato 1 es la primera luna nueva después del solsticio de invierno
  */
 const getLunatoInfo = (date: Date, solstice: Date): { lunato: number; jorno: number; lunatoStart: Date } => {
   const year = date.getFullYear();
   const newMoons = getNewMoonDates(year);
   
-  // Encontrar la primera luna nueva después del solsticio de junio
-  let lunatoStartIndex = 0;
-  for (let i = 0; i < newMoons.length; i++) {
-    if (newMoons[i] >= solstice) {
-      lunatoStartIndex = i;
-      break;
-    }
-  }
-  
-  // Si el solsticio es del año anterior, buscar la luna nueva correspondiente
+  // Obtener lunas nuevas del año anterior y siguiente
   const prevYearNewMoons = getNewMoonDates(year - 1);
-  const prevYearSolstice = getJuneSolstice(year - 1);
-  
-  // Combinar las lunas nuevas relevantes
-  let allNewMoons: Date[] = [];
-  
-  // Agregar lunas nuevas del año anterior después del solsticio
-  for (const nm of prevYearNewMoons) {
-    if (nm >= prevYearSolstice) {
-      allNewMoons.push(nm);
-    }
-  }
-  
-  // Agregar lunas nuevas del año actual
-  allNewMoons = allNewMoons.concat(newMoons);
-  
-  // También agregar del próximo año si es necesario
   const nextYearNewMoons = getNewMoonDates(year + 1);
-  allNewMoons = allNewMoons.concat(nextYearNewMoons.slice(0, 3));
   
-  // Encontrar el solsticio relevante para la fecha actual
-  let relevantSolstice: Date;
-  const currentYearSolstice = getJuneSolstice(year);
+  // Combinar todas las lunas nuevas relevantes
+  let allNewMoons: Date[] = [...prevYearNewMoons, ...newMoons, ...nextYearNewMoons.slice(0, 6)];
   
-  if (date < currentYearSolstice) {
-    relevantSolstice = prevYearSolstice;
-  } else {
-    relevantSolstice = currentYearSolstice;
-  }
+  // Ordenar por fecha
+  allNewMoons.sort((a, b) => a.getTime() - b.getTime());
   
-  // Encontrar la primera luna nueva después del solsticio relevante
-  let firstLunatoStart: Date | null = null;
-  for (const nm of allNewMoons) {
-    if (nm >= relevantSolstice) {
-      firstLunatoStart = nm;
+  // Encontrar la primera luna nueva después del solsticio
+  let firstLunatoIndex = -1;
+  for (let i = 0; i < allNewMoons.length; i++) {
+    if (allNewMoons[i] >= solstice) {
+      firstLunatoIndex = i;
       break;
     }
   }
   
-  if (!firstLunatoStart) {
-    firstLunatoStart = relevantSolstice;
+  // Si no hay luna nueva después del solsticio, usar el solsticio
+  if (firstLunatoIndex === -1) {
+    return { lunato: 0, jorno: 1, lunatoStart: solstice };
   }
   
-  // Contar lunatos y encontrar el actual
-  let lunato = 1;
-  let lunatoStart = firstLunatoStart;
+  // Encontrar en qué lunato estamos
+  let lunato = 0;
+  let lunatoStart: Date;
   
-  for (let i = 0; i < allNewMoons.length - 1; i++) {
-    if (allNewMoons[i] >= firstLunatoStart && allNewMoons[i] <= date) {
-      if (allNewMoons[i + 1] > date) {
+  // Verificar si estamos en el Lunato 0 (antes de la primera luna nueva del sol)
+  if (date < allNewMoons[firstLunatoIndex]) {
+    // Estamos en Lunato 0 (periodo entre solsticio y primera luna nueva)
+    // El inicio del Lunato 0 es la luna nueva anterior al solsticio
+    if (firstLunatoIndex > 0) {
+      lunatoStart = allNewMoons[firstLunatoIndex - 1];
+    } else {
+      lunatoStart = solstice;
+    }
+    lunato = 0;
+  } else {
+    // Encontrar el lunato actual contando desde la primera luna nueva después del solsticio
+    // Lunato 1 = primera luna nueva después del solsticio
+    lunatoStart = allNewMoons[firstLunatoIndex];
+    lunato = 1;
+    
+    // Buscar el lunato específico en el que estamos
+    for (let i = firstLunatoIndex; i < allNewMoons.length - 1; i++) {
+      // Si la fecha está entre esta luna nueva y la siguiente
+      if (date >= allNewMoons[i] && date < allNewMoons[i + 1]) {
+        lunato = (i - firstLunatoIndex) + 1;
         lunatoStart = allNewMoons[i];
         break;
       }
-      lunato++;
-      lunatoStart = allNewMoons[i];
     }
   }
   
@@ -288,37 +279,30 @@ export const getOzkarClock = (date: Date = new Date()): OzkarClockTime => {
 
 /**
  * Convierte una fecha al Calendario Solar Personal
- * - Sol = año solar desde el nacimiento (basado en solsticios de junio)
- * - Lunato = mes lunar (luna nueva a luna nueva)
+ * - Sol = año solar desde el solsticio de invierno de diciembre 1992 (Sol 1)
+ * - Lunato = mes lunar (luna nueva a luna nueva), 0 = lunato de transición
  * - Jorno = día dentro del lunato
  */
 export const getOzkarCalendar = (date: Date = new Date()): OzkarCalendarDate => {
-  const birthYear = BIRTHDATE.getFullYear();
   const currentYear = date.getFullYear();
   
   // Calcular Sol (año solar personal)
-  // Sol 0 comienza en el primer solsticio de junio después del nacimiento
-  const firstSolstice = getJuneSolstice(birthYear);
-  let sol: number;
+  // Sol 1 comienza en el solsticio de invierno de diciembre 1992
+  const firstSolYear = 1992;
   
-  // Encontrar el solsticio más reciente antes de la fecha actual
+  // Encontrar el solsticio de invierno más reciente antes de la fecha actual
   let recentSolstice: Date;
-  const currentYearSolstice = getJuneSolstice(currentYear);
+  const currentYearSolstice = getWinterSolstice(currentYear);
   
   if (date >= currentYearSolstice) {
     recentSolstice = currentYearSolstice;
   } else {
-    recentSolstice = getJuneSolstice(currentYear - 1);
+    recentSolstice = getWinterSolstice(currentYear - 1);
   }
   
-  // Calcular cuántos solsticios han pasado desde el nacimiento
-  sol = recentSolstice.getFullYear() - firstSolstice.getFullYear();
-  if (BIRTHDATE > firstSolstice) {
-    sol--; // Ajustar si nació después del solsticio de su año de nacimiento
-  }
-  
-  // Asegurar que sol no sea negativo
-  if (sol < 0) sol = 0;
+  // Calcular cuántos años solares han pasado desde diciembre 1992
+  // Sol 1 = solsticio diciembre 1992, Sol 2 = solsticio diciembre 1993, etc.
+  const sol = recentSolstice.getFullYear() - firstSolYear + 1;
   
   // Obtener información del lunato
   const { lunato, jorno, lunatoStart } = getLunatoInfo(date, recentSolstice);
