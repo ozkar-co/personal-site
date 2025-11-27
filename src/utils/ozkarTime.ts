@@ -243,9 +243,6 @@ export const getOzkarClock = (date: Date = new Date()): OzkarClockTime => {
   const seconds = date.getSeconds();
   const milliseconds = date.getMilliseconds();
   
-  // Total de segundos desde medianoche
-  const totalSeconds = hours * 3600 + minutes * 60 + seconds + milliseconds / 1000;
-  
   // 1 horo = 1 hora civil (24 horo por día, igual que 24 horas)
   const horo = hours;
   
@@ -253,15 +250,15 @@ export const getOzkarClock = (date: Date = new Date()): OzkarClockTime => {
   // Calcular temo, mino, tiko basados en los minutos y segundos
   const secondsIntoHour = minutes * 60 + seconds + milliseconds / 1000;
   const secondsPerTemo = 300; // 5 minutos = 300 segundos
-  const temo = Math.floor(secondsIntoHour / secondsPerTemo);
+  const temo = Math.min(Math.floor(secondsIntoHour / secondsPerTemo), 11);
   
   const secondsIntoTemo = secondsIntoHour % secondsPerTemo;
   const secondsPerMino = 25; // 300/12 = 25 segundos
-  const mino = Math.floor(secondsIntoTemo / secondsPerMino);
+  const mino = Math.min(Math.floor(secondsIntoTemo / secondsPerMino), 11);
   
   const secondsIntoMino = secondsIntoTemo % secondsPerMino;
   const secondsPerTiko = 25 / 12; // ≈ 2.083 segundos
-  const tiko = Math.floor(secondsIntoMino / secondsPerTiko);
+  const tiko = Math.min(Math.floor(secondsIntoMino / secondsPerTiko), 11);
   
   // Determinar período del día
   const period = horo < 12 ? 'matino' : 'vespero';
@@ -273,6 +270,7 @@ export const getOzkarClock = (date: Date = new Date()): OzkarClockTime => {
   const minoDozenal = toDozenal(mino);
   const tikoDozenal = toDozenal(tiko);
   
+  // Formato: horo.temo.mino (según especificación del usuario)
   const formatted = `${horoDozenal}.${temoDozenal}${minoDozenal}`;
   const formattedFull = `${horoDozenal}.${temoDozenal}${minoDozenal}.${tikoDozenal}`;
   
