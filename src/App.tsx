@@ -11,6 +11,7 @@ import { Blog } from './components/Blog/Blog'
 import { Projects } from './components/Projects/Projects'
 import { Wizz } from './components/Wizz/Wizz'
 import { Time } from './components/Time/Time'
+import { OzkarTime } from './components/OzkarTime/OzkarTime'
 import { Admin } from './components/Admin/Admin'
 import { Services } from './components/Services/Services'
 
@@ -36,6 +37,7 @@ const AppContent = () => {
         <Route path="/projects" element={<Projects />} />
         <Route path="/wizz" element={<Wizz />} />
         <Route path="/time" element={<Time />} />
+        <Route path="/ozkartime" element={<OzkarTime />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/" element={
           <main>
