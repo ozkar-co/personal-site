@@ -12,6 +12,7 @@ import { Projects } from './components/Projects/Projects'
 import { Wizz } from './components/Wizz/Wizz'
 import { Time } from './components/Time/Time'
 import { Admin } from './components/Admin/Admin'
+import { Services } from './components/Services/Services'
 
 // Componente para determinar el tipo de fondo según la ruta
 const AppContent = () => {
@@ -40,6 +41,7 @@ const AppContent = () => {
           <main>
             <Hero />
             <Skills />
+            <Services />
             <Social />
           </main>
         } />
