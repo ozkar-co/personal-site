@@ -1,0 +1,287 @@
+$color-accent: #00ff00;
+$color-background: #0d0d0d;
+
+.ozkar-time {
+  min-height: 100vh;
+  padding: 6rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .ozkar-time-container {
+    max-width: 1000px;
+    width: 100%;
+    text-align: center;
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+      color: var(--accent-color);
+      text-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.15em;
+    }
+
+    .ozkar-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-color);
+      opacity: 0.7;
+      margin-bottom: 3rem;
+      font-family: 'Courier New', monospace;
+    }
+
+    .ozkar-time-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .ozkar-clock,
+    .ozkar-calendar {
+      position: relative;
+      padding: 2rem;
+      background: rgba($color-background, 0.9);
+      border: 2px solid rgba($color-accent, 0.4);
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      box-shadow: 
+        0 0 25px rgba($color-accent, 0.2),
+        inset 0 0 20px rgba($color-accent, 0.05);
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(45deg, transparent, rgba($color-accent, 0.2), transparent);
+        border-radius: 15px;
+        z-index: -1;
+        animation: borderGlow 3s ease-in-out infinite alternate;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        color: var(--accent-color);
+        font-family: 'Courier New', monospace;
+      }
+
+      .clock-display,
+      .calendar-display {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .clock-time {
+        font-size: 3.5rem;
+        font-weight: bold;
+        color: $color-accent;
+        font-family: 'Courier New', monospace;
+        text-shadow: 0 0 15px rgba($color-accent, 0.6);
+        letter-spacing: 0.1em;
+      }
+
+      .clock-period {
+        font-size: 1.3rem;
+        color: var(--text-color);
+        opacity: 0.8;
+        font-style: italic;
+        margin-top: 0.5rem;
+        text-transform: capitalize;
+      }
+
+      .clock-breakdown {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin: 1.5rem 0;
+        padding: 1.2rem;
+        background: rgba($color-accent, 0.05);
+        border-radius: 10px;
+
+        .time-part {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          .value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: $color-accent;
+            font-family: 'Courier New', monospace;
+          }
+
+          .unit {
+            font-size: 0.8rem;
+            color: var(--text-color);
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+          }
+        }
+      }
+
+      .calendar-date {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: $color-accent;
+        font-family: 'Courier New', monospace;
+        text-shadow: 0 0 10px rgba($color-accent, 0.5);
+      }
+
+      .calendar-day {
+        font-size: 1.2rem;
+        color: var(--text-color);
+        opacity: 0.8;
+        font-style: italic;
+        margin-top: 0.5rem;
+      }
+
+      .calendar-details {
+        display: flex;
+        justify-content: space-around;
+        margin: 1.5rem 0;
+        padding: 1rem 0;
+        border-top: 1px solid rgba($color-accent, 0.2);
+        border-bottom: 1px solid rgba($color-accent, 0.2);
+
+        .detail-item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          .detail-label {
+            font-size: 0.85rem;
+            color: var(--text-color);
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+          }
+
+          .detail-value {
+            font-size: 1.2rem;
+            color: $color-accent;
+            font-weight: bold;
+            margin-top: 0.3rem;
+          }
+        }
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 10px;
+        background: rgba($color-accent, 0.1);
+        border-radius: 5px;
+        overflow: hidden;
+        margin: 1rem 0 0.5rem;
+
+        .progress-fill {
+          height: 100%;
+          border-radius: 5px;
+          transition: width 0.3s ease;
+
+          &.day-progress {
+            background: linear-gradient(90deg, $color-accent, lighten($color-accent, 20%));
+          }
+
+          &.year-progress {
+            background: linear-gradient(90deg, #6b5bff, #a855f7);
+          }
+        }
+      }
+
+      .progress-label {
+        font-size: 0.9rem;
+        color: var(--text-color);
+        opacity: 0.7;
+        display: block;
+        text-align: center;
+      }
+    }
+
+    .ozkar-explanation {
+      padding: 2rem;
+      background: rgba($color-background, 0.8);
+      border: 1px solid rgba($color-accent, 0.2);
+      border-radius: 12px;
+
+      h3 {
+        font-size: 1.4rem;
+        color: var(--accent-color);
+        margin-bottom: 1.5rem;
+        font-family: 'Courier New', monospace;
+      }
+
+      .explanation-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        text-align: left;
+
+        .explanation-item {
+          font-size: 1rem;
+          color: var(--text-color);
+          line-height: 1.7;
+          opacity: 0.85;
+
+          strong {
+            color: $color-accent;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Animaciones
+@keyframes borderGlow {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 0.7;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .ozkar-time {
+    padding: 5rem 1rem 1rem;
+
+    .ozkar-time-container {
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      .ozkar-subtitle {
+        font-size: 1rem;
+      }
+
+      .ozkar-time-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ozkar-clock,
+      .ozkar-calendar {
+        padding: 1.5rem;
+
+        .clock-time {
+          font-size: 2.5rem;
+        }
+
+        .clock-breakdown {
+          gap: 1rem;
+
+          .time-part .value {
+            font-size: 1.4rem;
+          }
+        }
+      }
+    }
+  }
+}
