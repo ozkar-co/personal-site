@@ -61,6 +61,8 @@ $color-background: #0d0d0d;
       box-shadow: 
         0 0 25px rgba($color-accent, 0.2),
         inset 0 0 20px rgba($color-accent, 0.05);
+      display: flex;
+      flex-direction: column;
 
       &::before {
         content: '';
@@ -82,15 +84,19 @@ $color-background: #0d0d0d;
         font-family: 'Courier New', monospace;
       }
 
+      // === DISPLAY PRINCIPAL ===
       .clock-display,
       .calendar-display {
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-bottom: 1rem;
+        justify-content: center;
         gap: 0.3rem;
+        min-height: 140px; // Espacio consistente para ambos displays
       }
 
+      // === TIEMPO/FECHA PRINCIPAL ===
+      // Reloj - ocupa todo el espacio con una línea
       .clock-time {
         font-size: 3.5rem;
         font-weight: normal;
@@ -100,50 +106,49 @@ $color-background: #0d0d0d;
         letter-spacing: 0.2em;
       }
 
-      .clock-period {
-        font-size: 1.3rem;
-        color: var(--text-color);
-        opacity: 0.8;
-        font-style: italic;
-        margin-top: 0.5rem;
-        text-transform: capitalize;
-      }
-      
-      // Estilos para el calendario con constelaciones
+      // Calendario - dos líneas que ocupan el mismo espacio
       .calendar-sol {
-        font-size: 1.4rem;
-        font-weight: bold;
-        color: $color-accent;
-        font-family: 'Courier New', monospace;
-        text-shadow: 0 0 10px rgba($color-accent, 0.4);
-      }
-      
-      .calendar-lunato {
         font-size: 1.6rem;
         font-weight: bold;
         color: $color-accent;
         font-family: 'Courier New', monospace;
         text-shadow: 0 0 12px rgba($color-accent, 0.5);
         letter-spacing: 0.05em;
+      }
+      
+      .calendar-lunato {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: $color-accent;
+        font-family: 'Courier New', monospace;
+        text-shadow: 0 0 15px rgba($color-accent, 0.6);
+        letter-spacing: 0.05em;
         display: flex;
         align-items: center;
         gap: 0.5rem;
         
         .constellation-icon {
-          width: 24px;
-          height: 24px;
+          width: 26px;
+          height: 26px;
           filter: brightness(0) saturate(100%) invert(77%) sepia(23%) saturate(959%) hue-rotate(359deg) brightness(102%) contrast(102%);
         }
       }
-      
+
+      // === PERIODO/JORNO (texto secundario bajo el principal) ===
+      .clock-period,
       .calendar-jorno {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         color: var(--text-color);
         opacity: 0.8;
+        font-style: italic;
+        margin-top: 0.5rem;
+        text-transform: capitalize;
         font-family: 'Courier New', monospace;
       }
 
-      .clock-breakdown {
+      // === DESGLOSE (breakdown y details) ===
+      .clock-breakdown,
+      .calendar-details {
         display: flex;
         justify-content: center;
         gap: 1.5rem;
@@ -151,7 +156,9 @@ $color-background: #0d0d0d;
         padding: 1.2rem;
         background: rgba($color-accent, 0.05);
         border-radius: 10px;
+      }
 
+      .clock-breakdown {
         .time-part {
           display: flex;
           flex-direction: column;
@@ -174,6 +181,30 @@ $color-background: #0d0d0d;
         }
       }
 
+      .calendar-details {
+        .detail-item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          .detail-label {
+            font-size: 0.8rem;
+            color: var(--text-color);
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+          }
+
+          .detail-value {
+            font-size: 1.8rem;
+            color: $color-accent;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+          }
+        }
+      }
+
+      // === ESTILOS OBSOLETOS (mantener por compatibilidad) ===
       .calendar-date {
         font-size: 1.8rem;
         font-weight: bold;
@@ -190,36 +221,6 @@ $color-background: #0d0d0d;
         margin-top: 0.5rem;
       }
 
-      .calendar-details {
-        display: flex;
-        justify-content: space-around;
-        margin: 1.5rem 0;
-        padding: 1rem 0;
-        border-top: 1px solid rgba($color-accent, 0.2);
-        border-bottom: 1px solid rgba($color-accent, 0.2);
-
-        .detail-item {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-
-          .detail-label {
-            font-size: 0.85rem;
-            color: var(--text-color);
-            opacity: 0.6;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-          }
-
-          .detail-value {
-            font-size: 1.2rem;
-            color: $color-accent;
-            font-weight: bold;
-            margin-top: 0.3rem;
-          }
-        }
-      }
-
       .progress-bar {
         width: 100%;
         max-width: 100%;
@@ -227,7 +228,7 @@ $color-background: #0d0d0d;
         background: rgba($color-accent, 0.1);
         border-radius: 5px;
         overflow: visible;
-        margin: 1rem 0 0.5rem;
+        margin: auto 0 0.5rem;
         position: relative;
 
         .progress-markers {
@@ -243,7 +244,7 @@ $color-background: #0d0d0d;
             top: -2px;
             width: 2px;
             height: 14px;
-            background: rgba($color-accent, 0.5);
+            background: rgba($color-background, 0.6);
             transform: translateX(-1px);
           }
         }

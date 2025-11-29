@@ -221,6 +221,9 @@ export const OzkarTime = () => {
               </div>
             </div>
             <div className="progress-bar">
+              <div className="progress-markers">
+                <div className="marker" style={{ left: '50%' }}></div>
+              </div>
               <div 
                 className="progress-fill" 
                 style={{ width: `${dayProgress}%` }}
