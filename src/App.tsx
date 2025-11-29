@@ -37,7 +37,7 @@ const AppContent = () => {
         <Route path="/projects" element={<Projects />} />
         <Route path="/wizz" element={<Wizz />} />
         <Route path="/time" element={<Time />} />
-        <Route path="/ozkartime" element={<OzkarTime />} />
+        <Route path="/clock" element={<OzkarTime />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/" element={
           <main>
