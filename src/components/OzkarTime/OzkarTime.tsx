@@ -6,6 +6,7 @@ import {
   getLunatoProgress,
   getLunatoForSol,
   countLunatosInSol,
+  formatDozenal,
   OzkarClockTime, 
   OzkarCalendarDate,
   LunatoCalendarInfo,
@@ -15,6 +16,21 @@ import {
 import './OzkarTime.scss';
 
 export const OzkarTime = () => {
+  // Función helper para convertir símbolos dozenales a formato 7-segmentos
+  // X → H, W → E (solo para display visual)
+  const toSegment7 = (dozenalString: string): string => {
+    return dozenalString.replace(/X/g, 'H').replace(/W/g, 'E');
+  };
+
+  // Función helper para convertir porcentaje decimal a dozenal
+  // 100% decimal = 100 dozenal (que es 144 decimal)
+  const percentageToDozenal = (decimalPercentage: number): string => {
+    // Convertir de escala 0-100 decimal a 0-144 decimal
+    const dozenalValue = (decimalPercentage / 100) * 144;
+    // Formatear en dozenal
+    return formatDozenal(Math.round(dozenalValue));
+  };
+
   // Estado para OzkarTime
   const [ozkarClock, setOzkarClock] = useState<OzkarClockTime>({
     horo: 0,
@@ -183,34 +199,34 @@ export const OzkarTime = () => {
           <div className="ozkar-clock">
             <h2>Reloj Base 12</h2>
             <div className="clock-display">
-              <span className="clock-time">{ozkarClock.formatted}</span>
+              <span className="clock-time">{toSegment7(ozkarClock.formatted)}</span>
               <span className="clock-period">{ozkarClock.period}</span>
             </div>
             <div className="clock-breakdown">
               <div className="time-part">
-                <span className="value">{ozkarClock.horo}</span>
+                <span className="value">{formatDozenal(ozkarClock.horo)}</span>
                 <span className="unit">horo</span>
               </div>
               <div className="time-part">
-                <span className="value">{ozkarClock.temo}</span>
+                <span className="value">{formatDozenal(ozkarClock.temo)}</span>
                 <span className="unit">temo</span>
               </div>
               <div className="time-part">
-                <span className="value">{ozkarClock.mino}</span>
+                <span className="value">{formatDozenal(ozkarClock.mino)}</span>
                 <span className="unit">mino</span>
               </div>
               <div className="time-part">
-                <span className="value">{ozkarClock.tiko}</span>
+                <span className="value">{formatDozenal(ozkarClock.tiko)}</span>
                 <span className="unit">tiko</span>
               </div>
             </div>
             <div className="progress-bar">
               <div 
-                className="progress-fill day-progress" 
+                className="progress-fill" 
                 style={{ width: `${dayProgress}%` }}
               />
             </div>
-            <span className="progress-label">Progreso del jorno: {dayProgress.toFixed(1)}%</span>
+            <span className="progress-label">Progreso del jorno: {percentageToDozenal(dayProgress)}%</span>
           </div>
 
           {/* Calendario Solar */}
@@ -241,11 +257,11 @@ export const OzkarTime = () => {
                 <div className="marker" style={{ left: '75%' }}></div>
               </div>
               <div 
-                className="progress-fill year-progress" 
+                className="progress-fill" 
                 style={{ width: `${lunatoProgress}%` }}
               />
             </div>
-            <span className="progress-label">Progreso del lunato: {lunatoProgress.toFixed(1)}%</span>
+            <span className="progress-label">Progreso del lunato: {percentageToDozenal(lunatoProgress)}%</span>
           </div>
         </div>
 
