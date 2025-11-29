@@ -291,6 +291,15 @@ $color-background: #0d0d0d;
           &:active {
             transform: scale(0.95);
           }
+
+          &.double {
+            font-size: 1.3rem;
+            opacity: 0.8;
+            
+            &:hover {
+              opacity: 1;
+            }
+          }
         }
 
         .calendar-title-container {
@@ -461,6 +470,12 @@ $color-background: #0d0d0d;
             .date {
               font-size: 0.9em;
             }
+            
+            .year {
+              font-size: 0.75em;
+              opacity: 0.5;
+              font-weight: 300;
+            }
           }
         }
       }
@@ -521,6 +536,10 @@ $color-background: #0d0d0d;
             width: 45px;
             height: 45px;
             font-size: 1.3rem;
+            
+            &.double {
+              font-size: 1.1rem;
+            }
           }
 
           .calendar-title-container {
@@ -542,7 +561,7 @@ $color-background: #0d0d0d;
 
           .day-cell {
             min-width: 60px !important;
-            min-height: 70px !important;
+            min-height: 75px !important;
             padding: 0.4rem !important;
             font-size: 0.75rem !important;
 
@@ -555,6 +574,10 @@ $color-background: #0d0d0d;
             .civil-date {
               font-size: 0.7rem !important;
               gap: 0.1rem !important;
+              
+              .year {
+                font-size: 0.65em !important;
+              }
             }
           }
         }

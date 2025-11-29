@@ -73,6 +73,16 @@ export const OzkarTime = () => {
     setLunatoOffset(prev => prev + 1);
   };
 
+  const goToPrevious12Lunatos = () => {
+    // Saltar 12 lunatos hacia atrás (aproximadamente 1 Sol)
+    setLunatoOffset(prev => prev - 12);
+  };
+
+  const goToNext12Lunatos = () => {
+    // Saltar 12 lunatos hacia adelante (aproximadamente 1 Sol)
+    setLunatoOffset(prev => prev + 12);
+  };
+
   const goToCurrentLunato = () => {
     setLunatoOffset(0);
   };
@@ -96,6 +106,9 @@ export const OzkarTime = () => {
                   </span>
                   <span className="date">
                     {day.civilDate.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}
+                  </span>
+                  <span className="year">
+                    {day.civilDate.getFullYear()}
                   </span>
                 </span>
               </div>
@@ -210,6 +223,14 @@ export const OzkarTime = () => {
         <div className="lunato-calendars">
           <div className="calendar-header">
             <button 
+              className="nav-button double" 
+              onClick={goToPrevious12Lunatos}
+              aria-label="Retroceder 12 lunatos"
+              title="Retroceder 12 lunatos"
+            >
+              ≪
+            </button>
+            <button 
               className="nav-button" 
               onClick={goToPreviousLunato}
               aria-label="Lunato anterior"
@@ -234,6 +255,14 @@ export const OzkarTime = () => {
               aria-label="Lunato siguiente"
             >
               →
+            </button>
+            <button 
+              className="nav-button double" 
+              onClick={goToNext12Lunatos}
+              aria-label="Avanzar 12 lunatos"
+              title="Avanzar 12 lunatos"
+            >
+              ≫
             </button>
           </div>
           
