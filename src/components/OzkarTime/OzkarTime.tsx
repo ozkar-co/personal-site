@@ -8,7 +8,8 @@ import {
   OzkarClockTime, 
   OzkarCalendarDate,
   LunatoCalendarInfo,
-  LUNAR_PHASES
+  LUNAR_PHASES,
+  ZODIAC_CONSTELLATIONS
 } from '../../utils/ozkarTime';
 import './OzkarTime.scss';
 
@@ -32,6 +33,7 @@ export const OzkarTime = () => {
     jorno: 1,
     lunatoStartDate: new Date(),
     lunarPhase: LUNAR_PHASES[0],
+    constellation: ZODIAC_CONSTELLATIONS[0], // Capricornio por defecto
     formatted: 'Sol z0 · Lunato 1 · Jorno 1'
   });
 
@@ -164,21 +166,16 @@ export const OzkarTime = () => {
           <div className="ozkar-calendar">
             <h2>Calendario Luni-Solar</h2>
             <div className="calendar-display">
-              <span className="calendar-date">{ozkarCalendar.formatted}</span>
-              <span className="calendar-day">{ozkarCalendar.lunarPhase}</span>
+              <span className="calendar-sol">Sol {ozkarCalendar.solDozenal}</span>
+              <span className="calendar-lunato">
+                Lunato {ozkarCalendar.lunato} {ozkarCalendar.constellation.name} {ozkarCalendar.constellation.symbol}
+              </span>
+              <span className="calendar-jorno">Jorno {ozkarCalendar.jorno}</span>
             </div>
             <div className="calendar-details">
               <div className="detail-item">
-                <span className="detail-label">Sol</span>
-                <span className="detail-value">{ozkarCalendar.solDozenal}</span>
-              </div>
-              <div className="detail-item">
-                <span className="detail-label">Lunato</span>
-                <span className="detail-value">{ozkarCalendar.lunato}</span>
-              </div>
-              <div className="detail-item">
-                <span className="detail-label">Jorno</span>
-                <span className="detail-value">{ozkarCalendar.jorno}</span>
+                <span className="detail-label">Fase</span>
+                <span className="detail-value">{ozkarCalendar.lunarPhase}</span>
               </div>
             </div>
             <div className="progress-bar">
@@ -208,13 +205,40 @@ export const OzkarTime = () => {
               1 horo = 1 hora civil, 1 temo ≈ 5 min, 1 mino ≈ 25 seg, 1 tiko ≈ 2 seg.
             </div>
             <div className="explanation-item">
-              <strong>Calendario Solar:</strong> Sol = año solar personal desde el solsticio de invierno de diciembre 1992 (Sol 1).
-              Cada Sol va de un solsticio de invierno al siguiente.
+              <strong>Calendario Solar:</strong> Sol = año solar personal desde el solsticio de invierno 
+              de diciembre 1992 (Sol 0). Cada Sol va de un solsticio de invierno al siguiente. El Lunato 0 
+              es el lunato de transición que contiene el solsticio de invierno.
             </div>
             <div className="explanation-item">
               <strong>Lunatos:</strong> Meses lunares (~29.5 días) que comienzan en luna nueva.
-              Lunato 0 = transición entre años solares. Lunato 1 = primera luna nueva después del solsticio.
+              Lunato 1 es la primera luna nueva después del solsticio.
               Un Sol tiene 12 o 13 lunatos de forma natural.
+            </div>
+            <div className="explanation-item">
+              <strong>Nombres de los lunatos:</strong> Cada lunato recibe el nombre de la constelación 
+              zodiacal sobre la que se encuentra el Sol durante ese período. Los 12 lunatos estándar 
+              siguen las constelaciones zodiacales tradicionales.
+            </div>
+            <div className="explanation-item">
+              <strong>Ofiuco:</strong> Los Soles con 13 lunatos incluyen a Ofiuco (⛎, el Serpentario) 
+              como la decimotercera constelación, situada entre Escorpio y Sagitario. Su símbolo de 
+              "flecha interrumpida" representa estos años con un lunato adicional.
+            </div>
+            <div className="explanation-item">
+              <strong>Solsticio de invierno:</strong> Marca el inicio de cada Sol. Es el día más corto 
+              del año, fácilmente observable sin instrumentos modernos.
+            </div>
+            <div className="explanation-item">
+              <strong>Lunas nuevas:</strong> Marcan el inicio de cada lunato. Las fases lunares son 
+              completamente observables a simple vista.
+            </div>
+            <div className="explanation-item">
+              <strong>Constelaciones:</strong> La constelación del lunato se calcula según la posición 
+              del Sol en la eclíptica, determinada astronómicamente para precisión.
+            </div>
+            <div className="explanation-item">
+              <strong>Inicio del día:</strong> El día comienza a medianoche (0:00 horas), permitiendo 
+              sincronización con el tiempo civil.
             </div>
           </div>
         </div>
@@ -239,7 +263,7 @@ export const OzkarTime = () => {
             </button>
             <div className="calendar-title-container">
               <h3>
-                {currentLunato && `Sol ${currentLunato.solDozenal} · Lunato ${currentLunato.lunatoDozenal}`}
+                {currentLunato && `Sol ${currentLunato.solDozenal} · Lunato ${currentLunato.lunatoDozenal} ${currentLunato.constellation.symbol}`}
               </h3>
               <button 
                 className="today-button" 

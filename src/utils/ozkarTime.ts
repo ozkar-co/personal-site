@@ -35,6 +35,31 @@ export const LUNAR_PHASES = [
   'Pre-nova'    // Menguante
 ];
 
+// Constelaciones zodiacales
+export interface ZodiacConstellation {
+  name: string;           // "Sagitario"
+  nameShort: string;      // "Sag"
+  symbol: string;         // "♐"
+  start: number;          // Longitud eclíptica inicial (grados)
+  end: number;            // Longitud eclíptica final (grados)
+}
+
+export const ZODIAC_CONSTELLATIONS: ZodiacConstellation[] = [
+  { name: 'Capricornio', nameShort: 'Cap', start: 270, end: 300, symbol: '♑' },
+  { name: 'Acuario',     nameShort: 'Acu', start: 300, end: 330, symbol: '♒' },
+  { name: 'Piscis',      nameShort: 'Pis', start: 330, end: 360, symbol: '♓' },
+  { name: 'Aries',       nameShort: 'Ari', start: 0,   end: 30,  symbol: '♈' },
+  { name: 'Tauro',       nameShort: 'Tau', start: 30,  end: 60,  symbol: '♉' },
+  { name: 'Géminis',     nameShort: 'Gém', start: 60,  end: 90,  symbol: '♊' },
+  { name: 'Cáncer',      nameShort: 'Cán', start: 90,  end: 120, symbol: '♋' },
+  { name: 'Leo',         nameShort: 'Leo', start: 120, end: 150, symbol: '♌' },
+  { name: 'Virgo',       nameShort: 'Vir', start: 150, end: 180, symbol: '♍' },
+  { name: 'Libra',       nameShort: 'Lib', start: 180, end: 210, symbol: '♎' },
+  { name: 'Escorpio',    nameShort: 'Esc', start: 210, end: 240, symbol: '♏' },
+  { name: 'Ofiuco',      nameShort: 'Ofi', start: 240, end: 270, symbol: '⛎' },
+  { name: 'Sagitario',   nameShort: 'Sag', start: 265, end: 275, symbol: '♐' }
+];
+
 // Cache para datos astronómicos precalculados
 let astronomicalDataCache: {
   newMoons?: string[];
@@ -87,6 +112,7 @@ export interface OzkarCalendarDate {
   jorno: number;          // Día dentro del lunato (1-30)
   lunatoStartDate: Date;  // Fecha de inicio del lunato actual
   lunarPhase: string;     // Fase lunar aproximada
+  constellation: ZodiacConstellation; // Constelación zodiacal del lunato
   formatted: string;      // "Sol ## · Lunato # · Jorno #"
 }
 
@@ -125,6 +151,72 @@ export const fromDozenal = (dozenal: string): number => {
   }
   
   return result;
+};
+
+/**
+ * Calcula la longitud eclíptica del Sol para una fecha dada
+ * Basado en la fórmula simplificada de Jean Meeus
+ * @param date Fecha para la cual calcular la posición solar
+ * @returns Longitud eclíptica en grados (0-360)
+ */
+const getSolarLongitude = (date: Date): number => {
+  // Referencia: J2000 (1 de enero de 2000, 12:00 UTC)
+  const J2000 = new Date('2000-01-01T12:00:00Z');
+  const daysSinceJ2000 = (date.getTime() - J2000.getTime()) / (24 * 60 * 60 * 1000);
+  
+  // Número de siglos julianos desde J2000
+  const T = daysSinceJ2000 / 36525;
+  
+  // Longitud media del Sol (simplificada)
+  const L0 = 280.46646 + 36000.76983 * T + 0.0003032 * T * T;
+  
+  // Anomalía media
+  const M = 357.52911 + 35999.05029 * T - 0.0001537 * T * T;
+  const M_rad = (M * Math.PI) / 180;
+  
+  // Ecuación del centro
+  const C = (1.914602 - 0.004817 * T - 0.000014 * T * T) * Math.sin(M_rad)
+          + (0.019993 - 0.000101 * T) * Math.sin(2 * M_rad)
+          + 0.000289 * Math.sin(3 * M_rad);
+  
+  // Longitud verdadera
+  let longitude = (L0 + C) % 360;
+  if (longitude < 0) longitude += 360;
+  
+  return longitude;
+};
+
+/**
+ * Obtiene la constelación zodiacal para una fecha dada
+ * basándose en la posición del Sol en la eclíptica
+ * @param date Fecha para determinar la constelación
+ * @returns Objeto ZodiacConstellation correspondiente
+ */
+export const getConstellation = (date: Date): ZodiacConstellation => {
+  const longitude = getSolarLongitude(date);
+  
+  // Buscar la constelación que corresponde a esta longitud
+  for (const constellation of ZODIAC_CONSTELLATIONS) {
+    // Manejo especial para Piscis (cruza el 0°)
+    if (constellation.name === 'Piscis') {
+      if (longitude >= constellation.start || longitude < constellation.end % 360) {
+        return constellation;
+      }
+    }
+    // Manejo especial para Sagitario (se superpone ligeramente con Ofiuco)
+    else if (constellation.name === 'Sagitario') {
+      if (longitude >= constellation.start) {
+        return constellation;
+      }
+    }
+    // Resto de constelaciones
+    else if (longitude >= constellation.start && longitude < constellation.end) {
+      return constellation;
+    }
+  }
+  
+  // Fallback (no debería ocurrir, pero por seguridad)
+  return ZODIAC_CONSTELLATIONS[0]; // Capricornio
 };
 
 /**
@@ -361,6 +453,9 @@ export const getOzkarCalendar = (date: Date = new Date()): OzkarCalendarDate => 
   // Obtener fase lunar
   const lunarPhase = getLunarPhase(jorno);
   
+  // Obtener constelación zodiacal basada en la fecha de inicio del lunato
+  const constellation = getConstellation(lunatoStart);
+  
   // Formatear
   const solDozenal = toDozenal(sol);
   const formatted = `Sol ${solDozenal} · Lunato ${lunato} · Jorno ${jorno}`;
@@ -372,6 +467,7 @@ export const getOzkarCalendar = (date: Date = new Date()): OzkarCalendarDate => 
     jorno,
     lunatoStartDate: lunatoStart,
     lunarPhase,
+    constellation,
     formatted
   };
 };
@@ -417,6 +513,7 @@ export interface LunatoCalendarInfo {
   lunatoDozenal: string;   // Lunato en formato dozenal
   sol: number;
   solDozenal: string;      // Sol en formato dozenal
+  constellation: ZodiacConstellation; // Constelación zodiacal del lunato
   startDate: Date;
   endDate: Date;
   days: LunatoDayInfo[];
@@ -541,6 +638,7 @@ const buildLunatoCalendar = (
     lunatoDozenal: toDozenal(targetCalendar.lunato),
     sol: targetCalendar.sol,
     solDozenal: targetCalendar.solDozenal,
+    constellation: targetCalendar.constellation,
     startDate: lunatoStart,
     endDate: lunatoEnd,
     days,
