@@ -114,6 +114,15 @@ $color-background: #0d0d0d;
         font-family: 'Courier New', monospace;
         text-shadow: 0 0 12px rgba($color-accent, 0.5);
         letter-spacing: 0.05em;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        
+        .constellation-icon {
+          width: 24px;
+          height: 24px;
+          filter: brightness(0) saturate(100%) invert(77%) sepia(23%) saturate(959%) hue-rotate(359deg) brightness(102%) contrast(102%);
+        }
       }
       
       .calendar-jorno {
@@ -343,6 +352,16 @@ $color-background: #0d0d0d;
             font-family: 'Courier New', monospace;
             text-shadow: 0 0 10px rgba($color-accent, 0.3);
             width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            
+            .constellation-icon-header {
+              width: 28px;
+              height: 28px;
+              filter: brightness(0) saturate(100%) invert(77%) sepia(23%) saturate(959%) hue-rotate(359deg) brightness(102%) contrast(102%);
+            }
           }
 
           .today-button {
@@ -464,6 +483,33 @@ $color-background: #0d0d0d;
               color: $color-accent;
               font-weight: bold;
               text-shadow: 0 0 8px rgba($color-accent, 0.6);
+            }
+          }
+
+          &.solstice {
+            border: 2px solid rgba(135, 206, 250, 0.8); // Azul cielo
+            box-shadow: 0 0 15px rgba(135, 206, 250, 0.4);
+            
+            .solstice-marker {
+              position: absolute;
+              top: 5px;
+              left: 8px;
+              font-size: 1.3rem;
+              opacity: 0.9;
+              filter: drop-shadow(0 0 3px rgba(135, 206, 250, 0.8));
+            }
+          }
+
+          &.other-sol {
+            opacity: 0.5;
+            background: rgba($color-background, 0.3);
+            
+            .jorno-number {
+              color: rgba($color-accent, 0.4);
+            }
+            
+            .civil-date {
+              opacity: 0.4;
             }
           }
 

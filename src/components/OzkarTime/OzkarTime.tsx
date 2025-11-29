@@ -4,7 +4,8 @@ import {
   getOzkarCalendar, 
   getDayProgress, 
   getLunatoProgress,
-  getLunatoCalendarInfo,
+  getLunatoForSol,
+  countLunatosInSol,
   OzkarClockTime, 
   OzkarCalendarDate,
   LunatoCalendarInfo,
@@ -40,7 +41,10 @@ export const OzkarTime = () => {
   const [dayProgress, setDayProgress] = useState(0);
   const [lunatoProgress, setLunatoProgress] = useState(0);
   const [currentLunato, setCurrentLunato] = useState<LunatoCalendarInfo | null>(null);
-  const [lunatoOffset, setLunatoOffset] = useState(0); // Offset para navegar entre lunatos
+  
+  // Navegación independiente de Sol y Lunato
+  const [solOffset, setSolOffset] = useState(0);      // Offset del Sol desde el actual
+  const [lunatoNumber, setLunatoNumber] = useState(0); // Número del lunato (0-12 o 0-13)
 
   useEffect(() => {
     const updateTime = () => {
@@ -54,39 +58,76 @@ export const OzkarTime = () => {
       setDayProgress(getDayProgress(now));
       setLunatoProgress(getLunatoProgress(calendar));
       
-      // Actualizar calendario lunar con el offset actual
-      setCurrentLunato(getLunatoCalendarInfo(now, lunatoOffset));
+      // Calcular el Sol absoluto (Sol actual + offset)
+      const targetSol = calendar.sol + solOffset;
+      
+      // Obtener calendario del lunato usando el nuevo sistema
+      try {
+        const lunatoInfo = getLunatoForSol(targetSol, lunatoNumber);
+        setCurrentLunato(lunatoInfo);
+      } catch (error) {
+        console.error('Error al obtener lunato:', error);
+      }
     };
 
     updateTime();
     const interval = setInterval(updateTime, 1000);
 
     return () => clearInterval(interval);
-  }, [lunatoOffset]);
+  }, [solOffset, lunatoNumber]);
 
-  // Funciones de navegación
+  // Funciones de navegación de lunatos
   const goToPreviousLunato = () => {
-    // Sin límites - podemos navegar infinitamente hacia atrás
-    setLunatoOffset(prev => prev - 1);
+    if (lunatoNumber === 0) {
+      // Estamos en Lunato 0, ir al último lunato del Sol anterior
+      setSolOffset(prev => prev - 1);
+      // Necesitamos calcular cuántos lunatos tiene el Sol anterior
+      const prevSol = ozkarCalendar.sol + solOffset - 1;
+      const lunatosInPrevSol = countLunatosInSol(prevSol);
+      setLunatoNumber(lunatosInPrevSol - 1); // Último lunato (índice base 0)
+    } else {
+      setLunatoNumber(prev => prev - 1);
+    }
   };
 
   const goToNextLunato = () => {
-    // Sin límites - podemos navegar infinitamente hacia adelante
-    setLunatoOffset(prev => prev + 1);
+    const currentSol = ozkarCalendar.sol + solOffset;
+    const totalLunatos = countLunatosInSol(currentSol);
+    
+    if (lunatoNumber >= totalLunatos - 1) {
+      // Estamos en el último lunato, ir al Lunato 0 del siguiente Sol
+      setSolOffset(prev => prev + 1);
+      setLunatoNumber(0);
+    } else {
+      setLunatoNumber(prev => prev + 1);
+    }
   };
 
-  const goToPrevious12Lunatos = () => {
-    // Saltar 12 lunatos hacia atrás (aproximadamente 1 Sol)
-    setLunatoOffset(prev => prev - 12);
+  // Funciones de navegación de Soles (salto de ±1 Sol, mismo lunato)
+  const goToPreviousSol = () => {
+    setSolOffset(prev => prev - 1);
+    // Verificar si el Sol anterior tiene este número de lunato
+    const prevSol = ozkarCalendar.sol + solOffset - 1;
+    const lunatosInPrevSol = countLunatosInSol(prevSol);
+    // Si el lunato actual no existe en el Sol anterior (ej: lunato 13 → Sol con 12 lunatos)
+    if (lunatoNumber >= lunatosInPrevSol) {
+      setLunatoNumber(lunatosInPrevSol - 1); // Ir al último lunato disponible
+    }
   };
 
-  const goToNext12Lunatos = () => {
-    // Saltar 12 lunatos hacia adelante (aproximadamente 1 Sol)
-    setLunatoOffset(prev => prev + 12);
+  const goToNextSol = () => {
+    setSolOffset(prev => prev + 1);
+    // Verificar si el Sol siguiente tiene este número de lunato
+    const nextSol = ozkarCalendar.sol + solOffset + 1;
+    const lunatosInNextSol = countLunatosInSol(nextSol);
+    if (lunatoNumber >= lunatosInNextSol) {
+      setLunatoNumber(lunatosInNextSol - 1);
+    }
   };
 
   const goToCurrentLunato = () => {
-    setLunatoOffset(0);
+    setSolOffset(0);
+    setLunatoNumber(ozkarCalendar.lunato);
   };
 
   // Función auxiliar para renderizar las celdas del calendario
@@ -96,25 +137,35 @@ export const OzkarTime = () => {
         <div key={phaseName} className="phase-row">
           <div className="phase-label">{phaseDays[0].lunarPhase}</div>
           <div className="phase-days">
-            {phaseDays.map((day) => (
-              <div 
-                key={day.jorno} 
-                className={`day-cell ${day.isToday ? 'today' : ''}`}
-              >
-                <span className="jorno-number">{day.jornoDozenal}</span>
-                <span className="civil-date">
-                  <span className="weekday">
-                    {day.civilDate.toLocaleDateString('es-ES', { weekday: 'short' })}
+            {phaseDays.map((day) => {
+              const classes = [
+                'day-cell',
+                day.isToday ? 'today' : '',
+                day.isSolstice ? 'solstice' : '',
+                !day.belongsToCurrentSol ? 'other-sol' : ''
+              ].filter(Boolean).join(' ');
+              
+              return (
+                <div 
+                  key={day.jorno} 
+                  className={classes}
+                >
+                  <span className="jorno-number">{day.jornoDozenal}</span>
+                  {day.isSolstice && <span className="solstice-marker">❄</span>}
+                  <span className="civil-date">
+                    <span className="weekday">
+                      {day.civilDate.toLocaleDateString('es-ES', { weekday: 'short' })}
+                    </span>
+                    <span className="date">
+                      {day.civilDate.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}
+                    </span>
+                    <span className="year">
+                      {day.civilDate.getFullYear()}
+                    </span>
                   </span>
-                  <span className="date">
-                    {day.civilDate.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}
-                  </span>
-                  <span className="year">
-                    {day.civilDate.getFullYear()}
-                  </span>
-                </span>
-              </div>
-            ))}
+                </div>
+              );
+            })}
           </div>
         </div>
       )
@@ -168,7 +219,12 @@ export const OzkarTime = () => {
             <div className="calendar-display">
               <span className="calendar-sol">Sol {ozkarCalendar.solDozenal}</span>
               <span className="calendar-lunato">
-                Lunato {ozkarCalendar.lunato} {ozkarCalendar.constellation.name} {ozkarCalendar.constellation.symbol}
+                Lunato {ozkarCalendar.lunato} {ozkarCalendar.constellation.name}
+                <img 
+                  src={`/assets/constellations/${ozkarCalendar.constellation.image}`}
+                  alt={ozkarCalendar.constellation.name}
+                  className="constellation-icon"
+                />
               </span>
               <span className="calendar-jorno">Jorno {ozkarCalendar.jorno}</span>
             </div>
@@ -206,13 +262,24 @@ export const OzkarTime = () => {
             </div>
             <div className="explanation-item">
               <strong>Calendario Solar:</strong> Sol = año solar personal desde el solsticio de invierno 
-              de diciembre 1992 (Sol 0). Cada Sol va de un solsticio de invierno al siguiente. El Lunato 0 
-              es el lunato de transición que contiene el solsticio de invierno.
+              de diciembre 1992 (Sol 0). Cada Sol va de un solsticio de invierno al siguiente.
             </div>
             <div className="explanation-item">
               <strong>Lunatos:</strong> Meses lunares (~29.5 días) que comienzan en luna nueva.
               Lunato 1 es la primera luna nueva después del solsticio.
               Un Sol tiene 12 o 13 lunatos de forma natural.
+            </div>
+            <div className="explanation-item">
+              <strong>Lunato 0 (Transición):</strong> El Lunato 0 es especial porque pertenece 
+              simultáneamente a dos Soles: es el último lunato del Sol anterior y el primero del 
+              Sol actual. Comienza con la luna nueva anterior al solsticio y contiene el día del 
+              solsticio de invierno, marcando visualmente la transición entre años solares.
+            </div>
+            <div className="explanation-item">
+              <strong>Visualización del solsticio:</strong> En el calendario lunar, el día del 
+              solsticio aparece marcado con un símbolo especial (❄). Los días anteriores al 
+              solsticio (que pertenecen al Sol anterior) aparecen atenuados, mientras que los días 
+              posteriores pertenecen al nuevo Sol, haciendo evidente la transición astronómica.
             </div>
             <div className="explanation-item">
               <strong>Nombres de los lunatos:</strong> Cada lunato recibe el nombre de la constelación 
@@ -248,9 +315,9 @@ export const OzkarTime = () => {
           <div className="calendar-header">
             <button 
               className="nav-button double" 
-              onClick={goToPrevious12Lunatos}
-              aria-label="Retroceder 12 lunatos"
-              title="Retroceder 12 lunatos"
+              onClick={goToPreviousSol}
+              aria-label="Sol anterior"
+              title="Sol anterior (mismo lunato)"
             >
               ≪
             </button>
@@ -263,12 +330,23 @@ export const OzkarTime = () => {
             </button>
             <div className="calendar-title-container">
               <h3>
-                {currentLunato && `Sol ${currentLunato.solDozenal} · Lunato ${currentLunato.lunatoDozenal} ${currentLunato.constellation.symbol}`}
+                {currentLunato && (
+                  <>
+                    Sol {currentLunato.solDozenal} · Lunato {currentLunato.lunatoDozenal}
+                    {currentLunato.constellation && (
+                      <img 
+                        src={`/assets/constellations/${currentLunato.constellation.image}`}
+                        alt={currentLunato.constellation.name}
+                        className="constellation-icon-header"
+                      />
+                    )}
+                  </>
+                )}
               </h3>
               <button 
                 className="today-button" 
                 onClick={goToCurrentLunato}
-                disabled={lunatoOffset === 0}
+                disabled={solOffset === 0 && lunatoNumber === ozkarCalendar.lunato}
               >
                 Ir al lunato actual
               </button>
@@ -282,9 +360,9 @@ export const OzkarTime = () => {
             </button>
             <button 
               className="nav-button double" 
-              onClick={goToNext12Lunatos}
-              aria-label="Avanzar 12 lunatos"
-              title="Avanzar 12 lunatos"
+              onClick={goToNextSol}
+              aria-label="Sol siguiente"
+              title="Sol siguiente (mismo lunato)"
             >
               ≫
             </button>
