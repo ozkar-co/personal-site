@@ -5,13 +5,12 @@
  * 
  * 1. SISTEMA NUMÉRICO DOZENAL (Base-12)
  *    - Dígitos: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, X (10), W (11)
- *    - Se usa 'z' al inicio para indicar números dozenales
  * 
  * 2. SISTEMA DE TIEMPO (Base-12)
- *    - 1 jorno (día) = z20 horo (24 horo decimal)
- *    - 1 horo = z10 temo (12 temo)
- *    - 1 temo = z10 mino (12 mino)  
- *    - 1 mino = z10 tiko (12 tiko)
+ *    - 1 jorno (día) = 20 horo (24 horo decimal)
+ *    - 1 horo = 10 temo (12 temo)
+ *    - 1 temo = 10 mino (12 mino)  
+ *    - 1 mino = 10 tiko (12 tiko)
  *    - Dos mitades: matino (mañana) y vespero (tarde/noche)
  * 
  * 3. CALENDARIO SOLAR PERSONAL ("Sol Calendar")
@@ -38,10 +37,10 @@ export const LUNAR_PHASES = [
 
 // Interfaces
 export interface OzkarClockTime {
-  horo: number;           // 0-23 (z0-z1W en dozenal)
-  temo: number;           // 0-11 (z0-zW)
-  mino: number;           // 0-11 (z0-zW)
-  tiko: number;           // 0-11 (z0-zW)
+  horo: number;           // 0-23 (0-1W en dozenal)
+  temo: number;           // 0-11 (0-W)
+  mino: number;           // 0-11 (0-W)
+  tiko: number;           // 0-11 (0-W)
   formatted: string;      // "horo.temo.mino" en dozenal
   formattedFull: string;  // Incluye tiko
   period: string;         // matino o vespero
@@ -55,7 +54,7 @@ export interface OzkarCalendarDate {
   jorno: number;          // Día dentro del lunato (1-30)
   lunatoStartDate: Date;  // Fecha de inicio del lunato actual
   lunarPhase: string;     // Fase lunar aproximada
-  formatted: string;      // "Sol z## · Lunato # · Jorno #"
+  formatted: string;      // "Sol ## · Lunato # · Jorno #"
 }
 
 /**
@@ -223,10 +222,10 @@ const getLunarPhase = (jorno: number): string => {
 
 /**
  * Convierte el tiempo actual a OzkarClock (tiempo dozenal)
- * - 1 jorno = z20 horo (24 horo)
- * - 1 horo = z10 temo (12 temo) ≈ 5 minutos civiles cada uno
- * - 1 temo = z10 mino (12 mino) ≈ 25 segundos civiles cada uno
- * - 1 mino = z10 tiko (12 tiko) ≈ 2.08 segundos civiles cada uno
+ * - 1 jorno = 20 horo (24 horo)
+ * - 1 horo = 10 temo (12 temo) ≈ 5 minutos civiles cada uno
+ * - 1 temo = 10 mino (12 mino) ≈ 25 segundos civiles cada uno
+ * - 1 mino = 10 tiko (12 tiko) ≈ 2.08 segundos civiles cada uno
  */
 export const getOzkarClock = (date: Date = new Date()): OzkarClockTime => {
   const hours = date.getHours();
@@ -312,7 +311,7 @@ export const getOzkarCalendar = (date: Date = new Date()): OzkarCalendarDate => 
   
   // Formatear
   const solDozenal = toDozenal(sol);
-  const formatted = `Sol z${solDozenal} · Lunato ${lunato} · Jorno ${jorno}`;
+  const formatted = `Sol ${solDozenal} · Lunato ${lunato} · Jorno ${jorno}`;
   
   return {
     sol,

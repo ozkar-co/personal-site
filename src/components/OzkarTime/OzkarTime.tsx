@@ -58,13 +58,13 @@ export const OzkarTime = () => {
   return (
     <section className="ozkar-time">
       <div className="ozkar-time-container">
-        <h1>⏳ OzkarTime</h1>
-        <p className="ozkar-subtitle">Mi sistema personal de medición del tiempo (Base-12 / Dozenal)</p>
+        <h1>Clock</h1>
+        <p className="ozkar-subtitle"></p>
 
         <div className="ozkar-time-grid">
           {/* Reloj Dozenal */}
           <div className="ozkar-clock">
-            <h2>🕐 Reloj Dozenal</h2>
+            <h2>Reloj Base 12</h2>
             <div className="clock-display">
               <span className="clock-time">{ozkarClock.formatted}</span>
               <span className="clock-period">{ozkarClock.period}</span>
@@ -98,7 +98,7 @@ export const OzkarTime = () => {
 
           {/* Calendario Solar */}
           <div className="ozkar-calendar">
-            <h2>📅 Calendario Solar</h2>
+            <h2>Calendario Luni-Solar</h2>
             <div className="calendar-display">
               <span className="calendar-date">{ozkarCalendar.formatted}</span>
               <span className="calendar-day">{ozkarCalendar.lunarPhase}</span>
@@ -106,7 +106,7 @@ export const OzkarTime = () => {
             <div className="calendar-details">
               <div className="detail-item">
                 <span className="detail-label">Sol</span>
-                <span className="detail-value">z{ozkarCalendar.solDozenal}</span>
+                <span className="detail-value">{ozkarCalendar.solDozenal}</span>
               </div>
               <div className="detail-item">
                 <span className="detail-label">Lunato</span>
@@ -118,6 +118,11 @@ export const OzkarTime = () => {
               </div>
             </div>
             <div className="progress-bar">
+              <div className="progress-markers">
+                <div className="marker" style={{ left: '25%' }}></div>
+                <div className="marker" style={{ left: '50%' }}></div>
+                <div className="marker" style={{ left: '75%' }}></div>
+              </div>
               <div 
                 className="progress-fill year-progress" 
                 style={{ width: `${lunatoProgress}%` }}
@@ -132,10 +137,10 @@ export const OzkarTime = () => {
           <div className="explanation-grid">
             <div className="explanation-item">
               <strong>Sistema Numérico Dozenal (Base-12):</strong> Usa los dígitos 0-9, X (10), W (11). 
-              Se prefija con 'z' para indicar notación dozenal. Ejemplo: z1X = 1×12 + 10 = 22 en decimal.
+              Ejemplo: 1X = 1×12 + 10 = 22 en decimal.
             </div>
             <div className="explanation-item">
-              <strong>Reloj Dozenal:</strong> 1 jorno = z20 horo (24), cada unidad subdividida por 12.
+              <strong>Reloj Dozenal:</strong> 1 jorno = 20 horo (24), cada unidad subdividida por 12.
               1 horo = 1 hora civil, 1 temo ≈ 5 min, 1 mino ≈ 25 seg, 1 tiko ≈ 2 seg.
             </div>
             <div className="explanation-item">

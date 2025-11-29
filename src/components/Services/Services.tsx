@@ -10,9 +10,6 @@ export const Services = () => {
         <div className="services-content">
           <div className="services-grid">
             <div className="service-card">
-              <div className="service-icon">
-                <span>💻</span>
-              </div>
               <h3>DESARROLLO PERSONALIZADO</h3>
               <p>
                 Creo aplicaciones y sistemas informáticos desde cero, 
@@ -28,9 +25,6 @@ export const Services = () => {
             </div>
             
             <div className="service-card">
-              <div className="service-icon">
-                <span>🎨</span>
-              </div>
               <h3>DISEÑO DE SOFTWARE</h3>
               <p>
                 Análisis y diseño de arquitecturas robustas y escalables, 
@@ -46,10 +40,7 @@ export const Services = () => {
             </div>
             
             <div className="service-card">
-              <div className="service-icon">
-                <span>⚙️</span>
-              </div>
-              <h3>MANTENIMIENTO Y CONFIGURACIÓN</h3>
+              <h3>MANTENIMIENTO</h3>
               <p>
                 Modifico y configuro aplicaciones existentes para 
                 que funcionen perfectamente con tus sistemas actuales, 
