@@ -21,15 +21,12 @@
  *    - Jorno = día dentro del lunato actual (1-30)
  */
 
-// Solsticio de invierno de diciembre 1992 - inicio del Sol 1
-const FIRST_SOL_START = new Date('1992-12-21T00:00:00-05:00');
-
 // Dígitos dozenales
 const DOZENAL_DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'X', 'W'];
 
 // Fases lunares (orientativo)
 export const LUNAR_PHASES = [
-  'Nov-luno',   // Luna nueva
+  'Nova',       // Luna nueva
   'Pre-plena',  // Creciente
   'Plena',      // Luna llena
   'Pre-nova'    // Menguante
@@ -344,6 +341,110 @@ export const getDayProgress = (date: Date = new Date()): number => {
 export const getLunatoProgress = (calendar: OzkarCalendarDate): number => {
   const SYNODIC_MONTH = 29.53; // días
   return Math.min((calendar.jorno / SYNODIC_MONTH) * 100, 100);
+};
+
+/**
+ * Información de un día en el calendario lunar
+ */
+export interface LunatoDayInfo {
+  jorno: number;           // Día dentro del lunato
+  jornoDozenal: string;    // Jorno en formato dozenal
+  civilDate: Date;         // Fecha civil
+  lunarPhase: string;      // Fase lunar
+  isToday: boolean;        // Si es el día actual
+}
+
+/**
+ * Información completa de un lunato para el calendario
+ */
+export interface LunatoCalendarInfo {
+  lunato: number;
+  lunatoDozenal: string;   // Lunato en formato dozenal
+  sol: number;
+  solDozenal: string;      // Sol en formato dozenal
+  startDate: Date;
+  endDate: Date;
+  days: LunatoDayInfo[];
+  phases: {
+    novLuno: LunatoDayInfo[];    // Luna nueva (días 1-7)
+    prePlena: LunatoDayInfo[];   // Creciente (días 8-15)
+    plena: LunatoDayInfo[];      // Luna llena (días 16-22)
+    preNova: LunatoDayInfo[];    // Menguante (días 23+)
+  };
+}
+
+/**
+ * Obtiene la información completa de un lunato para el calendario
+ */
+export const getLunatoCalendarInfo = (date: Date = new Date(), offset: number = 0): LunatoCalendarInfo => {
+  const calendar = getOzkarCalendar(date);
+  const year = date.getFullYear();
+  
+  // Obtener todas las lunas nuevas
+  const prevYearNewMoons = getNewMoonDates(year - 1);
+  const currentYearNewMoons = getNewMoonDates(year);
+  const nextYearNewMoons = getNewMoonDates(year + 1);
+  const allNewMoons = prevYearNewMoons.concat(currentYearNewMoons, nextYearNewMoons);
+  allNewMoons.sort((a, b) => a.getTime() - b.getTime());
+  
+  // Encontrar el inicio del lunato actual
+  const currentLunatoStart = calendar.lunatoStartDate;
+  
+  // Encontrar el índice del lunato actual en la lista de lunas nuevas
+  let currentLunatoIndex = allNewMoons.findIndex(
+    moon => Math.abs(moon.getTime() - currentLunatoStart.getTime()) < 24 * 60 * 60 * 1000
+  );
+  
+  if (currentLunatoIndex === -1) currentLunatoIndex = 0;
+  
+  // Aplicar offset para lunato anterior/siguiente
+  const targetLunatoIndex = currentLunatoIndex + offset;
+  const lunatoStart = allNewMoons[targetLunatoIndex];
+  const lunatoEnd = allNewMoons[targetLunatoIndex + 1] || new Date(lunatoStart.getTime() + 30 * 24 * 60 * 60 * 1000);
+  
+  // Calcular todos los días del lunato
+  const days: LunatoDayInfo[] = [];
+  const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
+  
+  let currentDay = new Date(lunatoStart);
+  let jorno = 1;
+  
+  while (currentDay < lunatoEnd) {
+    const dayInfo: LunatoDayInfo = {
+      jorno,
+      jornoDozenal: toDozenal(jorno),
+      civilDate: new Date(currentDay),
+      lunarPhase: getLunarPhase(jorno),
+      isToday: currentDay.toDateString() === currentDate.toDateString()
+    };
+    days.push(dayInfo);
+    
+    currentDay = new Date(currentDay.getTime() + 24 * 60 * 60 * 1000);
+    jorno++;
+  }
+  
+  // Organizar por fases
+  const phases = {
+    novLuno: days.filter(d => d.jorno <= 7),
+    prePlena: days.filter(d => d.jorno > 7 && d.jorno <= 15),
+    plena: days.filter(d => d.jorno > 15 && d.jorno <= 22),
+    preNova: days.filter(d => d.jorno > 22)
+  };
+  
+  // Calcular el Sol y Lunato para esta fecha
+  const targetCalendar = getOzkarCalendar(lunatoStart);
+  
+  return {
+    lunato: targetCalendar.lunato,
+    lunatoDozenal: toDozenal(targetCalendar.lunato),
+    sol: targetCalendar.sol,
+    solDozenal: targetCalendar.solDozenal,
+    startDate: lunatoStart,
+    endDate: lunatoEnd,
+    days,
+    phases
+  };
 };
 
 // Re-exportar para compatibilidad

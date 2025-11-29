@@ -4,8 +4,10 @@ import {
   getOzkarCalendar, 
   getDayProgress, 
   getLunatoProgress,
+  getLunatoCalendarInfo,
   OzkarClockTime, 
   OzkarCalendarDate,
+  LunatoCalendarInfo,
   LUNAR_PHASES
 } from '../../utils/ozkarTime';
 import './OzkarTime.scss';
@@ -35,6 +37,8 @@ export const OzkarTime = () => {
 
   const [dayProgress, setDayProgress] = useState(0);
   const [lunatoProgress, setLunatoProgress] = useState(0);
+  const [currentLunato, setCurrentLunato] = useState<LunatoCalendarInfo | null>(null);
+  const [lunatoOffset, setLunatoOffset] = useState(0); // Offset para navegar entre lunatos
 
   useEffect(() => {
     const updateTime = () => {
@@ -47,13 +51,58 @@ export const OzkarTime = () => {
       setOzkarCalendar(calendar);
       setDayProgress(getDayProgress(now));
       setLunatoProgress(getLunatoProgress(calendar));
+      
+      // Actualizar calendario lunar con el offset actual
+      setCurrentLunato(getLunatoCalendarInfo(now, lunatoOffset));
     };
 
     updateTime();
     const interval = setInterval(updateTime, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [lunatoOffset]);
+
+  // Funciones de navegación
+  const goToPreviousLunato = () => {
+    setLunatoOffset(prev => prev - 1);
+  };
+
+  const goToNextLunato = () => {
+    setLunatoOffset(prev => prev + 1);
+  };
+
+  const goToCurrentLunato = () => {
+    setLunatoOffset(0);
+  };
+
+  // Función auxiliar para renderizar las celdas del calendario
+  const renderCalendarPhases = (lunato: LunatoCalendarInfo) => {
+    return Object.entries(lunato.phases).map(([phaseName, phaseDays]) => (
+      phaseDays.length > 0 && (
+        <div key={phaseName} className="phase-row">
+          <div className="phase-label">{phaseDays[0].lunarPhase}</div>
+          <div className="phase-days">
+            {phaseDays.map((day) => (
+              <div 
+                key={day.jorno} 
+                className={`day-cell ${day.isToday ? 'today' : ''}`}
+              >
+                <span className="jorno-number">{day.jornoDozenal}</span>
+                <span className="civil-date">
+                  <span className="weekday">
+                    {day.civilDate.toLocaleDateString('es-ES', { weekday: 'short' })}
+                  </span>
+                  <span className="date">
+                    {day.civilDate.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}
+                  </span>
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    ));
+  };
 
   return (
     <section className="ozkar-time">
@@ -153,6 +202,46 @@ export const OzkarTime = () => {
               Un Sol tiene 12 o 13 lunatos de forma natural.
             </div>
           </div>
+        </div>
+
+        {/* Calendario Lunar */}
+        <div className="lunato-calendars">
+          <div className="calendar-header">
+            <button 
+              className="nav-button" 
+              onClick={goToPreviousLunato}
+              aria-label="Lunato anterior"
+            >
+              ←
+            </button>
+            <div className="calendar-title-container">
+              <h3>
+                {currentLunato && `Sol ${currentLunato.solDozenal} · Lunato ${currentLunato.lunatoDozenal}`}
+              </h3>
+              <button 
+                className="today-button" 
+                onClick={goToCurrentLunato}
+                disabled={lunatoOffset === 0}
+              >
+                Ir al lunato actual
+              </button>
+            </div>
+            <button 
+              className="nav-button" 
+              onClick={goToNextLunato}
+              aria-label="Lunato siguiente"
+            >
+              →
+            </button>
+          </div>
+          
+          {currentLunato && (
+            <div className="lunato-calendar">
+              <div className="calendar-grid">
+                {renderCalendarPhases(currentLunato)}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </section>

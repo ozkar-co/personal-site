@@ -1,6 +1,8 @@
 $color-accent: #00ff00;
 $color-background: #0d0d0d;
 
+@use 'sass:color';
+
 .ozkar-time {
   min-height: 100vh;
   padding: 6rem 2rem 2rem;
@@ -205,7 +207,7 @@ $color-background: #0d0d0d;
           transition: width 0.3s ease;
 
           &.day-progress {
-            background: linear-gradient(90deg, $color-accent, lighten($color-accent, 20%));
+            background: linear-gradient(90deg, $color-accent, color.scale($color-accent, $lightness: 20%));
           }
 
           &.year-progress {
@@ -254,6 +256,215 @@ $color-background: #0d0d0d;
         }
       }
     }
+
+    .lunato-calendars {
+      margin-top: 3rem;
+      
+      .calendar-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 2rem;
+
+        .nav-button {
+          background: rgba($color-accent, 0.1);
+          border: 2px solid rgba($color-accent, 0.4);
+          border-radius: 50%;
+          width: 50px;
+          height: 50px;
+          font-size: 1.5rem;
+          color: $color-accent;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          
+          &:hover {
+            background: rgba($color-accent, 0.2);
+            border-color: $color-accent;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba($color-accent, 0.4);
+          }
+
+          &:active {
+            transform: scale(0.95);
+          }
+        }
+
+        .calendar-title-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.5rem;
+          min-width: 350px;
+
+          h3 {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            margin: 0;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 10px rgba($color-accent, 0.3);
+            width: 100%;
+          }
+
+          .today-button {
+            background: rgba($color-background, 0.8);
+            border: 1px solid rgba($color-accent, 0.5);
+            border-radius: 20px;
+            padding: 0.4rem 1rem;
+            font-size: 0.85rem;
+            color: $color-accent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Courier New', monospace;
+            font-weight: 500;
+            backdrop-filter: blur(5px);
+
+            &:hover:not(:disabled) {
+              background: rgba($color-background, 0.95);
+              border-color: $color-accent;
+              transform: translateY(-1px);
+              box-shadow: 0 2px 8px rgba($color-accent, 0.3);
+            }
+
+            &:disabled {
+              opacity: 0.4;
+              cursor: not-allowed;
+              background: rgba($color-background, 0.5);
+              border-color: rgba($color-accent, 0.2);
+            }
+          }
+        }
+      }
+
+      .lunato-calendar {
+        position: relative;
+        background: rgba($color-background, 0.9);
+        border: 2px solid rgba($color-accent, 0.3);
+        border-radius: 12px;
+        padding: 2rem;
+        max-width: 900px;
+        margin: 0 auto;
+        box-shadow: 0 0 20px rgba($color-accent, 0.2);
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: -2px;
+          left: -2px;
+          right: -2px;
+          bottom: -2px;
+          background: linear-gradient(45deg, transparent, rgba($color-accent, 0.2), transparent);
+          border-radius: 12px;
+          z-index: -1;
+          animation: borderGlow 3s ease-in-out infinite alternate;
+          pointer-events: none;
+        }
+
+        .calendar-grid {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+
+        .phase-row {
+          display: flex;
+          gap: 0.5rem;
+          align-items: stretch;
+
+          .phase-label {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            background: rgba($color-accent, 0.15);
+            padding: 0.5rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: $color-accent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 35px;
+          }
+
+          .phase-days {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            flex: 1;
+          }
+        }
+
+        .day-cell {
+          position: relative;
+          background: rgba($color-background, 0.6);
+          border: 1px solid rgba($color-accent, 0.2);
+          border-radius: 8px;
+          padding: 0.6rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s ease;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+          min-width: 85px;
+          min-height: 85px;
+
+          &:hover {
+            background: rgba($color-accent, 0.1);
+            border-color: $color-accent;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba($color-accent, 0.3);
+          }
+
+          &.today {
+            background: rgba($color-accent, 0.2);
+            border: 2px solid $color-accent;
+            box-shadow: 0 0 15px rgba($color-accent, 0.5);
+
+            .jorno-number {
+              color: $color-accent;
+              font-weight: bold;
+              text-shadow: 0 0 8px rgba($color-accent, 0.6);
+            }
+          }
+
+          .jorno-number {
+            position: absolute;
+            top: 5px;
+            right: 8px;
+            font-weight: bold;
+            color: $color-accent;
+            font-family: 'Courier New', monospace;
+            opacity: 0.9;
+            font-size: 1.2rem;
+          }
+
+          .civil-date {
+            color: var(--text-color);
+            opacity: 0.6;
+            text-align: center;
+            line-height: 1.2;
+            font-size: 0.85rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+            
+            .weekday {
+              font-size: 0.8em;
+              text-transform: lowercase;
+            }
+            
+            .date {
+              font-size: 0.9em;
+            }
+          }
+        }
+      }
+    }
   }
 }
 
@@ -268,7 +479,7 @@ $color-background: #0d0d0d;
 }
 
 // Responsive design
-@media (max-width: 768px) {
+@media (max-width: 1300px) {
   .ozkar-time {
     padding: 5rem 1rem 1rem;
 
@@ -298,6 +509,53 @@ $color-background: #0d0d0d;
 
           .time-part .value {
             font-size: 1.4rem;
+          }
+        }
+      }
+
+      .lunato-calendars {
+        .calendar-header {
+          gap: 1rem;
+          
+          .nav-button {
+            width: 45px;
+            height: 45px;
+            font-size: 1.3rem;
+          }
+
+          .calendar-title-container {
+            min-width: 280px;
+
+            h3 {
+              font-size: 1.3rem;
+            }
+
+            .today-button {
+              font-size: 0.75rem;
+              padding: 0.3rem 0.8rem;
+            }
+          }
+        }
+
+        .lunato-calendar {
+          padding: 1rem;
+
+          .day-cell {
+            min-width: 60px !important;
+            min-height: 70px !important;
+            padding: 0.4rem !important;
+            font-size: 0.75rem !important;
+
+            .jorno-number {
+              font-size: 0.95rem !important;
+              top: 3px !important;
+              right: 5px !important;
+            }
+
+            .civil-date {
+              font-size: 0.7rem !important;
+              gap: 0.1rem !important;
+            }
           }
         }
       }
