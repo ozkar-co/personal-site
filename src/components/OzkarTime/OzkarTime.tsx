@@ -64,11 +64,13 @@ export const OzkarTime = () => {
 
   // Funciones de navegación
   const goToPreviousLunato = () => {
-    setLunatoOffset(prev => prev - 1);
+    // Limitar a máximo 13 lunatos hacia atrás (aproximadamente 1 Sol)
+    setLunatoOffset(prev => Math.max(prev - 1, -13));
   };
 
   const goToNextLunato = () => {
-    setLunatoOffset(prev => prev + 1);
+    // Limitar a máximo 13 lunatos hacia adelante (aproximadamente 1 Sol)
+    setLunatoOffset(prev => Math.min(prev + 1, 13));
   };
 
   const goToCurrentLunato = () => {

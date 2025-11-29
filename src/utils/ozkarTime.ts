@@ -32,6 +32,39 @@ export const LUNAR_PHASES = [
   'Pre-nova'    // Menguante
 ];
 
+// Cache para datos astronómicos precalculados
+let astronomicalDataCache: {
+  newMoons?: string[];
+  winterSolstices?: Array<{ year: number; date: string }>;
+  loaded: boolean;
+} = { loaded: false };
+
+/**
+ * Carga los datos astronómicos precalculados
+ */
+const loadAstronomicalData = async () => {
+  if (astronomicalDataCache.loaded) return;
+  
+  try {
+    const response = await fetch('/astronomical-data/astronomical-data.json');
+    if (response.ok) {
+      const data = await response.json();
+      astronomicalDataCache.newMoons = data.newMoons;
+      astronomicalDataCache.winterSolstices = data.winterSolstices;
+      astronomicalDataCache.loaded = true;
+      console.log('✅ Datos astronómicos precalculados cargados');
+    }
+  } catch (error) {
+    console.warn('⚠️  No se pudieron cargar datos precalculados, usando cálculos', error);
+  }
+  astronomicalDataCache.loaded = true;
+};
+
+// Intentar cargar datos al importar el módulo
+if (typeof window !== 'undefined') {
+  loadAstronomicalData();
+}
+
 // Interfaces
 export interface OzkarClockTime {
   horo: number;           // 0-23 (0-1W en dozenal)
@@ -93,35 +126,48 @@ export const fromDozenal = (dozenal: string): number => {
 
 /**
  * Obtiene la fecha del solsticio de invierno (diciembre) para un año dado
- * Aproximación: alrededor del 21 de diciembre
+ * Usa datos precalculados si están disponibles, sino calcula una aproximación
  */
 const getWinterSolstice = (year: number): Date => {
-  // El solsticio de invierno ocurre típicamente entre el 20-22 de diciembre
-  // Usamos el 21 como aproximación
+  // Intentar usar datos precalculados
+  if (astronomicalDataCache.winterSolstices) {
+    const solstice = astronomicalDataCache.winterSolstices.find(s => s.year === year);
+    if (solstice) {
+      return new Date(solstice.date);
+    }
+  }
+  
+  // Fallback: aproximación (alrededor del 21 de diciembre)
   return new Date(year, 11, 21, 0, 0, 0); // Mes 11 = Diciembre (0-indexed)
 };
 
 /**
  * Calcula las fases lunares aproximadas
- * Usando el algoritmo simplificado basado en el ciclo sinódico
+ * Usa datos precalculados si están disponibles, sino calcula usando el ciclo sinódico
  */
 const getNewMoonDates = (year: number): Date[] => {
-  // Ciclo sinódico lunar ≈ 29.53059 días
-  const SYNODIC_MONTH = 29.53059;
+  // Intentar usar datos precalculados
+  if (astronomicalDataCache.newMoons) {
+    const yearStart = new Date(year, 0, 1);
+    const yearEnd = new Date(year, 11, 31, 23, 59, 59);
+    
+    return astronomicalDataCache.newMoons
+      .map(dateStr => new Date(dateStr))
+      .filter(date => date >= yearStart && date <= yearEnd);
+  }
   
-  // Luna nueva de referencia conocida: 6 de enero de 2000 a las 18:14 UTC
+  // Fallback: cálculo usando ciclo sinódico
+  const SYNODIC_MONTH = 29.53059;
   const REFERENCE_NEW_MOON = new Date('2000-01-06T18:14:00Z');
   
   const newMoons: Date[] = [];
   const startDate = new Date(year, 0, 1);
-  const endDate = new Date(year, 11, 31, 23, 59, 59); // End of the requested year
+  const endDate = new Date(year, 11, 31, 23, 59, 59);
   
-  // Calcular la primera luna nueva del año
   const daysSinceReference = (startDate.getTime() - REFERENCE_NEW_MOON.getTime()) / (24 * 60 * 60 * 1000);
   const cyclesSinceReference = daysSinceReference / SYNODIC_MONTH;
   const nextCycleStart = Math.ceil(cyclesSinceReference);
   
-  // Generar todas las lunas nuevas del año
   for (let i = nextCycleStart; ; i++) {
     const newMoonTime = REFERENCE_NEW_MOON.getTime() + (i * SYNODIC_MONTH * 24 * 60 * 60 * 1000);
     const newMoon = new Date(newMoonTime);
@@ -380,11 +426,13 @@ export const getLunatoCalendarInfo = (date: Date = new Date(), offset: number = 
   const calendar = getOzkarCalendar(date);
   const year = date.getFullYear();
   
-  // Obtener todas las lunas nuevas
-  const prevYearNewMoons = getNewMoonDates(year - 1);
-  const currentYearNewMoons = getNewMoonDates(year);
-  const nextYearNewMoons = getNewMoonDates(year + 1);
-  const allNewMoons = prevYearNewMoons.concat(currentYearNewMoons, nextYearNewMoons);
+  // Generar lunas nuevas para un rango más amplio (3 años antes y después)
+  const years = [];
+  for (let y = year - 3; y <= year + 3; y++) {
+    years.push(...getNewMoonDates(y));
+  }
+  
+  const allNewMoons = years;
   allNewMoons.sort((a, b) => a.getTime() - b.getTime());
   
   // Encontrar el inicio del lunato actual
@@ -395,12 +443,41 @@ export const getLunatoCalendarInfo = (date: Date = new Date(), offset: number = 
     moon => Math.abs(moon.getTime() - currentLunatoStart.getTime()) < 24 * 60 * 60 * 1000
   );
   
-  if (currentLunatoIndex === -1) currentLunatoIndex = 0;
+  if (currentLunatoIndex === -1) {
+    // Si no se encuentra, buscar la luna nueva más cercana antes de la fecha actual
+    currentLunatoIndex = allNewMoons.findIndex(moon => moon > currentLunatoStart);
+    if (currentLunatoIndex > 0) currentLunatoIndex--;
+  }
   
   // Aplicar offset para lunato anterior/siguiente
   const targetLunatoIndex = currentLunatoIndex + offset;
+  
+  // Validar que el índice esté dentro del rango
+  if (targetLunatoIndex < 0 || targetLunatoIndex >= allNewMoons.length - 1) {
+    // Si está fuera del rango, retornar un calendario vacío/por defecto
+    const fallbackDate = new Date(date);
+    fallbackDate.setMonth(fallbackDate.getMonth() + offset);
+    const fallbackCalendar = getOzkarCalendar(fallbackDate);
+    
+    return {
+      lunato: fallbackCalendar.lunato,
+      lunatoDozenal: toDozenal(fallbackCalendar.lunato),
+      sol: fallbackCalendar.sol,
+      solDozenal: fallbackCalendar.solDozenal,
+      startDate: fallbackCalendar.lunatoStartDate,
+      endDate: new Date(fallbackCalendar.lunatoStartDate.getTime() + 30 * 24 * 60 * 60 * 1000),
+      days: [],
+      phases: {
+        novLuno: [],
+        prePlena: [],
+        plena: [],
+        preNova: []
+      }
+    };
+  }
+  
   const lunatoStart = allNewMoons[targetLunatoIndex];
-  const lunatoEnd = allNewMoons[targetLunatoIndex + 1] || new Date(lunatoStart.getTime() + 30 * 24 * 60 * 60 * 1000);
+  const lunatoEnd = allNewMoons[targetLunatoIndex + 1];
   
   // Calcular todos los días del lunato
   const days: LunatoDayInfo[] = [];

@@ -13,7 +13,8 @@
     "deploy": "firebase deploy",
     "migrate-blog": "node scripts/migrate-blog-entries.cjs",
     "preload-blog": "node scripts/preload-blog-entries.cjs",
-    "prebuild": "npm run preload-blog"
+    "prebuild": "npm run preload-blog",
+    "generate-astro-data": "node scripts/fetch-astronomical-data.cjs"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
