@@ -15,7 +15,10 @@
  * 
  * 3. CALENDARIO SOLAR PERSONAL ("Sol Calendar")
  *    - Sol = año solar personal (desde solsticio de invierno - diciembre)
- *    - Sol 1 comienza en el solsticio de invierno de diciembre 1992
+ *    - Sol 0 comienza en el solsticio de invierno de diciembre 1992
+ *    - Sol 0 = año 1993 (desde solsticio dic 1992 hasta solsticio dic 1993)
+ *    - Sol 1 = año 1994 (desde solsticio dic 1993 hasta solsticio dic 1994)
+ *    - Fechas antes del solsticio de dic 1992 tienen Sol negativo
  *    - Lunato = mes lunar (luna nueva a luna nueva)
  *    - Lunato 0 = lunato de transición entre años solares
  *    - Jorno = día dentro del lunato actual (1-30)
@@ -321,7 +324,9 @@ export const getOzkarClock = (date: Date = new Date()): OzkarClockTime => {
 
 /**
  * Convierte una fecha al Calendario Solar Personal
- * - Sol = año solar desde el solsticio de invierno de diciembre 1992 (Sol 1)
+ * - Sol = año solar desde el solsticio de invierno de diciembre 1992
+ * - Sol 0 = solsticio dic 1992 a solsticio dic 1993 (año 1993)
+ * - Sol 1 = solsticio dic 1993 a solsticio dic 1994 (año 1994)
  * - Lunato = mes lunar (luna nueva a luna nueva), 0 = lunato de transición
  * - Jorno = día dentro del lunato
  */
@@ -329,8 +334,9 @@ export const getOzkarCalendar = (date: Date = new Date()): OzkarCalendarDate => 
   const currentYear = date.getFullYear();
   
   // Calcular Sol (año solar personal)
-  // Sol 1 comienza en el solsticio de invierno de diciembre 1992
-  const firstSolYear = 1992;
+  // Sol 0 comienza en el solsticio de invierno de diciembre 1992
+  // Esto hace que todo 1993 (desde dic 1992 hasta dic 1993) sea Sol 0
+  const sol0Year = 1992;
   
   // Encontrar el solsticio de invierno más reciente antes de la fecha actual
   let recentSolstice: Date;
@@ -343,8 +349,11 @@ export const getOzkarCalendar = (date: Date = new Date()): OzkarCalendarDate => 
   }
   
   // Calcular cuántos años solares han pasado desde diciembre 1992
-  // Sol 1 = solsticio diciembre 1992, Sol 2 = solsticio diciembre 1993, etc.
-  const sol = recentSolstice.getFullYear() - firstSolYear + 1;
+  // Sol 0 = solsticio diciembre 1992
+  // Sol 1 = solsticio diciembre 1993
+  // Sol 2 = solsticio diciembre 1994, etc.
+  // Fechas antes de dic 1992 tendrán Sol negativo
+  const sol = recentSolstice.getFullYear() - sol0Year;
   
   // Obtener información del lunato
   const { lunato, jorno, lunatoStart } = getLunatoInfo(date, recentSolstice);
@@ -426,9 +435,10 @@ export const getLunatoCalendarInfo = (date: Date = new Date(), offset: number = 
   const calendar = getOzkarCalendar(date);
   const year = date.getFullYear();
   
-  // Generar lunas nuevas para un rango más amplio (3 años antes y después)
+  // Generar lunas nuevas para un rango amplio (10 años antes y después)
+  // Esto permite navegar libremente sin restricciones artificiales
   const years = [];
-  for (let y = year - 3; y <= year + 3; y++) {
+  for (let y = year - 10; y <= year + 10; y++) {
     years.push(...getNewMoonDates(y));
   }
   
@@ -452,33 +462,47 @@ export const getLunatoCalendarInfo = (date: Date = new Date(), offset: number = 
   // Aplicar offset para lunato anterior/siguiente
   const targetLunatoIndex = currentLunatoIndex + offset;
   
-  // Validar que el índice esté dentro del rango
+  // Si estamos fuera del rango, generar datos para ese rango específico
   if (targetLunatoIndex < 0 || targetLunatoIndex >= allNewMoons.length - 1) {
-    // Si está fuera del rango, retornar un calendario vacío/por defecto
-    const fallbackDate = new Date(date);
-    fallbackDate.setMonth(fallbackDate.getMonth() + offset);
-    const fallbackCalendar = getOzkarCalendar(fallbackDate);
+    // Calcular la fecha aproximada del lunato objetivo
+    const targetDate = new Date(date);
+    // Aproximadamente 29.53 días por lunato
+    targetDate.setDate(targetDate.getDate() + (offset * 29.53));
     
-    return {
-      lunato: fallbackCalendar.lunato,
-      lunatoDozenal: toDozenal(fallbackCalendar.lunato),
-      sol: fallbackCalendar.sol,
-      solDozenal: fallbackCalendar.solDozenal,
-      startDate: fallbackCalendar.lunatoStartDate,
-      endDate: new Date(fallbackCalendar.lunatoStartDate.getTime() + 30 * 24 * 60 * 60 * 1000),
-      days: [],
-      phases: {
-        novLuno: [],
-        prePlena: [],
-        plena: [],
-        preNova: []
-      }
-    };
+    const targetYear = targetDate.getFullYear();
+    
+    // Generar lunas nuevas para ese año y los adyacentes
+    const extendedYears = [];
+    for (let y = targetYear - 2; y <= targetYear + 2; y++) {
+      extendedYears.push(...getNewMoonDates(y));
+    }
+    extendedYears.sort((a, b) => a.getTime() - b.getTime());
+    
+    // Encontrar el lunato más cercano a la fecha objetivo
+    const targetLunatoIdx = extendedYears.findIndex(moon => moon > targetDate);
+    const actualIdx = targetLunatoIdx > 0 ? targetLunatoIdx - 1 : 0;
+    
+    if (actualIdx >= 0 && actualIdx < extendedYears.length - 1) {
+      const lunatoStart = extendedYears[actualIdx];
+      const lunatoEnd = extendedYears[actualIdx + 1];
+      
+      return buildLunatoCalendar(lunatoStart, lunatoEnd);
+    }
   }
   
   const lunatoStart = allNewMoons[targetLunatoIndex];
   const lunatoEnd = allNewMoons[targetLunatoIndex + 1];
   
+  return buildLunatoCalendar(lunatoStart, lunatoEnd);
+};
+
+/**
+ * Construye la información del calendario de un lunato
+ */
+const buildLunatoCalendar = (
+  lunatoStart: Date, 
+  lunatoEnd: Date
+): LunatoCalendarInfo => {
   // Calcular todos los días del lunato
   const days: LunatoDayInfo[] = [];
   const currentDate = new Date();
