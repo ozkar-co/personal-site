@@ -180,20 +180,88 @@ export const toDozenal = (decimal: number): string => {
 };
 
 /**
+ * Convierte un número decimal a notación dozenal con decimales
+ * @param decimal Número decimal a convertir
+ * @param precision Número de dígitos decimales dozenales (por defecto 12)
+ */
+export const toDozenalWithDecimals = (decimal: number, precision: number = 12): string => {
+  if (decimal === 0) return '0';
+  
+  const isNegative = decimal < 0;
+  const absValue = Math.abs(decimal);
+  
+  // Parte entera
+  const integerPart = Math.floor(absValue);
+  let integerResult = '';
+  let num = integerPart;
+  
+  if (num === 0) {
+    integerResult = '0';
+  } else {
+    while (num > 0) {
+      integerResult = DOZENAL_DIGITS[num % 12] + integerResult;
+      num = Math.floor(num / 12);
+    }
+  }
+  
+  // Parte decimal
+  let fractionalPart = absValue - integerPart;
+  let fractionalResult = '';
+  
+  if (fractionalPart > 0 && precision > 0) {
+    fractionalResult = '.';
+    for (let i = 0; i < precision; i++) {
+      fractionalPart *= 12;
+      const digit = Math.floor(fractionalPart);
+      fractionalResult += DOZENAL_DIGITS[digit];
+      fractionalPart -= digit;
+      
+      // Detener si llegamos a cero exacto
+      if (fractionalPart === 0) break;
+    }
+  }
+  
+  return (isNegative ? '-' : '') + integerResult + fractionalResult;
+};
+
+/**
  * Convierte dozenal a decimal
  */
 export const fromDozenal = (dozenal: string): number => {
-  let result = 0;
   const str = dozenal.toUpperCase().replace(/^Z/, '');
+  const parts = str.split('.');
   
-  for (let i = 0; i < str.length; i++) {
-    const digit = str[i];
+  // Parte entera
+  let result = 0;
+  for (let i = 0; i < parts[0].length; i++) {
+    const digit = parts[0][i];
     let value: number;
     if (digit === 'X') value = 10;
     else if (digit === 'W') value = 11;
+    else if (digit === '-') continue; // Ignorar signo negativo aquí
     else value = parseInt(digit, 10);
     
     result = result * 12 + value;
+  }
+  
+  // Parte decimal
+  if (parts.length > 1) {
+    let fractionalValue = 0;
+    for (let i = 0; i < parts[1].length; i++) {
+      const digit = parts[1][i];
+      let value: number;
+      if (digit === 'X') value = 10;
+      else if (digit === 'W') value = 11;
+      else value = parseInt(digit, 10);
+      
+      fractionalValue += value / Math.pow(12, i + 1);
+    }
+    result += fractionalValue;
+  }
+  
+  // Manejar signo negativo
+  if (dozenal.startsWith('-')) {
+    result = -result;
   }
   
   return result;

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { toDozenal, fromDozenal } from '../../utils/ozkarTime';
+import { toDozenal, toDozenalWithDecimals, fromDozenal } from '../../utils/ozkarTime';
 import { dozenalToWords } from '../../utils/dozenalNaming';
 import './Calc.scss';
 
@@ -52,7 +52,7 @@ export const Calc = () => {
     if (previousValue !== null && operation !== null && !shouldResetDisplay) {
       // Execute pending operation
       const result = executeOperation(previousValue, currentDecimal, operation);
-      setDisplay(toDozenal(result));
+      setDisplay(toDozenalWithDecimals(result));
       setPreviousValue(result);
     } else {
       setPreviousValue(currentDecimal);
@@ -79,7 +79,7 @@ export const Calc = () => {
     if (previousValue !== null && operation !== null) {
       const currentDecimal = fromDozenal(display);
       const result = executeOperation(previousValue, currentDecimal, operation);
-      setDisplay(toDozenal(result));
+      setDisplay(toDozenalWithDecimals(result));
       setPreviousValue(null);
       setOperation(null);
       setShouldResetDisplay(true);
@@ -114,7 +114,7 @@ export const Calc = () => {
         result = currentDecimal;
     }
 
-    setDisplay(toDozenal(result));
+    setDisplay(toDozenalWithDecimals(result));
     setShouldResetDisplay(true);
   };
 
@@ -152,7 +152,7 @@ export const Calc = () => {
         result = currentDecimal;
     }
 
-    setDisplay(toDozenal(result));
+    setDisplay(toDozenalWithDecimals(result));
     setShouldResetDisplay(true);
   };
 
