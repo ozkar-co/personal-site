@@ -92,12 +92,8 @@ export const numberToWords = (decimal: number): string => {
         }
       } else if (magnitude.name === 'zen') {
         // Special handling for zen
-        if (quotient === 1 && remaining === 0) {
+        if (quotient === 1) {
           parts.push('zen');
-        } else if (quotient === 1) {
-          parts.push('zen');
-        } else if (remaining === 0) {
-          parts.push(numberToDigitName(quotient) + 'zen');
         } else {
           parts.push(numberToDigitName(quotient) + 'zen');
         }
