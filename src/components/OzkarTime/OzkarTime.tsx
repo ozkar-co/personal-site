@@ -16,12 +16,6 @@ import {
 import './OzkarTime.scss';
 
 export const OzkarTime = () => {
-  // Función helper para convertir símbolos dozenales a formato 7-segmentos
-  // X → H, W → E (solo para display visual)
-  const toSegment7 = (dozenalString: string): string => {
-    return dozenalString.replace(/X/g, 'H').replace(/W/g, 'E');
-  };
-
   // Función helper para convertir porcentaje decimal a dozenal
   // 100% decimal = 100 dozenal (que es 144 decimal)
   const percentageToDozenal = (decimalPercentage: number): string => {
@@ -199,7 +193,7 @@ export const OzkarTime = () => {
           <div className="ozkar-clock">
             <h2>Reloj Base 12</h2>
             <div className="clock-display">
-              <span className="clock-time">{toSegment7(ozkarClock.formatted)}</span>
+              <span className="clock-time">{ozkarClock.formatted}</span>
               <span className="clock-period">{ozkarClock.period}</span>
             </div>
             <div className="clock-breakdown">

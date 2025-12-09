@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { toDozenal, toDozenalWithDecimals, fromDozenal } from '../../utils/ozkarTime';
+import { toDozenalWithDecimals, fromDozenal } from '../../utils/ozkarTime';
 import { dozenalToWords } from '../../utils/dozenalNaming';
 import './Calc.scss';
 
@@ -11,11 +11,6 @@ export const Calc = () => {
   const [previousValue, setPreviousValue] = useState<number | null>(null);
   const [operation, setOperation] = useState<string | null>(null);
   const [shouldResetDisplay, setShouldResetDisplay] = useState(false);
-
-  // Función para convertir símbolos dozenales a formato 7-segmentos
-  const toSegment7 = (dozenalString: string): string => {
-    return dozenalString.replace(/X/g, 'H').replace(/W/g, 'E');
-  };
 
   // Handle digit input
   const handleDigit = (digit: string) => {
@@ -68,7 +63,13 @@ export const Calc = () => {
       case '+': return prev + current;
       case '-': return prev - current;
       case '×': return prev * current;
-      case '÷': return current !== 0 ? prev / current : 0;
+      case '÷': 
+        if (current === 0) {
+          setDisplay('ERROR');
+          setShouldResetDisplay(true);
+          return 0;
+        }
+        return prev / current;
       case '^': return Math.pow(prev, current);
       default: return current;
     }
@@ -102,9 +103,19 @@ export const Calc = () => {
         result = Math.tan(currentDecimal);
         break;
       case 'asin':
+        if (currentDecimal < -1 || currentDecimal > 1) {
+          setDisplay('ERROR');
+          setShouldResetDisplay(true);
+          return;
+        }
         result = Math.asin(currentDecimal);
         break;
       case 'acos':
+        if (currentDecimal < -1 || currentDecimal > 1) {
+          setDisplay('ERROR');
+          setShouldResetDisplay(true);
+          return;
+        }
         result = Math.acos(currentDecimal);
         break;
       case 'atan':
@@ -143,7 +154,12 @@ export const Calc = () => {
         result = TAU;
         break;
       case '1/x':
-        result = currentDecimal !== 0 ? 1 / currentDecimal : 0;
+        if (currentDecimal === 0) {
+          setDisplay('ERROR');
+          setShouldResetDisplay(true);
+          return;
+        }
+        result = 1 / currentDecimal;
         break;
       case '+/-':
         result = -currentDecimal;
@@ -176,7 +192,7 @@ export const Calc = () => {
         <div className="calculator">
           <div className="calc-display-section">
             <div className="calc-display">
-              <span className="display-value">{toSegment7(display)}</span>
+              <span className="display-value">{display}</span>
               {operation && <span className="operation-indicator">{operation}</span>}
             </div>
             <div className="calc-words">
@@ -203,7 +219,12 @@ export const Calc = () => {
 
             {/* Scientific functions row 3 */}
             <div className="button-row">
-              <button onClick={() => handleOperation('^')} className="btn-function">xʸ</button>
+              <button 
+                onClick={() => handleOperation('^')} 
+                className={`btn-function ${operation === '^' && shouldResetDisplay ? 'active' : ''}`}
+              >
+                xʸ
+              </button>
               <button onClick={() => handleSpecialFunction('square')} className="btn-function">x²</button>
               <button onClick={() => handleSpecialFunction('ln')} className="btn-function">ln</button>
               <button onClick={() => handleSpecialFunction('exp')} className="btn-function">eˣ</button>
@@ -214,28 +235,48 @@ export const Calc = () => {
               <button onClick={handleClear} className="btn-clear">C</button>
               <button onClick={() => handleSpecialFunction('+/-')} className="btn-operation">+/-</button>
               <button onClick={() => handleSpecialFunction('1/x')} className="btn-operation">1/x</button>
-              <button onClick={() => handleOperation('÷')} className="btn-operation">÷</button>
+              <button 
+                onClick={() => handleOperation('÷')} 
+                className={`btn-operation ${operation === '÷' && shouldResetDisplay ? 'active' : ''}`}
+              >
+                ÷
+              </button>
             </div>
 
             <div className="button-row">
               <button onClick={() => handleDigit('7')} className="btn-digit">7</button>
               <button onClick={() => handleDigit('8')} className="btn-digit">8</button>
               <button onClick={() => handleDigit('9')} className="btn-digit">9</button>
-              <button onClick={() => handleOperation('×')} className="btn-operation">×</button>
+              <button 
+                onClick={() => handleOperation('×')} 
+                className={`btn-operation ${operation === '×' && shouldResetDisplay ? 'active' : ''}`}
+              >
+                ×
+              </button>
             </div>
 
             <div className="button-row">
               <button onClick={() => handleDigit('4')} className="btn-digit">4</button>
               <button onClick={() => handleDigit('5')} className="btn-digit">5</button>
               <button onClick={() => handleDigit('6')} className="btn-digit">6</button>
-              <button onClick={() => handleOperation('-')} className="btn-operation">-</button>
+              <button 
+                onClick={() => handleOperation('-')} 
+                className={`btn-operation ${operation === '-' && shouldResetDisplay ? 'active' : ''}`}
+              >
+                -
+              </button>
             </div>
 
             <div className="button-row">
               <button onClick={() => handleDigit('1')} className="btn-digit">1</button>
               <button onClick={() => handleDigit('2')} className="btn-digit">2</button>
               <button onClick={() => handleDigit('3')} className="btn-digit">3</button>
-              <button onClick={() => handleOperation('+')} className="btn-operation">+</button>
+              <button 
+                onClick={() => handleOperation('+')} 
+                className={`btn-operation ${operation === '+' && shouldResetDisplay ? 'active' : ''}`}
+              >
+                +
+              </button>
             </div>
 
             <div className="button-row">

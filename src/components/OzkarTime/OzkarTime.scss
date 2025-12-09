@@ -1,10 +1,12 @@
 @use 'sass:color';
 
 @font-face {
-  font-family: 'Segment7';
-  src: url('/assets/Segment7Standard.otf') format('opentype');
+  font-family: 'Segment14';
+  src: url('/assets/Segment14.otf') format('opentype'),
+       url('/assets/Segment14.otf') format('truetype');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 $color-accent: #00ff00;
@@ -101,7 +103,7 @@ $color-background: #0d0d0d;
         font-size: 3.5rem;
         font-weight: normal;
         color: $color-accent;
-        font-family: 'Segment7', monospace;
+        font-family: 'Segment14', monospace;
         text-shadow: 0 0 15px rgba($color-accent, 0.6);
         letter-spacing: 0.2em;
       }

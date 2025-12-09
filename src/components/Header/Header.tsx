@@ -31,6 +31,7 @@ export const Header = ({ onMenuToggle }: HeaderProps) => {
         <Link to="/wizz" onClick={handleLinkClick}>WIZZ</Link>
         <Link to="/time" onClick={handleLinkClick}>TIME</Link>
         <Link to="/clock" onClick={handleLinkClick}>CLOCK</Link>
+        <Link to="/calc" onClick={handleLinkClick}>CALC</Link>
         <Link to="/admin" onClick={handleLinkClick}>ADMIN</Link>
       </nav>
       <button 

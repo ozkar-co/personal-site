@@ -1,10 +1,12 @@
 @use 'sass:color';
 
 @font-face {
-  font-family: 'Segment7';
-  src: url('/assets/Segment7Standard.otf') format('opentype');
+  font-family: 'Segment14';
+  src: url('/assets/Segment14.otf') format('opentype'),
+       url('/assets/Segment14.otf') format('truetype');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 $color-accent: #00ff00;
@@ -82,7 +84,7 @@ $color-background: #0d0d0d;
 
           .display-value {
             font-size: 3rem;
-            font-family: 'Segment7', monospace;
+            font-family: 'Segment14', monospace;
             color: $color-accent;
             text-shadow: 0 0 15px rgba($color-accent, 0.6);
             letter-spacing: 0.15em;
@@ -156,11 +158,23 @@ $color-background: #0d0d0d;
           .btn-operation {
             background: rgba($color-accent, 0.1);
             font-weight: 700;
+
+            &.active {
+              background: rgba($color-accent, 0.3);
+              border-color: $color-accent;
+              box-shadow: 0 0 15px rgba($color-accent, 0.5);
+            }
           }
 
           .btn-function {
             background: rgba($color-accent, 0.08);
             font-size: 1rem;
+
+            &.active {
+              background: rgba($color-accent, 0.25);
+              border-color: $color-accent;
+              box-shadow: 0 0 15px rgba($color-accent, 0.5);
+            }
           }
 
           .btn-clear {
