@@ -129,7 +129,7 @@ export const dozenalToWords = (dozenal: string): string => {
     else if (digit === 'W') value = 11;
     else value = parseInt(digit, 10);
     
-    if (isNaN(value)) return 'invalid';
+    if (isNaN(value)) return 'eroro';
     
     decimal = decimal * 12 + value;
   }
