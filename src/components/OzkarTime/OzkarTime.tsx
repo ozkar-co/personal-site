@@ -13,6 +13,7 @@ import {
   LUNAR_PHASES,
   ZODIAC_CONSTELLATIONS
 } from '../../utils/ozkarTime';
+import { dozenalToWords, readFractionalPart } from '../../utils/dozenalNaming';
 import './OzkarTime.scss';
 
 export const OzkarTime = () => {
@@ -23,6 +24,25 @@ export const OzkarTime = () => {
     const dozenalValue = (decimalPercentage / 100) * 144;
     // Formatear en dozenal
     return formatDozenal(Math.round(dozenalValue));
+  };
+
+  // Función helper para obtener la descripción en palabras de la hora
+  const getClockDescription = (clock: OzkarClockTime): string => {
+    // Convertir horo a palabras
+    const horoWords = dozenalToWords(formatDozenal(clock.horo));
+    // Leer temo y mino como parte fraccionaria (agrupada en pareja)
+    const temoMinoFractional = `${formatDozenal(clock.temo)}${formatDozenal(clock.mino)}`;
+    const fractionalWords = readFractionalPart(temoMinoFractional);
+    
+    return `Es ${horoWords} koma ${fractionalWords} horo`;
+  };
+
+  // Función helper para obtener la descripción del jorno
+  const getJornoDescription = (calendar: OzkarCalendarDate, clock: OzkarClockTime): string => {
+    const period = clock.period;
+    const jornoWords = dozenalToWords(formatDozenal(calendar.jorno));
+    
+    return `${period} di la jorno ${calendar.jorno} (${jornoWords})`;
   };
 
   // Estado para OzkarTime
@@ -194,7 +214,7 @@ export const OzkarTime = () => {
             <h2>Reloj Base 12</h2>
             <div className="clock-display">
               <span className="clock-time">{ozkarClock.formatted}</span>
-              <span className="clock-period">{ozkarClock.period}</span>
+              <span className="clock-description">{getClockDescription(ozkarClock)}</span>
             </div>
             <div className="clock-breakdown">
               <div className="time-part">
@@ -239,7 +259,7 @@ export const OzkarTime = () => {
                   className="constellation-icon"
                 />
               </span>
-              <span className="calendar-jorno">Jorno {ozkarCalendar.jorno}</span>
+              <span className="calendar-jorno">{getJornoDescription(ozkarCalendar, ozkarClock)}</span>
             </div>
             <div className="calendar-details">
               <div className="detail-item">
