@@ -14,6 +14,7 @@ import { Time } from './components/Time/Time'
 import { OzkarTime } from './components/OzkarTime/OzkarTime'
 import { Admin } from './components/Admin/Admin'
 import { Services } from './components/Services/Services'
+import { Calc } from './components/Calc/Calc'
 
 // Componente para determinar el tipo de fondo según la ruta
 const AppContent = () => {
@@ -38,6 +39,7 @@ const AppContent = () => {
         <Route path="/wizz" element={<Wizz />} />
         <Route path="/time" element={<Time />} />
         <Route path="/clock" element={<OzkarTime />} />
+        <Route path="/calc" element={<Calc />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/" element={
           <main>
