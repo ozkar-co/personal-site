@@ -209,7 +209,7 @@ export const toDozenalWithDecimals = (decimal: number, precision: number = 12): 
   let fractionalResult = '';
   
   if (fractionalPart > 0 && precision > 0) {
-    fractionalResult = '.';
+    fractionalResult = ',';
     for (let i = 0; i < precision; i++) {
       fractionalPart *= 12;
       const digit = Math.floor(fractionalPart);
@@ -229,7 +229,8 @@ export const toDozenalWithDecimals = (decimal: number, precision: number = 12): 
  */
 export const fromDozenal = (dozenal: string): number => {
   const str = dozenal.toUpperCase().replace(/^Z/, '');
-  const parts = str.split('.');
+  // Aceptar tanto coma como punto como separador fraccionario
+  const parts = str.split(/[.,]/);
   
   // Parte entera
   let result = 0;
@@ -522,9 +523,9 @@ export const getOzkarClock = (date: Date = new Date()): OzkarClockTime => {
   const minoDozenal = toDozenal(mino);
   const tikoDozenal = toDozenal(tiko);
   
-  // Formato: horo.temo.mino (según especificación del usuario)
-  const formatted = `${horoDozenal}.${temoDozenal}${minoDozenal}`;
-  const formattedFull = `${horoDozenal}.${temoDozenal}${minoDozenal}.${tikoDozenal}`;
+  // Formato: horo,temo mino (usando coma como separador fraccionario)
+  const formatted = `${horoDozenal},${temoDozenal}${minoDozenal}`;
+  const formattedFull = `${horoDozenal},${temoDozenal}${minoDozenal},${tikoDozenal}`;
   
   return {
     horo,

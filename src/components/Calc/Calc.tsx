@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { toDozenalWithDecimals, fromDozenal } from '../../utils/ozkarTime';
-import { dozenalToWords } from '../../utils/dozenalNaming';
+import { dozenalWithFractionalToWords } from '../../utils/dozenalNaming';
 import './Calc.scss';
 
 // Tau constant (2π)
@@ -22,13 +22,13 @@ export const Calc = () => {
     }
   };
 
-  // Handle decimal point
+  // Handle decimal point (koma)
   const handleDecimalPoint = () => {
     if (shouldResetDisplay) {
-      setDisplay('0.');
+      setDisplay('0,');
       setShouldResetDisplay(false);
-    } else if (!display.includes('.')) {
-      setDisplay(display + '.');
+    } else if (!display.includes(',') && !display.includes('.')) {
+      setDisplay(display + ',');
     }
   };
 
@@ -175,9 +175,8 @@ export const Calc = () => {
   // Get words representation
   const getWordsRepresentation = (): string => {
     try {
-      // Handle decimal points - only convert integer part for now
-      const dozenalStr = display.split('.')[0];
-      return dozenalToWords(dozenalStr);
+      // Use the new function that handles fractional parts
+      return dozenalWithFractionalToWords(display);
     } catch {
       return '';
     }
@@ -187,7 +186,6 @@ export const Calc = () => {
     <section className="calc">
       <div className="calc-container">
         <h1>Calculadora Dozenal</h1>
-        <p className="calc-subtitle">Sistema Base-12 con operaciones matemáticas y trigonométricas</p>
 
         <div className="calculator">
           <div className="calc-display-section">
@@ -287,99 +285,47 @@ export const Calc = () => {
             </div>
 
             <div className="button-row">
-              <button onClick={handleDecimalPoint} className="btn-digit btn-wide">.</button>
+              <button onClick={handleDecimalPoint} className="btn-digit btn-wide">,</button>
             </div>
           </div>
         </div>
 
-        {/* Explanation sections */}
-        <div className="calc-explanations">
-          <div className="explanation-section">
-            <h3>Sistema de Numeración Dozenal</h3>
-            <div className="explanation-content">
-              <h4>Dígitos</h4>
-              <p>El sistema dozenal usa 12 dígitos: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, X (diez), W (once)</p>
-              
-              <h4>Potencias de 12</h4>
-              <ul>
-                <li><strong>12⁰ = 1</strong> - unidades</li>
-                <li><strong>12¹ = 12 (10 dozenal)</strong> - zen</li>
-                <li><strong>12² = 144 (100 dozenal)</strong> - grod</li>
-                <li><strong>12³ = 1728 (1000 dozenal)</strong> - mil</li>
-                <li><strong>12⁶</strong> - milion</li>
-                <li><strong>12⁹</strong> - miliardo</li>
-              </ul>
-
-              <h4>Ventajas del Sistema Dozenal</h4>
-              <ul>
-                <li>12 tiene más divisores que 10 (1,2,3,4,6,12 vs 1,2,5,10)</li>
-                <li>Facilita división por tercios y cuartos</li>
-                <li>Mejor para medidas y cálculos cotidianos</li>
-                <li>Históricamente usado en docenas, pies, pulgadas, horas</li>
-              </ul>
+        {/* Explanation section */}
+        <div className="calc-explanation">
+          <h3>¿Cómo funciona?</h3>
+          <div className="explanation-grid">
+            <div className="explanation-item">
+              <strong>Sistema Numérico Dozenal (Base-12):</strong> Usa 12 dígitos: 0-9, X (diez), W (once). 
+              Potencias: 12¹=zen, 12²=grod, 12³=mil. Ventajas: 12 tiene más divisores que 10 (1,2,3,4,6,12 vs 1,2,5,10), 
+              facilitando calculos mentales..
             </div>
-          </div>
-
-          <div className="explanation-section">
-            <h3>Reglas de Nomenclatura</h3>
-            <div className="explanation-content">
-              <h4>Nombres de Dígitos</h4>
-              <p>0=zero, 1=un, 2=du, 3=tri, 4=quar, 5=kin, 6=ses, 7=sep, 8=ok, 9=non, X=dek, W=elv</p>
-
-              <h4>Composición de Números</h4>
-              <ul>
-                <li><strong>0-W (0-11):</strong> Usar nombre del dígito directamente</li>
-                <li><strong>10 (12 decimal):</strong> zen</li>
-                <li><strong>11 (13 decimal):</strong> zen un</li>
-                <li><strong>20 (24 decimal):</strong> duzen</li>
-                <li><strong>100 (144 decimal):</strong> un grod</li>
-                <li><strong>164 (232 decimal):</strong> un grod seszen quar</li>
-                <li><strong>1000 (1728 decimal):</strong> un mil</li>
-              </ul>
-
-              <h4>Reglas de Espaciado</h4>
-              <ul>
-                <li>No usar guiones</li>
-                <li>Separación por espacios entre bloques</li>
-                <li>Para zen: un dígito + "zen" se une (ej: "duzen")</li>
-                <li>Para magnitudes mayores: siempre separado (ej: "du grod")</li>
-              </ul>
+            
+            <div className="explanation-item">
+              <strong>Nombres de Dígitos:</strong> 0=zero, 1=un, 2=du, 3=tri, 4=quar, 5=kin, 6=ses, 7=sep, 8=ok, 
+              9=non, X=dek, W=elv. Ejemplos: 10₁₂=zen, 11₁₂=zen un, 20₁₂=duzen, 100₁₂=un grod, 1000₁₂=un mil.
             </div>
-          </div>
-
-          <div className="explanation-section">
-            <h3>¿Por qué Tau (τ) es mejor que Pi (π)?</h3>
-            <div className="explanation-content">
-              <h4>Tau = 2π ≈ 6.283185...</h4>
-              
-              <h4>Razones matemáticas:</h4>
-              <ul>
-                <li><strong>Circunferencia = τ × radio</strong> (más directo que C = 2πr)</li>
-                <li><strong>Radianes completos:</strong> Un círculo = τ radianes (vs 2π)</li>
-                <li><strong>Medio círculo = τ/2</strong> (vs π)</li>
-                <li><strong>Cuarto de círculo = τ/4</strong> (vs π/2)</li>
-              </ul>
-
-              <h4>Ventajas pedagógicas:</h4>
-              <ul>
-                <li>Tau relaciona directamente circunferencia con radio (relación fundamental)</li>
-                <li>Elimina el factor "2" que aparece constantemente con π</li>
-                <li>Más intuitivo: 1 vuelta = τ radianes</li>
-                <li>Fórmulas trigonométricas más naturales</li>
-              </ul>
-
-              <h4>Conversiones útiles:</h4>
-              <ul>
-                <li>360° = τ radianes</li>
-                <li>180° = τ/2 radianes</li>
-                <li>90° = τ/4 radianes</li>
-                <li>60° = τ/6 radianes</li>
-              </ul>
-
-              <p className="tau-note">
-                <strong>Nota:</strong> Esta calculadora usa radianes basados en τ. Los ángulos en radianes 
-                se relacionan directamente con fracciones de círculo: τ/4 = cuarto de vuelta, τ/2 = media vuelta, etc.
-              </p>
+            
+            <div className="explanation-item">
+              <strong>Sistema Fraccionario (Koma):</strong> Usamos la coma (,) como separador fraccionario. 
+              La parte fraccionaria se agrupa de a dos dígitos y cada pareja se lee como un número independiente. 
+              Ejemplos: 5,3 → "kin koma tri", 5,46 → "kin koma quarzen ses", W,81 → "elv koma okzen un".
+            </div>
+            
+            <div className="explanation-item">
+              <strong>Lectura Fraccionaria:</strong> Si una pareja lleva cero debe explicitarse (8,06 → "ok koma zero ses"). 
+              Si el último dígito no forma pareja, se nombra solo. Variante alternativa: también existe leer dígito por dígito.
+            </div>
+            
+            <div className="explanation-item">
+              <strong>Tau (τ) en lugar de Pi (π):</strong> τ = 2π ≈ 6.283185. Razones: Circunferencia = τ × radio 
+              (vs C = 2πr), un círculo = τ radianes (vs 2π), más intuitivo para ángulos. Esta calculadora usa radianes 
+              basados en τ: τ/4 = cuarto de vuelta, τ/2 = media vuelta.
+            </div>
+            
+            <div className="explanation-item">
+              <strong>Conversiones útiles:</strong> 360° = τ radianes, 180° = τ/2 radianes, 90° = τ/4 radianes, 
+              60° = τ/6 radianes. Ventaja pedagógica: elimina el factor "2" que aparece constantemente con π, 
+              haciendo las fórmulas trigonométricas más naturales.
             </div>
           </div>
         </div>

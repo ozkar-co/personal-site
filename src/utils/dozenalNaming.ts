@@ -136,3 +136,64 @@ export const dozenalToWords = (dozenal: string): string => {
   
   return numberToWords(decimal);
 };
+
+/**
+ * Reads the fractional part of a dozenal number
+ * Groups digits in pairs and reads them as if they were numbers (0-143)
+ * If a pair starts with 0, it must be explicitly named
+ * If the last digit is alone, it's read individually
+ */
+export const readFractionalPart = (fractionalDigits: string): string => {
+  const result: string[] = [];
+  const str = fractionalDigits.toUpperCase();
+  
+  // Process in pairs
+  for (let i = 0; i < str.length; i += 2) {
+    if (i + 1 < str.length) {
+      // We have a pair
+      const digit1 = str[i];
+      const digit2 = str[i + 1];
+      
+      // Convert pair to decimal number
+      let value1 = DIGIT_NAMES[digit1] ? (digit1 === 'X' ? 10 : digit1 === 'W' ? 11 : parseInt(digit1, 10)) : 0;
+      let value2 = DIGIT_NAMES[digit2] ? (digit2 === 'X' ? 10 : digit2 === 'W' ? 11 : parseInt(digit2, 10)) : 0;
+      
+      const pairValue = value1 * 12 + value2;
+      
+      // Read the pair as a number
+      result.push(numberToWords(pairValue));
+    } else {
+      // Last digit alone
+      const digit = str[i];
+      const name = DIGIT_NAMES[digit];
+      if (name) {
+        result.push(name);
+      }
+    }
+  }
+  
+  return result.join(' ');
+};
+
+/**
+ * Converts a complete dozenal number (with fractional part) to words
+ * Format: "5,3" → "kin koma tri"
+ * Format: "5,38" → "kin koma quarzen" (38 dozenal = 44 decimal)
+ */
+export const dozenalWithFractionalToWords = (dozenal: string): string => {
+  // Split by comma or point
+  const parts = dozenal.split(/[.,]/);
+  
+  if (parts.length === 1) {
+    // No fractional part
+    return dozenalToWords(parts[0]);
+  }
+  
+  // Integer part
+  const integerWords = dozenalToWords(parts[0]);
+  
+  // Fractional part - read in pairs
+  const fractionalWords = readFractionalPart(parts[1]);
+  
+  return `${integerWords} koma ${fractionalWords}`;
+};
