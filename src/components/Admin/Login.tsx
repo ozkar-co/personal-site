@@ -71,18 +71,11 @@ export const Login = ({ onLoginSuccess }: LoginProps) => {
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="site">Sitio:</label>
-            <input
-              type="text"
-              id="site"
-              value={credentials.site}
-              onChange={handleInputChange('site')}
-              required
-              disabled={loading}
-              readOnly
-            />
-          </div>
+          <input
+            type="hidden"
+            id="site"
+            value={credentials.site}
+          />
 
           {error && (
             <div className="error-message">
