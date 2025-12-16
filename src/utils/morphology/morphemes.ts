@@ -109,11 +109,7 @@ export function identifyMorphemes(word: string): Morpheme[] {
   }
 
   // If no special morphemes found, the whole word is the root
-  if (morphemes.length === 0) {
-    morphemes.push({ type: 'root', value: remaining });
-  } else {
-    morphemes.push({ type: 'root', value: remaining });
-  }
+  morphemes.push({ type: 'root', value: remaining });
 
   return morphemes;
 }

@@ -4,7 +4,7 @@
  */
 
 import { MorphologyAnalysis } from './types';
-import { normalize } from './tokenizer';
+import { normalize, tokenize } from './tokenizer';
 import { identifyMorphemes, getRoot } from './morphemes';
 import { tagPartOfSpeech } from './tagger';
 import { extractFeatures } from './features';
@@ -48,7 +48,6 @@ export function analyzeWords(words: string[]): MorphologyAnalysis[] {
  * Analyzes text by tokenizing and analyzing each word
  */
 export function analyzeText(text: string): MorphologyAnalysis[] {
-  const { tokenize } = require('./tokenizer');
   const words = tokenize(text);
   return analyzeWords(words);
 }

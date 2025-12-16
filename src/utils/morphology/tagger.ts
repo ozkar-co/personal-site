@@ -14,10 +14,10 @@ const ARTICLES = new Set([
 
 // Common Spanish pronouns
 const PRONOUNS = new Set([
-  'yo', 'tú', 'tu', 'él', 'el', 'ella', 'nosotros', 'nosotras',
+  'yo', 'tú', 'tu', 'él', 'ella', 'nosotros', 'nosotras',
   'vosotros', 'vosotras', 'ellos', 'ellas', 'usted', 'ustedes',
   'me', 'te', 'se', 'lo', 'la', 'le', 'nos', 'os', 'los', 'las', 'les',
-  'mí', 'mi', 'ti', 'sí', 'si'
+  'mí', 'mi', 'ti', 'sí'
 ]);
 
 // Common Spanish prepositions

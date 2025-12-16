@@ -3,7 +3,7 @@
  * This file demonstrates how to use the analyzer in TypeScript code
  */
 
-import { analyzeWord, analyzeText, formatAnalysis, getAnalysisSummary } from './analyzer';
+import { analyzeWord, analyzeText, formatAnalysis, getAnalysisSummary } from './index';
 
 // Example 1: Analyze a single word
 console.log('Example 1: Analyzing a single word');
