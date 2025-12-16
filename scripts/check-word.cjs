@@ -62,15 +62,18 @@ function analyzeWord(word) {
       analysis.partOfSpeech = 'verb';
       analysis.features.form = 'infinitive';
     }
-  } else if (normalized.endsWith('ción') || normalized.endsWith('sión') || normalized.endsWith('dad')) {
+  } else if (normalized.endsWith('ción') || normalized.endsWith('sión') || 
+             normalized.endsWith('dad') || normalized.endsWith('tad')) {
     analysis.partOfSpeech = 'noun';
-  } else if (normalized.endsWith('oso') || normalized.endsWith('osa')) {
+  } else if (normalized.endsWith('oso') || normalized.endsWith('osa') ||
+             normalized.endsWith('ivo') || normalized.endsWith('iva')) {
     analysis.partOfSpeech = 'adjective';
   } else if (normalized.endsWith('amos') || normalized.endsWith('emos') || normalized.endsWith('imos')) {
     analysis.partOfSpeech = 'verb';
     analysis.features.person = '1st';
     analysis.features.number = 'plural';
-  } else if (normalized.endsWith('o') || normalized.endsWith('a')) {
+  } else if (normalized.endsWith('o') || normalized.endsWith('a') || 
+             normalized.endsWith('os') || normalized.endsWith('as')) {
     analysis.partOfSpeech = 'noun';
   }
 
