@@ -10,7 +10,7 @@ import {
   SiMysql, SiGooglecloud, SiLinux,
   SiDocker, SiLaravel,
   SiPython, SiGo, SiPhp, SiHtml5, SiSass,
-  SiRedis, SiAmazon, SiFirebase,
+  SiRedis, SiIcloud, SiFirebase,
   SiSnowflake,
 } from 'react-icons/si';
 import { 
@@ -48,7 +48,7 @@ export const CV = () => {
     SiHtml5,
     SiSass,
     SiRedis,
-    SiAmazon,
+    SiIcloud,
     SiFirebase,
     SiSnowflake,
     // Habilidades Pedagógicas
