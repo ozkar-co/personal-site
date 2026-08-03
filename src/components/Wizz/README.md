@@ -45,4 +45,4 @@ El componente se accede a través de la ruta `/wizz` y está disponible en el me
 ## Personalización
 - Las frases se cargan desde `src/data/quotes.txt`
 - Los colores y efectos usan las variables del proyecto para mantener consistencia
-- La imagen del mago se encuentra en `public/assets/wizz.png` 
+- Las imágenes del mago están en `public/assets/wizz/wizz_0.webp` … `wizz_13.webp` 
