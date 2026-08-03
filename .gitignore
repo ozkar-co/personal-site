@@ -26,7 +26,3 @@ dist-ssr
 *.cache
 .firebase
 .firebase/*
-
-# Generated blog files for Wayback Machine
-public/blog-entries/
-public/blog-pages/

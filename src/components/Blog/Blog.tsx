@@ -2,7 +2,6 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { BlogEntry } from './BlogEntry';
 import { BlogEntryType } from './types';
 import { blogService } from '../../services/blogService';
-import { staticBlogService } from '../../services/staticBlogService';
 import { useState, useEffect, useRef } from 'react';
 import { formatShortDateWithoutTimezone } from '../../utils/dateUtils';
 import './Blog.scss';
@@ -12,88 +11,63 @@ export const Blog = () => {
   const navigate = useNavigate();
   const entryId = searchParams.get('id');
   const blogContentRef = useRef<HTMLDivElement>(null);
-  
+
   const [entries, setEntries] = useState<BlogEntryType[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
-  // Cargar entradas en dos pasos: estático primero, luego API
+
   useEffect(() => {
     const loadEntries = async () => {
       try {
         setLoading(true);
         setError(null);
-        
-        // Paso 1: Cargar y mostrar contenido estático inmediatamente
-        console.log('📚 Loading static blog entries...');
-        const staticEntries = await staticBlogService.getStaticEntries();
-        setEntries(staticEntries);
-        setLoading(false); // Mostrar contenido estático inmediatamente
-        
-        // Paso 2: Verificar API para contenido más nuevo (en segundo plano)
-        console.log('🔄 Checking API for newer entries...');
-        try {
-          const newerEntries = await staticBlogService.getNewerEntries();
-          if (newerEntries.length > 0) {
-            console.log(`🆕 Found ${newerEntries.length} newer entries from API`);
-            const allEntries = [...staticEntries, ...newerEntries];
-            allEntries.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-            setEntries(allEntries);
-          }
-        } catch (apiError) {
-          console.warn('⚠️ Could not fetch newer entries from API:', apiError);
-          // No mostrar error al usuario, ya tenemos contenido estático
-        }
-        
+
+        const blogEntries = await blogService.getBlogEntries();
+        blogEntries.sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
+        setEntries(blogEntries);
       } catch (err) {
-        console.error('Error loading static blog entries:', err);
-        setError('Error al cargar las entradas del blog. Por favor, intenta de nuevo más tarde.');
+        console.error('Error loading blog entries:', err);
+        setError(
+          'Error al cargar las entradas del blog. Por favor, intenta de nuevo más tarde.'
+        );
+      } finally {
         setLoading(false);
       }
     };
 
     loadEntries();
-  }, []); // Solo cargar una vez al montar el componente
+  }, []);
 
-  // Efecto separado para manejar la navegación automática a la primera entrada
+  // Navigate to the newest entry once the list is ready and no id is in the URL
   useEffect(() => {
-    // Si no hay entryId en la URL y hay entradas, navegar a la primera
-    if (!entryId && entries.length > 0) {
+    if (!loading && !entryId && entries.length > 0) {
       navigate(`/blog?id=${entries[0].id}`, { replace: true });
     }
-  }, [entryId, entries, navigate]);
+  }, [loading, entryId, entries, navigate]);
 
-  // Efecto para hacer scroll al inicio cuando cambia la entrada seleccionada
+  // Scroll to content when the selected entry changes
   useEffect(() => {
-    if (entryId) {
-      // Opción 1: Scroll hacia el contenido del blog con offset para el header
-      if (blogContentRef.current) {
-        const element = blogContentRef.current;
-        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-        const offsetPosition = elementPosition - 100; // Offset de 100px para el header
+    if (entryId && blogContentRef.current) {
+      const element = blogContentRef.current;
+      const elementPosition =
+        element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - 100;
 
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-      } else {
-        // Opción 2: Scroll hacia la parte superior de la página
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
-      }
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
     }
   }, [entryId]);
-  
-  // Encontrar la entrada actual o usar la primera como fallback
-  const currentEntry = entries.find(e => e.id === entryId) || entries[0];
+
+  const currentEntry = entries.find((e) => e.id === entryId) || entries[0];
 
   const handleEntrySelect = (entry: BlogEntryType) => {
     navigate(`/blog?id=${entry.id}`);
   };
 
-  // Mostrar loading
   if (loading) {
     return (
       <section className="blog">
@@ -107,7 +81,6 @@ export const Blog = () => {
     );
   }
 
-  // Mostrar error
   if (error) {
     return (
       <section className="blog">
@@ -115,8 +88,8 @@ export const Blog = () => {
           <div className="blog-error">
             <h2>BLOG</h2>
             <p className="error-message">{error}</p>
-            <button 
-              onClick={() => window.location.reload()} 
+            <button
+              onClick={() => window.location.reload()}
               className="retry-button"
             >
               Reintentar
@@ -127,7 +100,6 @@ export const Blog = () => {
     );
   }
 
-  // Mostrar mensaje si no hay entradas
   if (entries.length === 0) {
     return (
       <section className="blog">
@@ -148,13 +120,15 @@ export const Blog = () => {
           <h2>BLOG</h2>
           <ul className="blog-entries-list">
             {entries.map((entry) => (
-              <li 
+              <li
                 key={entry.id}
                 className={`blog-entry-item ${currentEntry?.id === entry.id ? 'active' : ''}`}
                 onClick={() => handleEntrySelect(entry)}
               >
                 <h3>{entry.title}</h3>
-                <span className="entry-date">{formatShortDateWithoutTimezone(entry.date)}</span>
+                <span className="entry-date">
+                  {formatShortDateWithoutTimezone(entry.date)}
+                </span>
               </li>
             ))}
           </ul>
@@ -165,4 +139,4 @@ export const Blog = () => {
       </div>
     </section>
   );
-}; 
+};
