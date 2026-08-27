@@ -22,7 +22,7 @@ const path = require('path');
 const readline = require('readline');
 
 // Configuración de la API
-const API_BASE_URL = 'https://forja-api.onrender.com';
+const API_BASE_URL = 'https://legacy-api.forja.cc';
 
 // Función para crear interfaz de readline
 function createReadlineInterface() {

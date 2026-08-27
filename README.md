@@ -16,7 +16,6 @@ Este es mi sitio web personal, construido con React y TypeScript. El sitio prese
 - TypeScript
 - Vite
 - CSS Moderno (Flexbox, Grid, Variables CSS)
-- Firebase Hosting
 
 ## Desarrollo Local
 

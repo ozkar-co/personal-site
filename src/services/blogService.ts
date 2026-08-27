@@ -1,6 +1,6 @@
 import { BlogEntryType } from '../components/Blog/types';
 
-const API_BASE_URL = 'https://forja-api.onrender.com';
+const API_BASE_URL = 'https://legacy-api.forja.cc';
 
 export interface LoginCredentials {
   username: string;
