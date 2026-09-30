@@ -292,7 +292,7 @@ def _editor(entry: dict | None, tags: list[str], message: str) -> str:
 <label>Fecha<input type="date" name="date" value="{esc(date)}" required></label>
 <label>Resumen<textarea name="abstract">{esc(abstract)}</textarea></label>
 <label>Contenido<textarea name="content" required>{esc(content)}</textarea></label>
-<label>Etiquetas<input name="tags" value="{esc(chosen)}" placeholder="una, otra"></label>
+<label>Categorías<input name="tags" value="{esc(chosen)}" placeholder="una, otra"></label>
 <p class="muted">Ya existen: {known}</p>
 <button type="submit">Guardar</button>
 </form>

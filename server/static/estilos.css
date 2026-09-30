@@ -56,15 +56,18 @@ p, ul, ol { margin: 0 0 var(--gap); }
 
 .grid { display: grid; gap: var(--gap); grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
 .card { background: var(--card); padding: var(--pad); border: 1px solid var(--line); }
-.split { display: grid; gap: var(--gap); grid-template-columns: minmax(0, 1fr) 16rem; align-items: start; }
+.split { display: grid; gap: var(--gap); grid-template-columns: minmax(0, 1fr) 20rem; align-items: start; }
 .side { position: sticky; top: 5rem; max-height: 70vh; overflow: auto; }
 .portrait { width: min(16rem, 100%); justify-self: center; }
 .wizz { text-align: center; }
 .wizz img { width: min(28rem, 100%); }
 
-.tag-cloud, .tags { display: flex; flex-wrap: wrap; gap: .4rem .7rem; }
-.tag-cloud a { font-size: calc(.75rem + var(--w, 1) * .12rem); text-decoration: none; }
-.tag-cloud a.is-on, a[aria-current="true"] { text-decoration: underline; }
+.cats { list-style: none; margin: 0; padding: 0; display: grid; gap: .35rem; }
+.cats a, .entry-cats a { text-decoration: none; white-space: nowrap; }
+.entry-cats { display: flex; flex-wrap: wrap; gap: .4rem .7rem; }
+form.tools { display: flex; flex-wrap: wrap; align-items: end; }
+form.tools label { flex: 1 1 14rem; }
+a[aria-current="true"] { text-decoration: underline; }
 
 form, .prose { display: grid; gap: var(--gap); }
 label { display: grid; gap: .35rem; }

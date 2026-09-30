@@ -1,4 +1,4 @@
-"""Trae las entradas de legacy-api. No copia etiquetas."""
+"""Trae las entradas de legacy-api. No copia categorías."""
 
 import json
 import urllib.request
@@ -44,7 +44,7 @@ def main() -> None:
         pieces = body_chunks(data["title"], data["abstract"], data["content"])
         db.save_entry(settings, data, pieces)
         print(slug)
-    print(f"{len(rows)} entradas. Etiquetas no importadas. Embed en cola.")
+    print(f"{len(rows)} entradas. Categorías no importadas. Embed en cola.")
 
 
 if __name__ == "__main__":

@@ -341,7 +341,10 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @app.get("/blog/", response_class=HTMLResponse)
     def blog_html_index(tag: str = "", orden: str = "desc") -> HTMLResponse:
         entries = db.list_entries(cfg, tag or None, orden == "asc")
-        page = blog_html.list_page(entries, db.list_tags(cfg), cfg.site_url, tag, orden == "asc")
+        total = len(entries) if not tag else len(db.list_entries(cfg, None, False))
+        page = blog_html.list_page(
+            entries, db.list_tags(cfg), cfg.site_url, tag, orden == "asc", total
+        )
         return HTMLResponse(page)
 
     @app.get("/blog/{slug}", response_class=HTMLResponse)
