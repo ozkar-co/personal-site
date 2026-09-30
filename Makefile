@@ -10,5 +10,5 @@ run:
 migrate:
 	.venv/bin/python -m server.migrate
 
-web:
+build:
 	npm run build
