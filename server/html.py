@@ -40,7 +40,12 @@ def layout(
         mark = ' aria-current="page"' if href == current else ""
         links.append(f'<a href="{href}"{mark}>{label}</a>')
     script = "".join(f'<script type="module" src="{src}"></script>' for src in scripts)
+    sheets = "".join(
+        f'<link rel="stylesheet" href="/s/{name}">'
+        for name in ("base.css", "lectura.css", "instrumentos.css", "movimiento.css")
+    )
     year = datetime.now().year
+    mode = "quiet" if current.startswith("/admin") else "stage"
     return f"""<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -51,10 +56,10 @@ def layout(
 {"" if index else '<meta name="robots" content="noindex">'}
 <link rel="canonical" href="{esc(canonical)}">
 <link rel="icon" href="/assets/favicon.svg">
-<link rel="stylesheet" href="/s/estilos.css">
+{sheets}
 <link rel="alternate" type="application/rss+xml" title="Ozkar" href="/rss.xml">
 </head>
-<body>
+<body class="{mode}">
 <header>
 <a class="brand" href="/">Ozkar</a>
 <nav>{"".join(links)}</nav>
