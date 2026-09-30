@@ -144,6 +144,18 @@ body:has(.keys) h1 {
 .days b { font-weight: 400; }
 .days .today { border-color: var(--accent); color: var(--accent-hot); }
 .days .dim { color: var(--muted); }
+.days .dim b.dozenal { color: var(--muted); }
+
+.dozenal,
+.screen.dozenal,
+.digits b.dozenal,
+.days b.dozenal,
+.keys button.dozenal {
+  font-family: Palatino, "Palatino Linotype", Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+  color: #d7e2ee;
+}
 
 @media (max-width: 50rem) {
   .split.calc { grid-template-columns: 1fr; }

@@ -1,4 +1,4 @@
-import { fromDozenal, toDozenalWithDecimals, dozenalWithFractionalToWords } from "/s/lib.js";
+import { fromDozenal, toDozenalWithDecimals, dozenalWithFractionalToWords, showDozenal } from "/s/lib.js";
 
 const TAU = 2 * Math.PI;
 let display = "0";
@@ -12,7 +12,7 @@ const mark = document.getElementById("op");
 
 function show(value) {
   display = value;
-  screen.textContent = display;
+  screen.textContent = showDozenal(display);
   mark.textContent = operation || "";
   try {
     words.textContent = dozenalWithFractionalToWords(display);

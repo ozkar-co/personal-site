@@ -545,6 +545,7 @@ var readFractionalPart = (fractionalDigits) => {
   }
   return result.join(" ");
 };
+var showDozenal = (value) => String(value).replaceAll("X", "χ").replaceAll("W", "ε");
 var dozenalWithFractionalToWords = (dozenal) => {
   const parts = dozenal.split(/[.,]/);
   if (parts.length === 1) {
@@ -567,5 +568,6 @@ export {
   getOzkarClock,
   readFractionalPart,
   loadAstronomicalData as ready,
-  toDozenalWithDecimals
+  toDozenalWithDecimals,
+  showDozenal
 };

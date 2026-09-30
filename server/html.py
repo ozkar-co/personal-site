@@ -222,13 +222,13 @@ def clock_page(site_url: str) -> str:
 <div class="grid">
 <article class="card">
 <h2>Reloj base 12</h2>
-<p class="screen" id="hora">0</p>
+<p class="screen dozenal" id="hora">0</p>
 <p id="hora-words"></p>
 <p class="digits">
-<span><b id="horo">0</b>horo</span>
-<span><b id="temo">0</b>temo</span>
-<span><b id="mino">0</b>mino</span>
-<span><b id="tiko">0</b>tiko</span>
+<span><b class="dozenal" id="horo">0</b>horo</span>
+<span><b class="dozenal" id="temo">0</b>temo</span>
+<span><b class="dozenal" id="mino">0</b>mino</span>
+<span><b class="dozenal" id="tiko">0</b>tiko</span>
 </p>
 <div class="bar"><i id="day-bar"></i></div>
 <p id="day-label"></p>
@@ -255,7 +255,7 @@ def clock_page(site_url: str) -> str:
 <div id="cal"></div>
 <div class="prose">
 <h2>Cómo funciona</h2>
-<p><strong>Dozenal.</strong> Dígitos 0-9, X (10), W (11). 1X = 22 en decimal.</p>
+<p><strong>Dozenal.</strong> Dígitos 0-9, <span class="dozenal">χ</span> (10), <span class="dozenal">ε</span> (11). <span class="dozenal">1χ</span> = 22 en decimal.</p>
 <p><strong>Reloj.</strong> 1 jorno = 20 horo. 1 horo = 1 hora civil, 1 temo ≈ 5 min, 1 mino ≈ 25 s, 1 tiko ≈ 2 s. El día empieza a medianoche.</p>
 <p><strong>Sol.</strong> Año solar personal desde el solsticio de invierno de diciembre de 1992 (Sol 0). Cada Sol va de un solsticio al siguiente.</p>
 <p><strong>Lunatos.</strong> Meses lunares que empiezan en luna nueva. Lunato 1 es la primera luna nueva después del solsticio. Un Sol tiene 12 o 13 lunatos. El nombre es la constelación sobre la que está el Sol. Ofiuco aparece en los soles de 13 lunatos.</p>
@@ -268,8 +268,14 @@ def clock_page(site_url: str) -> str:
 def calc_page(site_url: str) -> str:
     def key(label: str, **data: str) -> str:
         attrs = " ".join(f'data-{name}' if value == "" else f'data-{name}="{esc(value)}"' for name, value in data.items())
-        extra = " wide" if "wide" in data else ""
-        return f'<button type="button" class="{extra.strip()}" {attrs}>{label}</button>'
+        classes = []
+        if "wide" in data:
+            classes.append("wide")
+        if data.get("digit") in {"X", "W"}:
+            classes.append("dozenal")
+            label = "χ" if data["digit"] == "X" else "ε"
+        class_attr = f' class="{" ".join(classes)}"' if classes else ""
+        return f"<button type=\"button\"{class_attr} {attrs}>{label}</button>"
 
     keys = [
         key("τ", fn="tau"), key("sin", fn="sin"), key("cos", fn="cos"), key("tan", fn="tan"),
@@ -287,14 +293,14 @@ def calc_page(site_url: str) -> str:
 <div class="split calc">
 <div class="prose">
 <h2>Cómo funciona</h2>
-<p><strong>Base 12.</strong> Dígitos 0-9, X (diez), W (once). 12 tiene más divisores que 10.</p>
-<p><strong>Nombres.</strong> 0 zero, 1 un, 2 du, 3 tri, 4 quar, 5 kin, 6 ses, 7 sep, 8 ok, 9 non, X dek, W elv. 10₁₂ es zen, 100₁₂ es un grod, 1000₁₂ es un mil.</p>
+<p><strong>Base 12.</strong> Dígitos 0-9, <span class="dozenal">χ</span> (diez), <span class="dozenal">ε</span> (once). 12 tiene más divisores que 10.</p>
+<p><strong>Nombres.</strong> 0 zero, 1 un, 2 du, 3 tri, 4 quar, 5 kin, 6 ses, 7 sep, 8 ok, 9 non, <span class="dozenal">χ</span> dek, <span class="dozenal">ε</span> elv. 10₁₂ es zen, 100₁₂ es un grod, 1000₁₂ es un mil.</p>
 <p><strong>Koma.</strong> La coma separa la fracción. Se lee de a dos dígitos: 5,3 es kin koma tri. Si una pareja lleva cero, se dice: 8,06 es ok koma zero ses.</p>
 <p><strong>Tau.</strong> τ = 2π. La circunferencia es τ por el radio. Un círculo son τ radianes. Esta calculadora usa esos radianes.</p>
 </div>
 <div class="card">
 <div class="readout">
-<p class="screen" id="screen">0</p>
+<p class="screen dozenal" id="screen">0</p>
 <p id="op"></p>
 <p id="words"></p>
 </div>
