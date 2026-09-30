@@ -28,7 +28,10 @@ def _post_embed(settings: Settings, texts: list[str]) -> tuple[str, list[list[fl
     request = urllib.request.Request(
         f"{settings.embed_url}/api/embed",
         data=payload,
-        headers={"Content-Type": "application/json"},
+        headers={
+            "Content-Type": "application/json",
+            "User-Agent": "ozkar-blog/1.0",
+        },
         method="POST",
     )
     with urllib.request.urlopen(request, timeout=120) as response:
