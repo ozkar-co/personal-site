@@ -123,10 +123,7 @@ def home(site_url: str) -> str:
 <h2>Conecta conmigo</h2>
 <p>
 <a href="mailto:ozcodx@gmail.com">Correo</a> ·
-<a href="https://github.com/ozkar-co">GitHub</a> ·
-<a href="https://linkedin.com/in/ozcodx">LinkedIn</a> ·
-<a href="https://www.instagram.com/ozkar.co/">Instagram</a> ·
-<a href="https://wa.me/573006274400">WhatsApp</a>
+<a href="https://github.com/ozkar-co">GitHub</a>
 </p>
 """
     return layout("Ozkar", "Ingeniero de sistemas, blog y proyectos.", f"{site_url}/", body, "/")
