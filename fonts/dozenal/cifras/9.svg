@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="620"
+   height="1060"
+   viewBox="0 0 620 1060"
+   sodipodi0:docname="9.svg"
+   version="1.1"
+   id="svg2"
+   sodipodi:docname="9.svg"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:sodipodi0="http://sodipodi.sourceforge.net/DTD/sodipodi-0.0.dtd">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="namedview2"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.85283019"
+     inkscape:cx="310.14381"
+     inkscape:cy="530"
+     inkscape:window-width="1920"
+     inkscape:window-height="1149"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer-dibujo" />
+  <title
+     id="title1">9</title>
+  <desc
+     id="desc1">Cifra 9. Dibujar solo en la capa dibujo: relleno negro, sin trazo, dentro de la caja. La base de la caja es la linea de las cifras. python3 fonts/dozenal/build.py regenera la fuente.</desc>
+  <sodipodi0:namedview
+     id="view-9"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     inkscape:showpageshadow="false"
+     inkscape:pageopacity="1"
+     inkscape:deskcolor="#d8d8d8"
+     showguides="true"
+     units="px"
+     inkscape:current-layer="layer-dibujo">
+    <sodipodi0:guide
+       id="guide-base-9"
+       orientation="0,1"
+       position="0,820"
+       inkscape:label="linea de base"
+       inkscape:locked="true" />
+    <sodipodi0:guide
+       id="guide-cap-9"
+       orientation="0,1"
+       position="0,120"
+       inkscape:label="altura de cifra"
+       inkscape:locked="true" />
+    <sodipodi0:guide
+       id="guide-left-9"
+       orientation="1,0"
+       position="0,0"
+       inkscape:label="izquierda"
+       inkscape:locked="true" />
+    <sodipodi0:guide
+       id="guide-right-9"
+       orientation="1,0"
+       position="620,0"
+       inkscape:label="derecha"
+       inkscape:locked="true" />
+    <sodipodi0:guide
+       id="guide-fall-9"
+       orientation="0,1"
+       position="0,1060"
+       inkscape:label="descendente"
+       inkscape:locked="true" />
+  </sodipodi0:namedview>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-referencia"
+     inkscape:label="referencia"
+     sodipodi0:insensitive="true"
+     opacity="0.22">
+    <path
+       d="M 524,370 C 524,523.33333 452.66667,600 310,600 167.33333,600 96,523.33333 96,370 96,216.66667 167.33333,140 310,140 c 142.66667,0 214,76.66667 214,230 z m -74,0 c 0,-104 -46.66667,-156 -140,-156 -93.33333,0 -140,52 -140,156 0,104 46.66667,156 140,156 93.33333,0 140,-52 140,-156 z m 5.65144,80.10178 7.86223,28.3359 6.75919,27.86773 5.49162,26.87587 4.21056,25.90425 2.91095,24.95444 1.58625,24.027 0.22835,23.12059 -1.17222,22.23076 -2.62545,21.34828 -4.13993,20.45745 -5.71971,19.53512 -7.35972,18.55154 -9.0416,17.47457 -10.73187,16.27774 -12.38595,14.95008 -13.95838,13.50295 -15.41577,11.96931 -16.74592,10.39433 -17.95852,8.82259 -19.07846,7.28789 -20.13627,5.8094 -21.1605,4.39319 -22.17356,3.03641 -22.88925,1.71633 -15.84975,0.37737 -15.03369,-0.42251 -14.50596,-1.2471 -13.99234,-2.12032 -13.48133,-3.05264 -12.95385,-4.05212 -12.3825,-5.1204 -11.73332,-6.24721 -10.97189,-7.40577 -10.07382,-8.5524 -9.03612,-9.63384 -7.88285,-10.60159 -6.66002,-11.42718 -5.4215,-12.10967 -4.213538,-12.67188 -3.065758,-13.14929 -1.990189,-13.57846 -0.985678,-13.9896 -0.04362,-14.40398 0.847371,-14.83456 1.698616,-15.28786 2.51997,-15.7662 3.319408,-16.26924 3.94222,-16.16127 71.88526,17.56444 -3.62722,14.81789 -2.72226,13.33493 -1.99392,12.46297 -1.2875,11.5663 -0.61096,10.64461 0.0258,9.70019 0.61155,8.73957 1.13481,7.77571 1.58702,6.82987 1.96702,5.93229 2.28683,5.11949 2.57609,4.42699 2.88104,3.87758 3.25555,3.47032 3.74562,3.17677 4.37533,2.9484 5.14168,2.73195 6.02028,2.48377 6.9767,2.17704 7.97701,1.80154 8.99377,1.35884 10.00793,0.85706 11.00797,0.30666 11.7197,-0.26846 19.19408,-1.42256 17.40977,-2.38025 15.92284,-3.30126 14.44706,-4.16282 13.00488,-4.96211 11.62481,-5.70519 10.33742,-6.41122 9.16755,-7.11403 8.12496,-7.85816 7.19738,-8.68881 6.35147,-9.63892 5.54173,-10.71988 4.72361,-11.92068 3.86363,-13.21488 2.9434,-14.57033 1.95789,-15.95728 0.91111,-17.35257 -0.18832,-18.74052 -1.33041,-20.11189 -2.50572,-21.46223 -3.70611,-22.79019 -4.92505,-24.09635 z"
+       fill="#000000"
+       stroke="none"
+       id="path1"
+       sodipodi:nodetypes="ssssssssssccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-caja"
+     inkscape:label="caja"
+     sodipodi0:insensitive="true">
+    <rect
+       x="0.5"
+       y="120.5"
+       width="619"
+       height="699"
+       fill="none"
+       stroke="#c45c5c"
+       stroke-width="1"
+       id="rect1" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-dibujo"
+     inkscape:label="dibujo">
+    <path
+       d="M 524,370 C 524,523.33333 452.66667,600 310,600 167.33333,600 96,523.33333 96,370 96,216.66667 167.33333,140 310,140 c 142.66667,0 214,76.66667 214,230 z m -74,0 c 0,-104 -46.66667,-156 -140,-156 -93.33333,0 -140,52 -140,156 0,104 46.66667,156 140,156 93.33333,0 140,-52 140,-156 z m 55.07864,93.99986 -16.89564,70.46178 -5.29701,49.57833 1.58625,24.027 0.22835,23.12059 -1.17222,22.23076 -2.62545,21.34828 -4.13993,20.45745 -5.71971,19.53512 -7.35972,18.55154 -9.0416,17.47457 -10.73187,16.27774 -12.38595,14.95008 -13.95838,13.50295 -15.41577,11.96931 -16.74592,10.39433 -17.95852,8.82259 -19.07846,7.28789 -20.13627,5.8094 -21.1605,4.39319 -22.17356,3.03641 -22.88925,1.71633 -15.84975,0.37737 -15.03369,-0.42251 -14.50596,-1.2471 -13.99234,-2.12032 -13.48133,-3.05264 -12.95385,-4.05212 -12.3825,-5.1204 -11.73332,-6.24721 -10.97189,-7.40577 -10.07382,-8.5524 -9.03612,-9.63384 -7.88285,-10.60159 -6.66002,-11.42718 -5.4215,-12.10967 -4.213538,-12.67188 -3.065758,-13.14929 -1.990189,-13.57846 -0.985678,-13.9896 -0.04362,-14.40398 0.847371,-14.83456 1.698616,-15.28786 2.51997,-15.7662 3.319406,-16.26924 3.94222,-16.16127 71.88526,17.56444 -3.62722,14.81789 -2.72226,13.33493 -1.99392,12.46297 -1.2875,11.5663 -0.61096,10.64461 0.0258,9.70019 0.61155,8.73957 1.13481,7.77571 1.58702,6.82987 1.96702,5.93229 2.28683,5.11949 2.57609,4.42699 2.88104,3.87758 3.25555,3.47032 3.74562,3.17677 4.37533,2.9484 5.14168,2.73195 6.02028,2.48377 6.9767,2.17704 7.97701,1.80154 8.99377,1.35884 10.00793,0.85706 11.00797,0.30666 11.7197,-0.26846 19.19408,-1.42256 17.40977,-2.38025 15.92284,-3.30126 14.44706,-4.16282 13.00488,-4.96211 11.62481,-5.70519 10.33742,-6.41122 9.16755,-7.11403 8.12496,-7.85816 7.19738,-8.68881 6.35147,-9.63892 5.54173,-10.71988 4.72361,-11.92068 3.86363,-13.21488 2.9434,-14.57033 1.95789,-15.95728 0.91111,-17.35257 -0.18832,-18.74052 -1.33041,-20.11189 -2.50572,-21.46223 -3.70611,-22.79019 18.52628,-28.78662 z"
+       fill="#000000"
+       stroke="none"
+       id="path2"
+       sodipodi:nodetypes="sssssssssscccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc" />
+  </g>
+</svg>

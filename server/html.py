@@ -259,6 +259,23 @@ def clock_page(site_url: str) -> str:
 <p><strong>Reloj.</strong> 1 jorno = 20 horo. 1 horo = 1 hora civil, 1 temo ≈ 5 min, 1 mino ≈ 25 s, 1 tiko ≈ 2 s. El día empieza a medianoche.</p>
 <p><strong>Sol.</strong> Año solar personal desde el solsticio de invierno de diciembre de 1992 (Sol 0). Cada Sol va de un solsticio al siguiente.</p>
 <p><strong>Lunatos.</strong> Meses lunares que empiezan en luna nueva. Lunato 1 es la primera luna nueva después del solsticio. Un Sol tiene 12 o 13 lunatos. El nombre es la constelación sobre la que está el Sol. Ofiuco aparece en los soles de 13 lunatos.</p>
+<p><strong>Signos.</strong> Cada lunato tiene su letra, en el orden del Sol desde Sagitario. Cetus y Ofiuco van en la misma serie.</p>
+<ul class="signs">
+<li><b class="dozenal">&#xE000;</b> Sagitario</li>
+<li><b class="dozenal">&#xE001;</b> Capricornio</li>
+<li><b class="dozenal">&#xE002;</b> Acuario</li>
+<li><b class="dozenal">&#xE003;</b> Piscis</li>
+<li><b class="dozenal">&#xE004;</b> Aries</li>
+<li><b class="dozenal">&#xE005;</b> Cetus</li>
+<li><b class="dozenal">&#xE006;</b> Tauro</li>
+<li><b class="dozenal">&#xE007;</b> Géminis</li>
+<li><b class="dozenal">&#xE008;</b> Cáncer</li>
+<li><b class="dozenal">&#xE009;</b> Leo</li>
+<li><b class="dozenal">&#xE00A;</b> Virgo</li>
+<li><b class="dozenal">&#xE00B;</b> Libra</li>
+<li><b class="dozenal">&#xE00C;</b> Escorpio</li>
+<li><b class="dozenal">&#xE00D;</b> Ofiuco</li>
+</ul>
 <p><strong>Lunato 0.</strong> Pertenece a dos soles: es el último del anterior y el primero del actual. Incluye el solsticio, marcado con ❄. Los días anteriores al solsticio se ven atenuados.</p>
 </div>
 """

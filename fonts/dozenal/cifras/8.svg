@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.0.dtd"
+   width="620"
+   height="1060"
+   viewBox="0 0 620 1060"
+   sodipodi:docname="8.svg">
+  <title>8</title>
+  <desc>Cifra 8. Dibujar solo en la capa dibujo: relleno negro, sin trazo, dentro de la caja. La base de la caja es la linea de las cifras. python3 fonts/dozenal/build.py regenera la fuente.</desc>
+  <sodipodi:namedview
+     id="view-8"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     inkscape:showpageshadow="false"
+     inkscape:pageopacity="1"
+     inkscape:deskcolor="#d8d8d8"
+     showguides="true"
+     units="px"
+     inkscape:current-layer="layer-dibujo">
+    <sodipodi:guide id="guide-base-8" orientation="0,1" position="0,820" inkscape:label="linea de base" inkscape:locked="true"/>
+    <sodipodi:guide id="guide-cap-8" orientation="0,1" position="0,120" inkscape:label="altura de cifra" inkscape:locked="true"/>
+    <sodipodi:guide id="guide-left-8" orientation="1,0" position="0,0" inkscape:label="izquierda" inkscape:locked="true"/>
+    <sodipodi:guide id="guide-right-8" orientation="1,0" position="620,0" inkscape:label="derecha" inkscape:locked="true"/>
+    <sodipodi:guide id="guide-fall-8" orientation="0,1" position="0,1060" inkscape:label="descendente" inkscape:locked="true"/>
+  </sodipodi:namedview>
+  <g inkscape:groupmode="layer" id="layer-referencia" inkscape:label="referencia" sodipodi:insensitive="true" opacity="0.22">
+    <path d="M486 308Q486 496 310 496Q134 496 134 308Q134 120 310 120Q486 120 486 308ZM420 308Q420 186 310 186Q200 186 200 308Q200 430 310 430Q420 430 420 308ZM506 624Q506 830 310 830Q114 830 114 624Q114 418 310 418Q506 418 506 624ZM440 624Q440 484 310 484Q180 484 180 624Q180 764 310 764Q440 764 440 624Z" fill="#000" stroke="none"/>
+  </g>
+  <g inkscape:groupmode="layer" id="layer-caja" inkscape:label="caja" sodipodi:insensitive="true">
+    <rect x="0.5" y="120.5" width="619" height="699" fill="none" stroke="#c45c5c" stroke-width="1"/>
+  </g>
+  <g inkscape:groupmode="layer" id="layer-dibujo" inkscape:label="dibujo">
+    <path d="M486 308Q486 496 310 496Q134 496 134 308Q134 120 310 120Q486 120 486 308ZM420 308Q420 186 310 186Q200 186 200 308Q200 430 310 430Q420 430 420 308ZM506 624Q506 830 310 830Q114 830 114 624Q114 418 310 418Q506 418 506 624ZM440 624Q440 484 310 484Q180 484 180 624Q180 764 310 764Q440 764 440 624Z" fill="#000" stroke="none"/>
+  </g>
+</svg>

@@ -11,20 +11,20 @@ var LUNAR_PHASES = [
   // Menguante
 ];
 var ZODIAC_CONSTELLATIONS = [
-  { name: "Capricornio", nameShort: "Cap", start: 270, end: 300, image: "Capricornus_symbol_(fixed_width).svg.png" },
-  { name: "Acuario", nameShort: "Acu", start: 300, end: 330, image: "Aquarius_symbol_(fixed_width).svg.png" },
-  { name: "Piscis", nameShort: "Pis", start: 330, end: 360, image: "Pisces_symbol_(fixed_width).svg.png" },
-  { name: "Aries", nameShort: "Ari", start: 0, end: 30, image: "Aries_symbol_(fixed_width).svg.png" },
-  { name: "Cetus", nameShort: "Cet", start: 15, end: 45, image: "Cetus_symbol_(fixed_width).svg.png" },
-  { name: "Tauro", nameShort: "Tau", start: 30, end: 60, image: "Taurus_symbol_(fixed_width).svg.png" },
-  { name: "G\xE9minis", nameShort: "G\xE9m", start: 60, end: 90, image: "Gemini_symbol_(fixed_width).svg.png" },
-  { name: "C\xE1ncer", nameShort: "C\xE1n", start: 90, end: 120, image: "Cancer_symbol_(fixed_width).svg.png" },
-  { name: "Leo", nameShort: "Leo", start: 120, end: 150, image: "Leo_symbol_(fixed_width).svg.png" },
-  { name: "Virgo", nameShort: "Vir", start: 150, end: 180, image: "Virgo_symbol_(fixed_width).svg.png" },
-  { name: "Libra", nameShort: "Lib", start: 180, end: 210, image: "Libra_symbol_(fixed_width).svg.png" },
-  { name: "Escorpio", nameShort: "Esc", start: 210, end: 240, image: "Scorpius_symbol_(fixed_width).svg.png" },
-  { name: "Ofiuco", nameShort: "Ofi", start: 240, end: 270, image: "Ophiuchus_symbol_(fixed_width).svg.png" },
-  { name: "Sagitario", nameShort: "Sag", start: 265, end: 275, image: "Sagittarius_symbol_(fixed_width).svg.png" }
+  { name: "Capricornio", nameShort: "Cap", sign: "\uE001", start: 270, end: 300 },
+  { name: "Acuario", nameShort: "Acu", sign: "\uE002", start: 300, end: 330 },
+  { name: "Piscis", nameShort: "Pis", sign: "\uE003", start: 330, end: 360 },
+  { name: "Aries", nameShort: "Ari", sign: "\uE004", start: 0, end: 30 },
+  { name: "Cetus", nameShort: "Cet", sign: "\uE005", start: 15, end: 45 },
+  { name: "Tauro", nameShort: "Tau", sign: "\uE006", start: 30, end: 60 },
+  { name: "G\xE9minis", nameShort: "G\xE9m", sign: "\uE007", start: 60, end: 90 },
+  { name: "C\xE1ncer", nameShort: "C\xE1n", sign: "\uE008", start: 90, end: 120 },
+  { name: "Leo", nameShort: "Leo", sign: "\uE009", start: 120, end: 150 },
+  { name: "Virgo", nameShort: "Vir", sign: "\uE00A", start: 150, end: 180 },
+  { name: "Libra", nameShort: "Lib", sign: "\uE00B", start: 180, end: 210 },
+  { name: "Escorpio", nameShort: "Esc", sign: "\uE00C", start: 210, end: 240 },
+  { name: "Ofiuco", nameShort: "Ofi", sign: "\uE00D", start: 240, end: 270 },
+  { name: "Sagitario", nameShort: "Sag", sign: "\uE000", start: 265, end: 275 }
 ];
 var getConstellationForLunato = (lunatoNumber) => {
   const lunatoSequence = [

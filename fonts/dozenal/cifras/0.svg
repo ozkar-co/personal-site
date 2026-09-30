@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.0.dtd"
+   width="620"
+   height="1060"
+   viewBox="0 0 620 1060"
+   sodipodi:docname="0.svg">
+  <title>0</title>
+  <desc>Cifra 0. Dibujar solo en la capa dibujo: relleno negro, sin trazo, dentro de la caja. La base de la caja es la linea de las cifras. python3 fonts/dozenal/build.py regenera la fuente.</desc>
+  <sodipodi:namedview
+     id="view-0"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     inkscape:showpageshadow="false"
+     inkscape:pageopacity="1"
+     inkscape:deskcolor="#d8d8d8"
+     showguides="true"
+     units="px"
+     inkscape:current-layer="layer-dibujo">
+    <sodipodi:guide id="guide-base-0" orientation="0,1" position="0,820" inkscape:label="linea de base" inkscape:locked="true"/>
+    <sodipodi:guide id="guide-cap-0" orientation="0,1" position="0,120" inkscape:label="altura de cifra" inkscape:locked="true"/>
+    <sodipodi:guide id="guide-left-0" orientation="1,0" position="0,0" inkscape:label="izquierda" inkscape:locked="true"/>
+    <sodipodi:guide id="guide-right-0" orientation="1,0" position="620,0" inkscape:label="derecha" inkscape:locked="true"/>
+    <sodipodi:guide id="guide-fall-0" orientation="0,1" position="0,1060" inkscape:label="descendente" inkscape:locked="true"/>
+  </sodipodi:namedview>
+  <g inkscape:groupmode="layer" id="layer-referencia" inkscape:label="referencia" sodipodi:insensitive="true" opacity="0.22">
+    <path d="M542 470Q542 836 310 836Q78 836 78 470Q78 104 310 104Q542 104 542 470ZM468 470Q468 178 310 178Q152 178 152 470Q152 762 310 762Q468 762 468 470Z" fill="#000" stroke="none"/>
+  </g>
+  <g inkscape:groupmode="layer" id="layer-caja" inkscape:label="caja" sodipodi:insensitive="true">
+    <rect x="0.5" y="120.5" width="619" height="699" fill="none" stroke="#c45c5c" stroke-width="1"/>
+  </g>
+  <g inkscape:groupmode="layer" id="layer-dibujo" inkscape:label="dibujo">
+    <path d="M542 470Q542 836 310 836Q78 836 78 470Q78 104 310 104Q542 104 542 470ZM468 470Q468 178 310 178Q152 178 152 470Q152 762 310 762Q468 762 468 470Z" fill="#000" stroke="none"/>
+  </g>
+</svg>

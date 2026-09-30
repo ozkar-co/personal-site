@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="620"
+   height="1060"
+   viewBox="0 0 620 1060"
+   sodipodi0:docname="6.svg"
+   version="1.1"
+   id="svg2"
+   sodipodi:docname="6.svg"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:sodipodi0="http://sodipodi.sourceforge.net/DTD/sodipodi-0.0.dtd">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="namedview2"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.85283019"
+     inkscape:cx="310.14381"
+     inkscape:cy="530"
+     inkscape:window-width="1920"
+     inkscape:window-height="1149"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer-dibujo" />
+  <title
+     id="title1">6</title>
+  <desc
+     id="desc1">Cifra 6. Dibujar solo en la capa dibujo: relleno negro, sin trazo, dentro de la caja. La base de la caja es la linea de las cifras. python3 fonts/dozenal/build.py regenera la fuente.</desc>
+  <sodipodi0:namedview
+     id="view-6"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     inkscape:showpageshadow="false"
+     inkscape:pageopacity="1"
+     inkscape:deskcolor="#d8d8d8"
+     showguides="true"
+     units="px"
+     inkscape:current-layer="layer-dibujo">
+    <sodipodi0:guide
+       id="guide-base-6"
+       orientation="0,1"
+       position="0,820"
+       inkscape:label="linea de base"
+       inkscape:locked="true" />
+    <sodipodi0:guide
+       id="guide-cap-6"
+       orientation="0,1"
+       position="0,120"
+       inkscape:label="altura de cifra"
+       inkscape:locked="true" />
+    <sodipodi0:guide
+       id="guide-left-6"
+       orientation="1,0"
+       position="0,0"
+       inkscape:label="izquierda"
+       inkscape:locked="true" />
+    <sodipodi0:guide
+       id="guide-right-6"
+       orientation="1,0"
+       position="620,0"
+       inkscape:label="derecha"
+       inkscape:locked="true" />
+    <sodipodi0:guide
+       id="guide-fall-6"
+       orientation="0,1"
+       position="0,1060"
+       inkscape:label="descendente"
+       inkscape:locked="true" />
+  </sodipodi0:namedview>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-referencia"
+     inkscape:label="referencia"
+     sodipodi0:insensitive="true"
+     opacity="0.22">
+    <path
+       d="M 524,570 C 524,723.33333 452.66667,800 310,800 167.33333,800 96,723.33333 96,570 96,416.66667 167.33333,340 310,340 c 142.66667,0 214,76.66667 214,230 z m -74,0 c 0,-104 -46.66667,-156 -140,-156 -93.33333,0 -140,52 -140,156 0,104 46.66667,156 140,156 93.33333,0 140,-52 140,-156 z m -286.35047,-203.0976 -3.83786,-20.24611 -3.03409,-20.17639 -2.08575,-19.4827 -1.11539,-18.80976 -0.11596,-18.15694 0.92093,-17.52116 2.00445,-16.8955 3.14323,-16.26779 4.34294,-15.61918 5.60262,-14.92428 6.91056,-14.1534 8.2413,-13.27858 9.55677,-12.28199 10.81308,-11.16421 11.97181,-9.94712 13.01093,-8.66901 13.92957,-7.37373 14.74501,-6.09939 15.48463,-4.87153 16.17747,-3.702224 16.84855,-2.592822 17.51642,-1.538078 18.19323,-0.529731 20.06747,0.516331 17.44169,2.550071 15.32358,3.422851 14.59185,4.517912 -17.76447,72.62704 -7.20767,-2.96792 -8.53315,-2.63487 -9.88475,-2.20214 -9.84998,-1.54716 -14.02976,-0.28228 -14.09843,0.40777 -12.96969,1.13554 -11.832,1.8169 -10.69753,2.4436 -9.58482,3.01042 -8.51888,3.51867 -7.52876,3.98043 -6.64185,4.42127 -5.87541,4.87927 -5.22859,5.39829 -4.67934,6.01662 -4.18925,6.75614 -3.71445,7.61743 -3.21682,8.58267 -2.67095,9.62387 -2.06511,10.71138 -1.39832,11.81978 -0.67629,12.93023 0.0924,14.03056 0.8985,15.11385 1.73369,16.17702 2.59091,17.21945 3.5927,18.88583 z"
+       fill="#000000"
+       stroke="none"
+       id="path1"
+       sodipodi:nodetypes="sssssssssscccccccccccccccccccccccccccccccccccccccccccccccccccccccccc" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-caja"
+     inkscape:label="caja"
+     sodipodi0:insensitive="true">
+    <rect
+       x="0.5"
+       y="120.5"
+       width="619"
+       height="699"
+       fill="none"
+       stroke="#c45c5c"
+       stroke-width="1"
+       id="rect1" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer-dibujo"
+     inkscape:label="dibujo">
+    <path
+       d="M 524,570 C 524,723.33333 452.66667,800 310,800 167.33333,800 96,723.33333 96,570 96,416.66667 167.33333,340 310,340 c 142.66667,0 214,76.66667 214,230 z m -74,0 c 0,-104 -46.66667,-156 -140,-156 -93.33333,0 -140,52 -140,156 0,104 46.66667,156 140,156 93.33333,0 140,-52 140,-156 z m -336.77083,-61.21707 9.06038,-67.14876 20.41724,-58.87108 11.98504,-75.76589 -1.11539,-18.80976 -0.11596,-18.15694 0.92093,-17.52116 2.00445,-16.8955 3.14323,-16.26779 4.34294,-15.61918 5.60262,-14.92428 6.91056,-14.1534 8.2413,-13.27858 9.55677,-12.28199 10.81308,-11.16421 11.97181,-9.94712 13.01093,-8.66901 13.92957,-7.37373 14.74501,-6.09939 15.48463,-4.87153 16.17747,-3.702224 16.84855,-2.592822 17.51642,-1.538078 18.19323,-0.529731 20.06747,0.516331 17.44169,2.550071 15.32358,3.422851 14.59185,4.517912 13.834,5.71264 13.00325,7.00809 12.04102,8.38067 10.89225,9.77258 -56.74593,48.30874 -4.83398,-3.35544 -5.95508,-3.20024 -7.20767,-2.96792 -8.53315,-2.63487 -9.88475,-2.20214 -9.84998,-1.54716 -14.02976,-0.28228 -14.09843,0.40777 -12.96969,1.13554 -11.832,1.8169 -10.69753,2.4436 -9.58482,3.01042 -8.51888,3.51867 -7.52876,3.98043 -6.64185,4.42127 -5.87541,4.87927 -5.22859,5.39829 -4.67934,6.01662 -4.18925,6.75614 -3.71445,7.61743 -3.21682,8.58267 -2.67095,9.62387 -2.06511,10.71138 -1.39832,11.81978 -0.67629,12.93023 0.0924,14.03056 0.8985,15.11385 -4.12914,36.11065 -2.09935,31.29024 -16.34093,36.47433 z"
+       fill="#000000"
+       stroke="none"
+       id="path2"
+       sodipodi:nodetypes="sssssssssscccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc" />
+  </g>
+</svg>

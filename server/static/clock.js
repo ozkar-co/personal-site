@@ -24,9 +24,10 @@ function percent(value) {
   return formatDozenal(Math.round((value / 100) * 144));
 }
 
-function icon(image, name) {
-  if (!image) return "";
-  return `<img src="/assets/constellations/${encodeURIComponent(image)}" alt="${name || ""}">`;
+function sign(constellation) {
+  if (!constellation || !constellation.sign) return "";
+  const name = constellation.name || "";
+  return `<span class="dozenal sign" title="${name}">${constellation.sign}</span>`;
 }
 
 function paintCalendar(calendar) {
@@ -39,7 +40,7 @@ function paintCalendar(calendar) {
     $("cal").textContent = "Ese lunato no se puede armar.";
     return;
   }
-  $("cal-title").innerHTML = `Sol ${mark(info.solDozenal)} · Lunato ${mark(info.lunatoDozenal)} ${icon(info.constellation && info.constellation.image, info.constellation && info.constellation.name)}`;
+  $("cal-title").innerHTML = `Sol ${mark(info.solDozenal)} · Lunato ${mark(info.lunatoDozenal)} ${sign(info.constellation)}`;
   const blocks = Object.values(info.phases).filter((days) => days.length);
   $("cal").innerHTML = blocks.map((days) => {
     const cells = days.map((day) => {
@@ -69,7 +70,7 @@ function tick() {
   $("day-bar").style.width = `${day}%`;
   $("day-label").innerHTML = `Progreso del jorno: ${mark(percent(day))}%`;
   $("sol").innerHTML = `Sol ${mark(calendar.solDozenal)}`;
-  $("lunato").innerHTML = `Lunato ${calendar.lunato} ${calendar.constellation.name} ${icon(calendar.constellation.image, calendar.constellation.name)}`;
+  $("lunato").innerHTML = `Lunato ${calendar.lunato} ${sign(calendar.constellation)} ${calendar.constellation.name}`;
   const jorno = dozenalToWords(formatDozenal(calendar.jorno));
   $("jorno").textContent = `${clock.period} di la jorno ${calendar.jorno} (${jorno})`;
   $("fase").textContent = calendar.lunarPhase;

@@ -1,26 +1,37 @@
-"""Build Dozenal, a tabular figures face.
+"""Build Dozenal from the Inkscape sheets.
 
-Digits 0-9, the comma, the hyphen and the period share one advance
-and one figure height. Dek is a chi and elv is an epsilon, drawn in
-that same box so neither sinks under the line nor reads smaller than
-a digit. U+0058 and U+0057 carry the same outlines, for text that
-still spells dozenal with X and W.
+Each figure and each sign has an SVG. Draw on the layer dibujo, with
+black fill and no stroke, then run this file. That layer replaces the
+outline kept here. An empty dibujo layer leaves the outline in this
+file. Digits, chi, epsilon, comma, hyphen and period share one advance
+and one figure height. The fourteen signs, Cetus and Ophiuchus
+included, live at U+E000 in lunato order from the winter solstice.
 """
 
 from __future__ import annotations
 
 import math
+import re
 from pathlib import Path
 
 from fontTools.fontBuilder import FontBuilder
+from fontTools.misc import etree
+from fontTools.misc.transform import Transform
+from fontTools.pens.cu2quPen import Cu2QuPen
 from fontTools.pens.ttGlyphPen import TTGlyphPen
+from fontTools.svgLib.path import SVGPath
 from fontTools.ttLib import TTFont
 
 UPM = 1000
 WIDTH = 620
 CAP = 700
 STROKE = 74
+ASCENT = 820
+DESCENT = 240
 HERE = Path(__file__).resolve().parent
+INKSCAPE = "http://www.inkscape.org/namespaces/inkscape"
+SVGNS = "http://www.w3.org/2000/svg"
+DRAWABLE = {"path", "rect", "circle", "ellipse", "polygon", "polyline", "line"}
 
 
 def pen_for(draw) -> object:
@@ -143,9 +154,12 @@ def three(pen) -> None:
 
 
 def four(pen) -> None:
-    rect(pen, 400, 0, STROKE, CAP)
-    rect(pen, 120, 214, 390, STROKE)
-    stroke(pen, [(148, 680), (450, 230)])
+    left = 148
+    stem = 392
+    bar = 248
+    rect(pen, stem, 0, STROKE, CAP)
+    rect(pen, left, bar, stem + STROKE - left, STROKE)
+    rect(pen, left, bar, STROKE, CAP - bar)
 
 
 def five(pen) -> None:
@@ -213,6 +227,109 @@ def epsilon(pen) -> None:
     rect(grown, 190, 350 - STROKE / 2, 180, STROKE)
 
 
+def aries(pen) -> None:
+    curve(pen, [((310, 70), (70, 220), (168, 560))])
+    curve(pen, [((168, 560), (150, 700), (250, 620))])
+    curve(pen, [((310, 70), (550, 220), (452, 560))])
+    curve(pen, [((452, 560), (470, 700), (370, 620))])
+
+
+def taurus(pen) -> None:
+    ring(pen, 310, 280, 168, 168, STROKE)
+    curve(pen, [((210, 420), (120, 600), (230, 660))])
+    curve(pen, [((410, 420), (500, 600), (390, 660))])
+
+
+def gemini(pen) -> None:
+    rect(pen, 150, 40, STROKE, 620)
+    rect(pen, 396, 40, STROKE, 620)
+    rect(pen, 150, 40, 150, STROKE)
+    rect(pen, 320, 40, 150, STROKE)
+    rect(pen, 150, 586, 150, STROKE)
+    rect(pen, 320, 586, 150, STROKE)
+
+
+def cancer(pen) -> None:
+    ring(pen, 228, 468, 118, 118, 62)
+    ring(pen, 392, 232, 118, 118, 62)
+
+
+def leo(pen) -> None:
+    ring(pen, 236, 470, 128, 128, 64)
+    curve(pen, [
+        ((350, 420), (540, 380), (470, 170)),
+        ((470, 170), (420, 30), (290, 90)),
+    ])
+
+
+def virgo(pen) -> None:
+    rect(pen, 168, 40, STROKE, 640)
+    ring(pen, 392, 430, 128, 156, 64)
+
+
+def libra(pen) -> None:
+    rect(pen, 120, 236, 380, STROKE)
+    curve(pen, [((156, 310), (310, 700), (464, 310))])
+
+
+def scorpio(pen) -> None:
+    curve(pen, [
+        ((150, 80), (150, 360), (300, 470)),
+        ((300, 470), (470, 590), (470, 300)),
+    ])
+    stroke(pen, [(360, 430), (500, 300)])
+    stroke(pen, [(390, 250), (500, 300)])
+
+
+def ophiuchus(pen) -> None:
+    rect(pen, 310 - STROKE / 2, 36, STROKE, 640)
+    curve(pen, [
+        ((110, 180), (210, 340), (310, 250)),
+        ((310, 250), (430, 150), (510, 300)),
+        ((510, 300), (420, 470), (310, 390)),
+        ((310, 390), (190, 300), (130, 520)),
+    ])
+
+
+def sagittarius(pen) -> None:
+    stroke(pen, [(120, 90), (470, 620)])
+    stroke(pen, [(330, 540), (500, 660)])
+    stroke(pen, [(390, 470), (500, 660)])
+    stroke(pen, [(160, 220), (250, 90)])
+
+
+def capricorn(pen) -> None:
+    curve(pen, [
+        ((150, 620), (150, 280), (330, 300)),
+        ((330, 300), (530, 320), (480, 140)),
+        ((480, 140), (440, 20), (330, 90)),
+        ((330, 90), (270, 160), (360, 190)),
+    ])
+
+
+def aquarius(pen) -> None:
+    curve(pen, [
+        ((100, 470), (200, 640), (310, 470)),
+        ((310, 470), (420, 300), (520, 470)),
+    ])
+    curve(pen, [
+        ((100, 250), (200, 420), (310, 250)),
+        ((310, 250), (420, 80), (520, 250)),
+    ])
+
+
+def pisces(pen) -> None:
+    curve(pen, [((190, 70), (70, 350), (190, 630))])
+    curve(pen, [((430, 70), (550, 350), (430, 630))])
+    rect(pen, 150, 350 - STROKE / 2, 320, STROKE)
+
+
+def cetus(pen) -> None:
+    ring(pen, 230, 350, 145, 108, 64)
+    stroke(pen, [(400, 360), (545, 530)])
+    stroke(pen, [(400, 340), (545, 170)])
+
+
 class _Grow:
     def __init__(self, pen, factor, cx, cy):
         self.pen = pen
@@ -255,12 +372,162 @@ DRAWS = {
     "period": period,
     "chi": chi,
     "epsilon": epsilon,
+    "aries": aries,
+    "taurus": taurus,
+    "gemini": gemini,
+    "cancer": cancer,
+    "leo": leo,
+    "virgo": virgo,
+    "libra": libra,
+    "scorpio": scorpio,
+    "ophiuchus": ophiuchus,
+    "sagittarius": sagittarius,
+    "capricorn": capricorn,
+    "aquarius": aquarius,
+    "pisces": pisces,
+    "cetus": cetus,
 }
+
+# Private Use, in lunato order from the winter solstice.
+SIGNS = {
+    0xE000: "sagittarius",
+    0xE001: "capricorn",
+    0xE002: "aquarius",
+    0xE003: "pisces",
+    0xE004: "aries",
+    0xE005: "cetus",
+    0xE006: "taurus",
+    0xE007: "gemini",
+    0xE008: "cancer",
+    0xE009: "leo",
+    0xE00A: "virgo",
+    0xE00B: "libra",
+    0xE00C: "scorpio",
+    0xE00D: "ophiuchus",
+}
+
+SHEETS = {
+    "zero": HERE / "cifras" / "0.svg",
+    "one": HERE / "cifras" / "1.svg",
+    "two": HERE / "cifras" / "2.svg",
+    "three": HERE / "cifras" / "3.svg",
+    "four": HERE / "cifras" / "4.svg",
+    "five": HERE / "cifras" / "5.svg",
+    "six": HERE / "cifras" / "6.svg",
+    "seven": HERE / "cifras" / "7.svg",
+    "eight": HERE / "cifras" / "8.svg",
+    "nine": HERE / "cifras" / "9.svg",
+    "comma": HERE / "cifras" / "coma.svg",
+    "hyphen": HERE / "cifras" / "guion.svg",
+    "period": HERE / "cifras" / "punto.svg",
+    "chi": HERE / "cifras" / "chi.svg",
+    "epsilon": HERE / "cifras" / "epsilon.svg",
+    "sagittarius": HERE / "signs" / "sagitario.svg",
+    "capricorn": HERE / "signs" / "capricornio.svg",
+    "aquarius": HERE / "signs" / "acuario.svg",
+    "pisces": HERE / "signs" / "piscis.svg",
+    "aries": HERE / "signs" / "aries.svg",
+    "cetus": HERE / "signs" / "cetus.svg",
+    "taurus": HERE / "signs" / "tauro.svg",
+    "gemini": HERE / "signs" / "geminis.svg",
+    "cancer": HERE / "signs" / "cancer.svg",
+    "leo": HERE / "signs" / "leo.svg",
+    "virgo": HERE / "signs" / "virgo.svg",
+    "libra": HERE / "signs" / "libra.svg",
+    "scorpio": HERE / "signs" / "escorpio.svg",
+    "ophiuchus": HERE / "signs" / "ofiuco.svg",
+}
+
+
+def _sheet_transform(raw: str | None) -> Transform:
+    if not raw:
+        return Transform()
+    total = Transform()
+    found = re.findall(r"(matrix|translate|scale|rotate)\s*\(([^)]*)\)", raw)
+    if not found:
+        raise ValueError(raw)
+    for kind, args in found:
+        nums = [float(n) for n in re.split(r"[\s,]+", args.strip()) if n]
+        if kind == "matrix":
+            local = Transform(*nums)
+        elif kind == "translate":
+            local = Transform(1, 0, 0, 1, nums[0], nums[1] if len(nums) > 1 else 0)
+        elif kind == "scale":
+            sx = nums[0]
+            sy = nums[1] if len(nums) > 1 else sx
+            local = Transform(sx, 0, 0, sy, 0, 0)
+        else:
+            angle = math.radians(nums[0])
+            rot = Transform(math.cos(angle), math.sin(angle), -math.sin(angle), math.cos(angle), 0, 0)
+            if len(nums) == 3:
+                cx, cy = nums[1], nums[2]
+                local = Transform(1, 0, 0, 1, cx, cy).transform(rot).transform(Transform(1, 0, 0, 1, -cx, -cy))
+            else:
+                local = rot
+        total = total.transform(local)
+    return total
+
+
+def _matrix_attr(transform: Transform) -> str:
+    values = " ".join(f"{n:.4f}".rstrip("0").rstrip(".") for n in transform)
+    return f"matrix({values})"
+
+
+def glyph_from_svg(path: Path):
+    root = etree.parse(path).getroot()
+    layer = None
+    for el in root.iter():
+        if el.get(f"{{{INKSCAPE}}}label") == "dibujo":
+            layer = el
+            break
+    if layer is None:
+        return None
+    drawn = []
+
+    def walk(el, parent: Transform) -> None:
+        local = _sheet_transform(el.get("transform"))
+        absolute = parent.transform(local)
+        tag = etree.QName(el).localname
+        if tag in DRAWABLE and el.get("fill") != "none":
+            clone = etree.fromstring(etree.tostring(el))
+            clone.attrib.pop("transform", None)
+            if absolute != Transform():
+                clone.set("transform", _matrix_attr(absolute))
+            drawn.append(clone)
+        for child in el:
+            walk(child, absolute)
+
+    walk(layer, Transform())
+    if not drawn:
+        return None
+    wrapper = etree.Element(f"{{{SVGNS}}}svg")
+    for el in drawn:
+        wrapper.append(el)
+    pen = TTGlyphPen(None)
+    curves = Cu2QuPen(pen, max_err=1.0, reverse_direction=False)
+    SVGPath.fromstring(
+        etree.tostring(wrapper),
+        transform=(1, 0, 0, -1, 0, ASCENT),
+    ).draw(curves)
+    glyph = pen.glyph()
+    if not glyph.numberOfContours:
+        return None
+    return glyph
 
 
 def build() -> None:
     order = [".notdef", *DRAWS]
-    glyphs = {name: pen_for(draw) for name, draw in DRAWS.items()}
+    glyphs = {}
+    from_sheet = []
+    for name, draw in DRAWS.items():
+        sheet = SHEETS.get(name)
+        loaded = glyph_from_svg(sheet) if sheet and sheet.exists() else None
+        if loaded is None:
+            glyphs[name] = pen_for(draw)
+        else:
+            glyphs[name] = loaded
+            from_sheet.append(sheet.stem)
+    print("svg:", " ".join(from_sheet) if from_sheet else "ninguno")
     blank = TTGlyphPen(None).glyph()
     glyphs[".notdef"] = blank
     mapping = {ord(ch): name for ch, name in zip("0123456789", list(DRAWS)[:10])}
@@ -269,9 +536,12 @@ def build() -> None:
         ord("-"): "hyphen",
         ord("."): "period",
         0x03C7: "chi",
+        0x03A7: "chi",
         0x03B5: "epsilon",
+        0x0395: "epsilon",
         ord("X"): "chi",
         ord("W"): "epsilon",
+        **SIGNS,
     })
     fb = FontBuilder(UPM, isTTF=True)
     fb.setupGlyphOrder(order)
@@ -294,8 +564,8 @@ def build() -> None:
         "psName": "Dozenal-Regular",
         "designer": "Ozkar",
         "description": (
-            "Tabular dozenal figures. Dek is chi and elv is epsilon, "
-            "both on the figure line and at figure height."
+            "Tabular dozenal figures. Dek is chi and elv is epsilon. "
+            "Signs U+E000 to U+E00D follow the lunato from Sagittarius."
         ),
         "licenseDescription": "Use and modify these outlines freely.",
     })

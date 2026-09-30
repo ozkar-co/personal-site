@@ -29,6 +29,7 @@ body:has(.keys) h1 {
   font-weight: 400;
   color: var(--fg);
   font-variant-numeric: tabular-nums;
+  text-transform: none;
 }
 
 .screen {
@@ -148,7 +149,7 @@ body:has(.keys) h1 {
 
 @font-face {
   font-family: Dozenal;
-  src: url("/s/Dozenal-Regular.woff2") format("woff2");
+  src: url("/s/Dozenal-Regular.woff2?v=3") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -158,11 +159,35 @@ body:has(.keys) h1 {
 .screen.dozenal,
 .digits b.dozenal,
 .days b.dozenal,
-.keys button.dozenal {
+.keys button.dozenal,
+.signs b {
   font-family: Dozenal, Palatino, Georgia, serif;
   font-style: normal;
   font-weight: 400;
   font-synthesis: none;
+  text-transform: none;
+}
+
+.sign {
+  display: inline-block;
+  margin-left: .3rem;
+  font-size: 1.15em;
+  line-height: 1;
+  vertical-align: -.12em;
+}
+
+.signs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9.2rem, 1fr));
+  gap: .4rem .8rem;
+  margin: .4rem 0 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.signs b {
+  font-size: 1.35rem;
+  margin-right: .35rem;
 }
 
 @media (max-width: 50rem) {

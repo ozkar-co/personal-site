@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.0.dtd"
+   width="620"
+   height="1060"
+   viewBox="0 0 620 1060"
+   sodipodi:docname="coma.svg">
+  <title>coma</title>
+  <desc>Cifra coma. Dibujar solo en la capa dibujo: relleno negro, sin trazo, dentro de la caja. La base de la caja es la linea de las cifras. python3 fonts/dozenal/build.py regenera la fuente.</desc>
+  <sodipodi:namedview
+     id="view-coma"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     inkscape:showpageshadow="false"
+     inkscape:pageopacity="1"
+     inkscape:deskcolor="#d8d8d8"
+     showguides="true"
+     units="px"
+     inkscape:current-layer="layer-dibujo">
+    <sodipodi:guide id="guide-base-coma" orientation="0,1" position="0,820" inkscape:label="linea de base" inkscape:locked="true"/>
+    <sodipodi:guide id="guide-cap-coma" orientation="0,1" position="0,120" inkscape:label="altura de cifra" inkscape:locked="true"/>
+    <sodipodi:guide id="guide-left-coma" orientation="1,0" position="0,0" inkscape:label="izquierda" inkscape:locked="true"/>
+    <sodipodi:guide id="guide-right-coma" orientation="1,0" position="620,0" inkscape:label="derecha" inkscape:locked="true"/>
+    <sodipodi:guide id="guide-fall-coma" orientation="0,1" position="0,1060" inkscape:label="descendente" inkscape:locked="true"/>
+  </sodipodi:namedview>
+  <g inkscape:groupmode="layer" id="layer-referencia" inkscape:label="referencia" sodipodi:insensitive="true" opacity="0.22">
+    <path d="M348 670Q348 718 300 718Q252 718 252 670Q252 622 300 622Q348 622 348 670ZM326.72543938498086 698.3516998078065 277.2960381840123 856.2390944420599 263.8113678944428 973.244659587685 208.1886321055572 966.755340412315 222.70396181598773 843.7609055579401 273.27456061501914 681.6483001921935Z" fill="#000" stroke="none"/>
+  </g>
+  <g inkscape:groupmode="layer" id="layer-caja" inkscape:label="caja" sodipodi:insensitive="true">
+    <rect x="0.5" y="120.5" width="619" height="699" fill="none" stroke="#c45c5c" stroke-width="1"/>
+  </g>
+  <g inkscape:groupmode="layer" id="layer-dibujo" inkscape:label="dibujo">
+    <path d="M348 670Q348 718 300 718Q252 718 252 670Q252 622 300 622Q348 622 348 670ZM326.72543938498086 698.3516998078065 277.2960381840123 856.2390944420599 263.8113678944428 973.244659587685 208.1886321055572 966.755340412315 222.70396181598773 843.7609055579401 273.27456061501914 681.6483001921935Z" fill="#000" stroke="none"/>
+  </g>
+</svg>
