@@ -8,7 +8,9 @@ from pathlib import Path
 from server.chunks import text_hash
 from server.config import Settings
 
-CONTENT = Path(__file__).resolve().parents[1] / "content"
+ROOT = Path(__file__).resolve().parents[1]
+CONTENT = ROOT / "content"
+DUMP = ROOT / "data" / "site.sql"
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS entries (
@@ -87,6 +89,9 @@ def connect(settings: Settings) -> sqlite3.Connection:
 
 
 def init_db(settings: Settings) -> None:
+    if not settings.db_file.is_file() and DUMP.is_file():
+        settings.db_file.parent.mkdir(parents=True, exist_ok=True)
+        sqlite3.connect(settings.db_file).executescript(DUMP.read_text(encoding="utf-8"))
     with connect(settings) as conn:
         conn.executescript(SCHEMA)
         _seed(conn)
