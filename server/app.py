@@ -103,6 +103,170 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     def tags() -> list[dict]:
         return db.list_tags(cfg)
 
+    def _strings(body: dict, name: str) -> list[str]:
+        raw = body.get(name) or []
+        if not isinstance(raw, list):
+            raise HTTPException(status_code=400, detail=f"{name} debe ser una lista")
+        return [str(item).strip() for item in raw if str(item).strip()]
+
+    def _project_body(body: dict, project_id: str) -> dict:
+        title = str(body.get("title") or "").strip()
+        description = str(body.get("description") or "").strip()
+        url = str(body.get("url") or "").strip()
+        image = str(body.get("image") or "").strip()
+        if not project_id or not title or not description or not url or not image:
+            raise HTTPException(status_code=400, detail="Faltan id, title, description, url o image")
+        data = {
+            "id": project_id,
+            "title": title,
+            "description": description,
+            "url": url,
+            "image": image,
+            "technologies": _strings(body, "technologies"),
+            "features": _strings(body, "features"),
+        }
+        if body.get("ordinal") is not None:
+            data["ordinal"] = int(body["ordinal"])
+        return data
+
+    def _cv_body(body: dict) -> dict:
+        kind = str(body.get("kind") or "").strip()
+        title = str(body.get("title") or "").strip()
+        if kind not in {"about", "skill", "experience", "education", "extra"} or not title:
+            raise HTTPException(status_code=400, detail="kind o title inválido")
+        raw_items = body.get("items") or []
+        if not isinstance(raw_items, list):
+            raise HTTPException(status_code=400, detail="items debe ser una lista")
+        if kind == "skill":
+            items = []
+            for item in raw_items:
+                if not isinstance(item, dict) or not str(item.get("name") or "").strip():
+                    raise HTTPException(status_code=400, detail="cada habilidad necesita name")
+                items.append({
+                    "name": str(item["name"]).strip(),
+                    "experience": str(item.get("experience") or "").strip(),
+                })
+        else:
+            items = [str(item).strip() for item in raw_items if str(item).strip()]
+        data = {
+            "kind": kind,
+            "title": title,
+            "icon": str(body.get("icon") or ""),
+            "body": str(body.get("body") or ""),
+            "organization": str(body.get("organization") or ""),
+            "location": str(body.get("location") or ""),
+            "period": str(body.get("period") or ""),
+            "items": items,
+        }
+        if body.get("ordinal") is not None:
+            data["ordinal"] = int(body["ordinal"])
+        return data
+
+    @app.get("/api/quotes/random")
+    def quote_one() -> dict:
+        row = db.random_quote(cfg)
+        if row is None:
+            raise HTTPException(status_code=404, detail="No hay frases")
+        return row
+
+    @app.get("/api/quotes")
+    def quote_index() -> list[dict]:
+        return db.list_quotes(cfg)
+
+    @app.post("/api/quotes", status_code=201)
+    async def quote_create(request: Request) -> dict:
+        require_admin(request, cfg)
+        body = await request.json()
+        text = str(body.get("text") or "").strip()
+        if not text:
+            raise HTTPException(status_code=400, detail="Falta text")
+        return db.save_quote(cfg, text)
+
+    @app.put("/api/quotes/{quote_id}")
+    async def quote_update(quote_id: int, request: Request) -> dict:
+        require_admin(request, cfg)
+        body = await request.json()
+        text = str(body.get("text") or "").strip()
+        if not text:
+            raise HTTPException(status_code=400, detail="Falta text")
+        if db.get_quote(cfg, quote_id) is None:
+            raise HTTPException(status_code=404, detail="No existe")
+        return db.save_quote(cfg, text, quote_id)
+
+    @app.delete("/api/quotes/{quote_id}", status_code=204)
+    def quote_delete(quote_id: int, request: Request) -> Response:
+        require_admin(request, cfg)
+        if not db.delete_quote(cfg, quote_id):
+            raise HTTPException(status_code=404, detail="No existe")
+        return Response(status_code=204)
+
+    @app.get("/api/projects")
+    def project_index() -> list[dict]:
+        return db.list_projects(cfg)
+
+    @app.get("/api/projects/{project_id}")
+    def project_one(project_id: str) -> dict:
+        row = db.get_project(cfg, project_id)
+        if row is None:
+            raise HTTPException(status_code=404, detail="No existe")
+        return row
+
+    @app.post("/api/projects", status_code=201)
+    async def project_create(request: Request) -> dict:
+        require_admin(request, cfg)
+        body = await request.json()
+        data = _project_body(body, str(body.get("id") or "").strip())
+        if db.get_project(cfg, data["id"]) is not None:
+            raise HTTPException(status_code=409, detail="Ese id ya existe")
+        return db.save_project(cfg, data)
+
+    @app.put("/api/projects/{project_id}")
+    async def project_update(project_id: str, request: Request) -> dict:
+        require_admin(request, cfg)
+        if db.get_project(cfg, project_id) is None:
+            raise HTTPException(status_code=404, detail="No existe")
+        body = await request.json()
+        return db.save_project(cfg, _project_body(body, project_id))
+
+    @app.delete("/api/projects/{project_id}", status_code=204)
+    def project_delete(project_id: str, request: Request) -> Response:
+        require_admin(request, cfg)
+        if not db.delete_project(cfg, project_id):
+            raise HTTPException(status_code=404, detail="No existe")
+        return Response(status_code=204)
+
+    @app.get("/api/cv")
+    def cv_index(kind: str = "") -> list[dict]:
+        if kind and kind not in {"about", "skill", "experience", "education", "extra"}:
+            raise HTTPException(status_code=400, detail="kind inválido")
+        return db.list_cv(cfg, kind or None)
+
+    @app.get("/api/cv/{block_id}")
+    def cv_one(block_id: int) -> dict:
+        row = db.get_cv(cfg, block_id)
+        if row is None:
+            raise HTTPException(status_code=404, detail="No existe")
+        return row
+
+    @app.post("/api/cv", status_code=201)
+    async def cv_create(request: Request) -> dict:
+        require_admin(request, cfg)
+        return db.save_cv(cfg, _cv_body(await request.json()))
+
+    @app.put("/api/cv/{block_id}")
+    async def cv_update(block_id: int, request: Request) -> dict:
+        require_admin(request, cfg)
+        if db.get_cv(cfg, block_id) is None:
+            raise HTTPException(status_code=404, detail="No existe")
+        return db.save_cv(cfg, _cv_body(await request.json()), block_id)
+
+    @app.delete("/api/cv/{block_id}", status_code=204)
+    def cv_delete(block_id: int, request: Request) -> Response:
+        require_admin(request, cfg)
+        if not db.delete_cv(cfg, block_id):
+            raise HTTPException(status_code=404, detail="No existe")
+        return Response(status_code=204)
+
     @app.get("/api/blog")
     def blog_index(tag: str = "", orden: str = "desc") -> list[dict]:
         return db.list_entries(cfg, tag or None, orden == "asc")
@@ -228,15 +392,16 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @app.get("/cv", response_class=HTMLResponse)
     def cv() -> HTMLResponse:
-        return HTMLResponse(pages.cv_page(cfg.site_url))
+        return HTMLResponse(pages.cv_page(cfg.site_url, db.list_cv(cfg)))
 
     @app.get("/projects", response_class=HTMLResponse)
     def projects() -> HTMLResponse:
-        return HTMLResponse(pages.projects_page(cfg.site_url))
+        return HTMLResponse(pages.projects_page(cfg.site_url, db.list_projects(cfg)))
 
     @app.get("/wizz", response_class=HTMLResponse)
     def wizz() -> HTMLResponse:
-        return HTMLResponse(pages.wizz_page(cfg.site_url))
+        row = db.random_quote(cfg)
+        return HTMLResponse(pages.wizz_page(cfg.site_url, "" if row is None else row["text"]))
 
     @app.get("/time", response_class=HTMLResponse)
     def time_page() -> HTMLResponse:
@@ -353,9 +518,14 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @app.get("/robots.txt")
     def robots() -> Response:
-        path = ROOT / "public" / "robots.txt"
-        text = path.read_text(encoding="utf-8") if path.is_file() else "User-agent: *\nAllow: /\n"
-        return Response(text, media_type="text/plain")
+        return Response(pages.robots_txt(cfg.site_url), media_type="text/plain")
+
+    @app.get("/sitemap.xml")
+    def sitemap() -> Response:
+        return Response(
+            pages.sitemap_xml(cfg.site_url, db.list_entries(cfg, None, False)),
+            media_type="application/xml",
+        )
 
     app.mount("/s", StaticFiles(directory=str(Path(__file__).resolve().parent / "static")), name="s")
     app.mount("/assets", StaticFiles(directory=str(ROOT / "public" / "assets")), name="assets")

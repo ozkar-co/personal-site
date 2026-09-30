@@ -1,20 +1,11 @@
 from __future__ import annotations
 
 import html
-import json
 import random
 from datetime import datetime
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-CV = json.loads((ROOT / "content" / "cv.json").read_text(encoding="utf-8"))
-PROJECTS = json.loads((ROOT / "content" / "projects.json").read_text(encoding="utf-8"))
-QUOTES = [
-    line.strip()
-    for line in (ROOT / "content" / "quotes.txt").read_text(encoding="utf-8").splitlines()
-    if line.strip()
-]
-WIZZ = sorted((ROOT / "public" / "assets" / "wizz").glob("*.webp"))
+WIZZ = sorted((Path(__file__).resolve().parents[1] / "public" / "assets" / "wizz").glob("*.webp"))
 
 NAV = (
     ("/", "OZ"),
@@ -33,7 +24,16 @@ def esc(value: str) -> str:
     return html.escape(str(value), quote=True)
 
 
-def layout(title: str, description: str, canonical: str, body: str, current: str, scripts: tuple[str, ...] = ()) -> str:
+def layout(
+    title: str,
+    description: str,
+    canonical: str,
+    body: str,
+    current: str,
+    scripts: tuple[str, ...] = (),
+    *,
+    index: bool = True,
+) -> str:
     links = []
     for href, label in NAV:
         mark = ' aria-current="page"' if href == current else ""
@@ -48,6 +48,7 @@ def layout(title: str, description: str, canonical: str, body: str, current: str
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(description)}">
+{"" if index else '<meta name="robots" content="noindex">'}
 <link rel="canonical" href="{esc(canonical)}">
 <link rel="icon" href="/assets/favicon.svg">
 <link rel="stylesheet" href="/s/estilos.css">
@@ -71,24 +72,24 @@ def layout(title: str, description: str, canonical: str, body: str, current: str
 def _cards(title: str, rows: list[dict], kind: str) -> str:
     blocks = [f"<h2>{esc(title)}</h2>"]
     for row in rows:
-        if kind == "about":
-            items = "".join(f"<li>{esc(item)}</li>" for item in row["highlights"])
+        if kind == "skill":
+            items = "".join(
+                f"<li>{esc(item['name'])} <span class='muted'>{esc(item['experience'])}</span></li>"
+                for item in row["items"]
+            )
+            blocks.append(f"<article class='card'><h3>{esc(row['title'])}</h3><ul>{items}</ul></article>")
+        elif kind == "about":
+            items = "".join(f"<li>{esc(item)}</li>" for item in row["items"])
             blocks.append(
                 "<article class='card'>"
                 f"<h3>{esc(row['icon'])} {esc(row['title'])}</h3>"
-                f"<p>{esc(row['content'])}</p><ul>{items}</ul></article>"
+                f"<p>{esc(row['body'])}</p><ul>{items}</ul></article>"
             )
-        elif kind == "skill":
-            items = "".join(
-                f"<li>{esc(skill['name'])} <span class='muted'>{esc(skill['experience'])}</span></li>"
-                for skill in row["skills"]
-            )
-            blocks.append(f"<article class='card'><h3>{esc(row['title'])}</h3><ul>{items}</ul></article>")
         else:
-            items = "".join(f"<li>{esc(item)}</li>" for item in row["achievements"])
+            items = "".join(f"<li>{esc(item)}</li>" for item in row["items"])
             blocks.append(
                 "<article class='card'>"
-                f"<h3>{esc(row['position'])}</h3>"
+                f"<h3>{esc(row['title'])}</h3>"
                 f"<p class='muted'>{esc(row['organization'])} · {esc(row['location'])} · {esc(row['period'])}</p>"
                 f"<ul>{items}</ul></article>"
             )
@@ -131,28 +132,31 @@ def home(site_url: str) -> str:
     return layout("Ozkar", "Ingeniero de sistemas, blog y proyectos.", f"{site_url}/", body, "/")
 
 
-def cv_page(site_url: str) -> str:
+def cv_page(site_url: str, blocks: list[dict]) -> str:
+    def rows(kind: str) -> list[dict]:
+        return [block for block in blocks if block["kind"] == kind]
+
     body = (
         "<h1>Curriculum Vitae</h1>"
-        + _cards("Sobre mí", CV["about"]["profiles"], "about")
-        + _cards("Habilidades", CV["skills"], "skill")
-        + _cards("Experiencia", CV["experience"], "job")
-        + _cards("Educación", CV["education"], "job")
-        + _cards("Extra", CV["extracurricular"], "job")
+        + _cards("Sobre mí", rows("about"), "about")
+        + _cards("Habilidades", rows("skill"), "skill")
+        + _cards("Experiencia", rows("experience"), "job")
+        + _cards("Educación", rows("education"), "job")
+        + _cards("Extra", rows("extra"), "job")
     )
     return layout("CV — Ozkar", "Curriculum vitae de Ozkar.", f"{site_url}/cv", body, "/cv")
 
 
-def projects_page(site_url: str) -> str:
+def projects_page(site_url: str, projects: list[dict]) -> str:
     cards = []
-    for project in PROJECTS:
-        tech = ", ".join(esc(item["name"]) for item in project["tecnologias"])
-        feats = "".join(f"<li>{esc(item)}</li>" for item in project["caracteristicas"])
+    for project in projects:
+        tech = ", ".join(esc(name) for name in project["technologies"])
+        feats = "".join(f"<li>{esc(item)}</li>" for item in project["features"])
         cards.append(
             "<article class='card'>"
-            f"<img src='/assets/{esc(project['imagen'])}' alt=''>"
-            f"<h2>{esc(project['titulo'])}</h2>"
-            f"<p>{esc(project['descripcion'])}</p>"
+            f"<img src='/assets/{esc(project['image'])}' alt=''>"
+            f"<h2>{esc(project['title'])}</h2>"
+            f"<p>{esc(project['description'])}</p>"
             f"<p class='muted'>{tech}</p>"
             f"<ul>{feats}</ul>"
             f"<a class='btn' href='{esc(project['url'])}'>Visitar</a>"
@@ -162,8 +166,7 @@ def projects_page(site_url: str) -> str:
     return layout("Proyectos — Ozkar", "Proyectos de Ozkar.", f"{site_url}/projects", body, "/projects")
 
 
-def wizz_page(site_url: str) -> str:
-    quote = random.choice(QUOTES) if QUOTES else ""
+def wizz_page(site_url: str, quote: str) -> str:
     text = esc(quote).replace("; ", ";<br>").replace(". ", ".<br>")
     image = random.choice(WIZZ).name if WIZZ else ""
     picture = f"<a href='/wizz'><img src='/assets/wizz/{esc(image)}' alt='Sabio mago'></a>" if image else ""
@@ -308,7 +311,7 @@ def admin_login(site_url: str, failed: bool) -> str:
 <button type="submit">Entrar</button>
 </form>
 """
-    return layout("Admin — Ozkar", "Administrar el blog.", f"{site_url}/admin", body, "/admin")
+    return layout("Admin — Ozkar", "Administrar el blog.", f"{site_url}/admin", body, "/admin", index=False)
 
 
 def admin_home(site_url: str, entries: list[dict]) -> str:
@@ -330,9 +333,46 @@ def admin_home(site_url: str, entries: list[dict]) -> str:
 <form method="post" action="/admin/salir"><button type="submit">Salir</button></form>
 <div class="grid">{listing}</div>
 """
-    return layout("Admin — Ozkar", "Administrar el blog.", f"{site_url}/admin", body, "/admin")
+    return layout("Admin — Ozkar", "Administrar el blog.", f"{site_url}/admin", body, "/admin", index=False)
 
 
 def admin_editor(site_url: str, entry: dict | None, tags: list[str], message: str) -> str:
     body = _editor(entry, tags, message)
-    return layout("Editar — Ozkar", "Editar una entrada.", f"{site_url}/admin", body, "/admin")
+    return layout("Editar — Ozkar", "Editar una entrada.", f"{site_url}/admin", body, "/admin", index=False)
+
+
+PUBLIC_PATHS = ("/", "/cv", "/blog", "/projects", "/wizz", "/time", "/clock", "/calc")
+
+
+def robots_txt(site_url: str) -> str:
+    return (
+        "User-agent: *\n"
+        "Allow: /\n"
+        "\n"
+        "Disallow: /admin\n"
+        "Disallow: /api/\n"
+        "Disallow: /blog/buscar\n"
+        "\n"
+        f"Sitemap: {site_url}/sitemap.xml\n"
+    )
+
+
+def sitemap_xml(site_url: str, entries: list[dict]) -> str:
+    newest = max((entry["date"] for entry in entries), default="")
+    rows: list[tuple[str, str]] = []
+    for path in PUBLIC_PATHS:
+        last = newest if path == "/blog" else ""
+        rows.append((path, last))
+    for entry in entries:
+        rows.append((f"/blog/{entry['slug']}", entry["date"]))
+    body = []
+    for path, last in rows:
+        loc = site_url + "/" if path == "/" else site_url + path
+        extra = f"<lastmod>{esc(last)}</lastmod>" if last else ""
+        body.append(f"<url><loc>{esc(loc)}</loc>{extra}</url>")
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        + "\n".join(body)
+        + "\n</urlset>\n"
+    )

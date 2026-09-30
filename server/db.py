@@ -1,10 +1,14 @@
 from __future__ import annotations
 
+import json
 import sqlite3
 from datetime import datetime, timezone
+from pathlib import Path
 
 from server.chunks import text_hash
 from server.config import Settings
+
+CONTENT = Path(__file__).resolve().parents[1] / "content"
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS entries (
@@ -41,6 +45,32 @@ CREATE TABLE IF NOT EXISTS embed_jobs (
   entry_id INTEGER NOT NULL REFERENCES entries(id) ON DELETE CASCADE,
   created_at TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS quotes (
+  id INTEGER PRIMARY KEY,
+  text TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS projects (
+  id TEXT PRIMARY KEY,
+  ordinal INTEGER NOT NULL,
+  title TEXT NOT NULL,
+  description TEXT NOT NULL,
+  url TEXT NOT NULL,
+  image TEXT NOT NULL,
+  technologies TEXT NOT NULL,
+  features TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS cv_blocks (
+  id INTEGER PRIMARY KEY,
+  kind TEXT NOT NULL,
+  ordinal INTEGER NOT NULL,
+  title TEXT NOT NULL,
+  icon TEXT NOT NULL DEFAULT '',
+  body TEXT NOT NULL DEFAULT '',
+  organization TEXT NOT NULL DEFAULT '',
+  location TEXT NOT NULL DEFAULT '',
+  period TEXT NOT NULL DEFAULT '',
+  items TEXT NOT NULL DEFAULT '[]'
+);
 """
 
 
@@ -59,6 +89,7 @@ def connect(settings: Settings) -> sqlite3.Connection:
 def init_db(settings: Settings) -> None:
     with connect(settings) as conn:
         conn.executescript(SCHEMA)
+        _seed(conn)
 
 
 def _tags_for(conn: sqlite3.Connection, entry_id: int) -> list[str]:
@@ -298,3 +329,283 @@ def vectors_by_entry(settings: Settings) -> list[tuple[str, bytes]]:
             """
         ).fetchall()
     return [(row["slug"], row["vector"]) for row in rows]
+
+
+def _seed(conn: sqlite3.Connection) -> None:
+    if conn.execute("SELECT COUNT(*) AS n FROM quotes").fetchone()["n"] == 0:
+        path = CONTENT / "quotes.txt"
+        if path.is_file():
+            for line in path.read_text(encoding="utf-8").splitlines():
+                text = line.strip()
+                if text:
+                    conn.execute("INSERT INTO quotes (text) VALUES (?)", (text,))
+    if conn.execute("SELECT COUNT(*) AS n FROM projects").fetchone()["n"] == 0:
+        path = CONTENT / "projects.json"
+        if path.is_file():
+            for ordinal, project in enumerate(json.loads(path.read_text(encoding="utf-8"))):
+                names = [
+                    item["name"] if isinstance(item, dict) else str(item)
+                    for item in project.get("tecnologias") or []
+                ]
+                conn.execute(
+                    """
+                    INSERT INTO projects
+                      (id, ordinal, title, description, url, image, technologies, features)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                    """,
+                    (
+                        project["id"],
+                        ordinal,
+                        project["titulo"],
+                        project["descripcion"],
+                        project["url"],
+                        project["imagen"],
+                        json.dumps(names, ensure_ascii=False),
+                        json.dumps(project.get("caracteristicas") or [], ensure_ascii=False),
+                    ),
+                )
+    if conn.execute("SELECT COUNT(*) AS n FROM cv_blocks").fetchone()["n"] == 0:
+        path = CONTENT / "cv.json"
+        if path.is_file():
+            raw = json.loads(path.read_text(encoding="utf-8"))
+            rows: list[tuple] = []
+            for ordinal, profile in enumerate(raw["about"]["profiles"]):
+                rows.append((
+                    "about", ordinal, profile["title"], profile.get("icon") or "",
+                    profile["content"], "", "", "",
+                    json.dumps(profile.get("highlights") or [], ensure_ascii=False),
+                ))
+            for ordinal, section in enumerate(raw["skills"]):
+                items = [
+                    {"name": skill["name"], "experience": skill.get("experience") or ""}
+                    for skill in section["skills"]
+                ]
+                rows.append((
+                    "skill", ordinal, section["title"], "", "", "", "", "",
+                    json.dumps(items, ensure_ascii=False),
+                ))
+            for kind, source in (
+                ("experience", "experience"),
+                ("education", "education"),
+                ("extra", "extracurricular"),
+            ):
+                for ordinal, job in enumerate(raw[source]):
+                    rows.append((
+                        kind, ordinal, job["position"], "", "",
+                        job.get("organization") or "",
+                        job.get("location") or "",
+                        job.get("period") or "",
+                        json.dumps(job.get("achievements") or [], ensure_ascii=False),
+                    ))
+            conn.executemany(
+                """
+                INSERT INTO cv_blocks
+                  (kind, ordinal, title, icon, body, organization, location, period, items)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                rows,
+            )
+
+
+def _project(row: sqlite3.Row) -> dict:
+    return {
+        "id": row["id"],
+        "ordinal": row["ordinal"],
+        "title": row["title"],
+        "description": row["description"],
+        "url": row["url"],
+        "image": row["image"],
+        "technologies": json.loads(row["technologies"]),
+        "features": json.loads(row["features"]),
+    }
+
+
+def _block(row: sqlite3.Row) -> dict:
+    return {
+        "id": row["id"],
+        "kind": row["kind"],
+        "ordinal": row["ordinal"],
+        "title": row["title"],
+        "icon": row["icon"],
+        "body": row["body"],
+        "organization": row["organization"],
+        "location": row["location"],
+        "period": row["period"],
+        "items": json.loads(row["items"]),
+    }
+
+
+def list_quotes(settings: Settings) -> list[dict]:
+    with connect(settings) as conn:
+        rows = conn.execute("SELECT id, text FROM quotes ORDER BY id").fetchall()
+    return [{"id": row["id"], "text": row["text"]} for row in rows]
+
+
+def get_quote(settings: Settings, quote_id: int) -> dict | None:
+    with connect(settings) as conn:
+        row = conn.execute("SELECT id, text FROM quotes WHERE id = ?", (quote_id,)).fetchone()
+    return None if row is None else {"id": row["id"], "text": row["text"]}
+
+
+def random_quote(settings: Settings) -> dict | None:
+    with connect(settings) as conn:
+        row = conn.execute("SELECT id, text FROM quotes ORDER BY RANDOM() LIMIT 1").fetchone()
+    return None if row is None else {"id": row["id"], "text": row["text"]}
+
+
+def save_quote(settings: Settings, text: str, quote_id: int | None = None) -> dict:
+    with connect(settings) as conn:
+        if quote_id is None:
+            conn.execute("INSERT INTO quotes (text) VALUES (?)", (text,))
+            quote_id = int(conn.execute("SELECT last_insert_rowid()").fetchone()[0])
+        else:
+            conn.execute("UPDATE quotes SET text = ? WHERE id = ?", (text, quote_id))
+        conn.commit()
+    return {"id": quote_id, "text": text}
+
+
+def delete_quote(settings: Settings, quote_id: int) -> bool:
+    with connect(settings) as conn:
+        cur = conn.execute("DELETE FROM quotes WHERE id = ?", (quote_id,))
+        conn.commit()
+        return cur.rowcount > 0
+
+
+def list_projects(settings: Settings) -> list[dict]:
+    with connect(settings) as conn:
+        rows = conn.execute("SELECT * FROM projects ORDER BY ordinal, id").fetchall()
+    return [_project(row) for row in rows]
+
+
+def get_project(settings: Settings, project_id: str) -> dict | None:
+    with connect(settings) as conn:
+        row = conn.execute("SELECT * FROM projects WHERE id = ?", (project_id,)).fetchone()
+    return None if row is None else _project(row)
+
+
+def save_project(settings: Settings, data: dict) -> dict:
+    technologies = json.dumps(data["technologies"], ensure_ascii=False)
+    features = json.dumps(data["features"], ensure_ascii=False)
+    with connect(settings) as conn:
+        existing = conn.execute(
+            "SELECT ordinal FROM projects WHERE id = ?", (data["id"],)
+        ).fetchone()
+        ordinal = data.get("ordinal")
+        if ordinal is None:
+            if existing is None:
+                ordinal = conn.execute(
+                    "SELECT COALESCE(MAX(ordinal), -1) + 1 AS n FROM projects"
+                ).fetchone()["n"]
+            else:
+                ordinal = existing["ordinal"]
+        if existing is None:
+            conn.execute(
+                """
+                INSERT INTO projects
+                  (id, ordinal, title, description, url, image, technologies, features)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    data["id"], ordinal, data["title"], data["description"],
+                    data["url"], data["image"], technologies, features,
+                ),
+            )
+        else:
+            conn.execute(
+                """
+                UPDATE projects
+                SET ordinal = ?, title = ?, description = ?, url = ?, image = ?,
+                    technologies = ?, features = ?
+                WHERE id = ?
+                """,
+                (
+                    ordinal, data["title"], data["description"], data["url"],
+                    data["image"], technologies, features, data["id"],
+                ),
+            )
+        conn.commit()
+    found = get_project(settings, data["id"])
+    if found is None:
+        raise RuntimeError("El proyecto no quedó guardado")
+    return found
+
+
+def delete_project(settings: Settings, project_id: str) -> bool:
+    with connect(settings) as conn:
+        cur = conn.execute("DELETE FROM projects WHERE id = ?", (project_id,))
+        conn.commit()
+        return cur.rowcount > 0
+
+
+def list_cv(settings: Settings, kind: str | None = None) -> list[dict]:
+    sql = "SELECT * FROM cv_blocks"
+    args: tuple = ()
+    if kind:
+        sql += " WHERE kind = ?"
+        args = (kind,)
+    sql += " ORDER BY kind, ordinal, id"
+    with connect(settings) as conn:
+        rows = conn.execute(sql, args).fetchall()
+    return [_block(row) for row in rows]
+
+
+def get_cv(settings: Settings, block_id: int) -> dict | None:
+    with connect(settings) as conn:
+        row = conn.execute("SELECT * FROM cv_blocks WHERE id = ?", (block_id,)).fetchone()
+    return None if row is None else _block(row)
+
+
+def save_cv(settings: Settings, data: dict, block_id: int | None = None) -> dict:
+    items = json.dumps(data["items"], ensure_ascii=False)
+    with connect(settings) as conn:
+        existing = None
+        if block_id is not None:
+            existing = conn.execute(
+                "SELECT ordinal FROM cv_blocks WHERE id = ?", (block_id,)
+            ).fetchone()
+        ordinal = data.get("ordinal")
+        if ordinal is None:
+            if existing is None:
+                ordinal = conn.execute(
+                    "SELECT COALESCE(MAX(ordinal), -1) + 1 AS n FROM cv_blocks WHERE kind = ?",
+                    (data["kind"],),
+                ).fetchone()["n"]
+            else:
+                ordinal = existing["ordinal"]
+        fields = (
+            data["kind"], ordinal, data["title"], data.get("icon") or "",
+            data.get("body") or "", data.get("organization") or "",
+            data.get("location") or "", data.get("period") or "", items,
+        )
+        if existing is None:
+            conn.execute(
+                """
+                INSERT INTO cv_blocks
+                  (kind, ordinal, title, icon, body, organization, location, period, items)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                fields,
+            )
+            block_id = int(conn.execute("SELECT last_insert_rowid()").fetchone()[0])
+        else:
+            conn.execute(
+                """
+                UPDATE cv_blocks
+                SET kind = ?, ordinal = ?, title = ?, icon = ?, body = ?,
+                    organization = ?, location = ?, period = ?, items = ?
+                WHERE id = ?
+                """,
+                (*fields, block_id),
+            )
+        conn.commit()
+    found = get_cv(settings, int(block_id))
+    if found is None:
+        raise RuntimeError("El bloque no quedó guardado")
+    return found
+
+
+def delete_cv(settings: Settings, block_id: int) -> bool:
+    with connect(settings) as conn:
+        cur = conn.execute("DELETE FROM cv_blocks WHERE id = ?", (block_id,))
+        conn.commit()
+        return cur.rowcount > 0

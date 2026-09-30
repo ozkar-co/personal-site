@@ -55,16 +55,9 @@ def require_admin(request: Request, settings: Settings) -> None:
     cookie = request.cookies.get("oz_session", "")
     if cookie and _valid_jwt(settings, cookie):
         return
-    header_key = request.headers.get("x-api-key", "")
-    if header_key and _same(header_key, settings.api_key):
-        return
     auth = request.headers.get("authorization", "")
-    if auth.lower().startswith("bearer "):
-        token = auth[7:].strip()
-        if token and _same(token, settings.api_key):
-            return
-        if _valid_jwt(settings, token):
-            return
+    if auth.lower().startswith("bearer ") and _valid_jwt(settings, auth[7:].strip()):
+        return
     raise HTTPException(status_code=401, detail="No autorizado")
 
 

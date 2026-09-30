@@ -107,6 +107,7 @@ def search_page(query: str, entries: list[dict], site_url: str, message: str) ->
         f"{site_url}/blog/buscar",
         body,
         "/blog",
+        index=False,
     )
 
 

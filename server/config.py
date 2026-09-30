@@ -32,7 +32,6 @@ class Settings:
     admin_user: str
     admin_password: str
     jwt_secret: str
-    api_key: str
     db_file: Path
     embed_url: str
     site_url: str
@@ -50,7 +49,6 @@ def load_settings() -> Settings:
         admin_user=_need("ADMIN_USER"),
         admin_password=_need("ADMIN_PASSWORD"),
         jwt_secret=_need("JWT_SECRET"),
-        api_key=_need("ADMIN_API_KEY"),
         db_file=db_file,
         embed_url=os.environ.get("EMBED_URL", "https://embed.ozkr.net").rstrip("/"),
         site_url=os.environ.get("SITE_URL", "https://ozkar.co").rstrip("/"),

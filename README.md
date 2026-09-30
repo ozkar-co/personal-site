@@ -8,3 +8,5 @@ make run
 ```
 
 El proceso escucha en el puerto 8000. Las claves van en `.env` (ver `.env.example`).
+
+`data/site.sql` es la copia pública de la base. El proceso usa `data/blog.sqlite`.

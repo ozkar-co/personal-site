@@ -14,7 +14,8 @@ public/blog/
 public/rss.xml
 .venv
 .env
-data/
+data/*
+!data/site.sql
 __pycache__/
 *.local
 
