@@ -147,22 +147,47 @@ def cv_page(site_url: str, blocks: list[dict]) -> str:
     return layout("CV — Ozkar", "Curriculum vitae de Ozkar.", f"{site_url}/cv", body, "/cv")
 
 
+PROJECT_SECTIONS = (
+    ("Aplicaciones", (
+        "marcopolo", "cuentas", "impostor", "fabricalc",
+        "meye", "ozro", "lolchaos", "yd",
+    )),
+    ("Inteligencia artificial", ("whisper", "tts", "slm", "ocr", "embed")),
+    ("Infraestructura", ("oznet",)),
+)
+
+
+def _project_card(project: dict) -> str:
+    image = ""
+    if project["image"]:
+        image = f"<img src='/assets/{esc(project['image'])}' alt=''>"
+    return (
+        "<article class='card'>"
+        f"{image}<h3>{esc(project['title'])}</h3>"
+        f"<p>{esc(project['description'])}</p>"
+        f"<a class='btn' href='{esc(project['url'])}'>Abrir</a>"
+        "</article>"
+    )
+
+
 def projects_page(site_url: str, projects: list[dict]) -> str:
-    cards = []
-    for project in projects:
-        tech = ", ".join(esc(name) for name in project["technologies"])
-        feats = "".join(f"<li>{esc(item)}</li>" for item in project["features"])
-        cards.append(
-            "<article class='card'>"
-            f"<img src='/assets/{esc(project['image'])}' alt=''>"
-            f"<h2>{esc(project['title'])}</h2>"
-            f"<p>{esc(project['description'])}</p>"
-            f"<p class='muted'>{tech}</p>"
-            f"<ul>{feats}</ul>"
-            f"<a class='btn' href='{esc(project['url'])}'>Visitar</a>"
-            "</article>"
-        )
-    body = "<h1>Mis proyectos</h1><div class='grid'>" + "".join(cards) + "</div>"
+    by_id = {project["id"]: project for project in projects}
+    used: set[str] = set()
+    parts = ["<h1>Proyectos</h1>"]
+    for title, ids in PROJECT_SECTIONS:
+        cards = []
+        for project_id in ids:
+            project = by_id.get(project_id)
+            if project is None:
+                continue
+            used.add(project_id)
+            cards.append(_project_card(project))
+        if cards:
+            parts.append(f"<h2>{esc(title)}</h2><div class='grid projects'>{''.join(cards)}</div>")
+    rest = [_project_card(project) for project in projects if project["id"] not in used]
+    if rest:
+        parts.append("<div class='grid projects'>" + "".join(rest) + "</div>")
+    body = "".join(parts)
     return layout("Proyectos — Ozkar", "Proyectos de Ozkar.", f"{site_url}/projects", body, "/projects")
 
 
