@@ -56,11 +56,96 @@ CREATE TABLE tags (
   id INTEGER PRIMARY KEY,
   name TEXT NOT NULL UNIQUE
 );
+INSERT INTO tags VALUES(1,'Profesional');
+INSERT INTO tags VALUES(2,'Personal');
+INSERT INTO tags VALUES(3,'Inteligencia artificial');
+INSERT INTO tags VALUES(4,'Lecturas');
+INSERT INTO tags VALUES(5,'Libertad');
+INSERT INTO tags VALUES(6,'Identidad');
+INSERT INTO tags VALUES(7,'Salud Mental');
+INSERT INTO tags VALUES(8,'Amistad');
+INSERT INTO tags VALUES(9,'Muerte');
+INSERT INTO tags VALUES(10,'Soledad');
 CREATE TABLE entry_tags (
   entry_id INTEGER NOT NULL REFERENCES entries(id) ON DELETE CASCADE,
   tag_id INTEGER NOT NULL REFERENCES tags(id) ON DELETE CASCADE,
   PRIMARY KEY (entry_id, tag_id)
 );
+INSERT INTO entry_tags VALUES(14,1);
+INSERT INTO entry_tags VALUES(14,2);
+INSERT INTO entry_tags VALUES(13,1);
+INSERT INTO entry_tags VALUES(13,2);
+INSERT INTO entry_tags VALUES(12,3);
+INSERT INTO entry_tags VALUES(11,2);
+INSERT INTO entry_tags VALUES(10,1);
+INSERT INTO entry_tags VALUES(10,2);
+INSERT INTO entry_tags VALUES(9,2);
+INSERT INTO entry_tags VALUES(5,5);
+INSERT INTO entry_tags VALUES(5,1);
+INSERT INTO entry_tags VALUES(2,5);
+INSERT INTO entry_tags VALUES(15,3);
+INSERT INTO entry_tags VALUES(15,1);
+INSERT INTO entry_tags VALUES(17,5);
+INSERT INTO entry_tags VALUES(17,1);
+INSERT INTO entry_tags VALUES(19,3);
+INSERT INTO entry_tags VALUES(21,3);
+INSERT INTO entry_tags VALUES(21,4);
+INSERT INTO entry_tags VALUES(22,2);
+INSERT INTO entry_tags VALUES(27,4);
+INSERT INTO entry_tags VALUES(28,1);
+INSERT INTO entry_tags VALUES(28,2);
+INSERT INTO entry_tags VALUES(32,1);
+INSERT INTO entry_tags VALUES(32,3);
+INSERT INTO entry_tags VALUES(33,4);
+INSERT INTO entry_tags VALUES(36,3);
+INSERT INTO entry_tags VALUES(37,1);
+INSERT INTO entry_tags VALUES(37,2);
+INSERT INTO entry_tags VALUES(41,5);
+INSERT INTO entry_tags VALUES(41,3);
+INSERT INTO entry_tags VALUES(38,2);
+INSERT INTO entry_tags VALUES(42,1);
+INSERT INTO entry_tags VALUES(42,2);
+INSERT INTO entry_tags VALUES(40,5);
+INSERT INTO entry_tags VALUES(16,2);
+INSERT INTO entry_tags VALUES(16,6);
+INSERT INTO entry_tags VALUES(30,2);
+INSERT INTO entry_tags VALUES(30,7);
+INSERT INTO entry_tags VALUES(3,2);
+INSERT INTO entry_tags VALUES(3,1);
+INSERT INTO entry_tags VALUES(3,8);
+INSERT INTO entry_tags VALUES(20,2);
+INSERT INTO entry_tags VALUES(20,9);
+INSERT INTO entry_tags VALUES(18,2);
+INSERT INTO entry_tags VALUES(18,7);
+INSERT INTO entry_tags VALUES(1,2);
+INSERT INTO entry_tags VALUES(1,6);
+INSERT INTO entry_tags VALUES(4,2);
+INSERT INTO entry_tags VALUES(4,10);
+INSERT INTO entry_tags VALUES(4,8);
+INSERT INTO entry_tags VALUES(25,2);
+INSERT INTO entry_tags VALUES(25,7);
+INSERT INTO entry_tags VALUES(34,2);
+INSERT INTO entry_tags VALUES(34,6);
+INSERT INTO entry_tags VALUES(39,2);
+INSERT INTO entry_tags VALUES(39,10);
+INSERT INTO entry_tags VALUES(35,2);
+INSERT INTO entry_tags VALUES(35,8);
+INSERT INTO entry_tags VALUES(31,2);
+INSERT INTO entry_tags VALUES(31,7);
+INSERT INTO entry_tags VALUES(24,2);
+INSERT INTO entry_tags VALUES(24,10);
+INSERT INTO entry_tags VALUES(24,8);
+INSERT INTO entry_tags VALUES(26,2);
+INSERT INTO entry_tags VALUES(26,9);
+INSERT INTO entry_tags VALUES(23,2);
+INSERT INTO entry_tags VALUES(23,10);
+INSERT INTO entry_tags VALUES(8,2);
+INSERT INTO entry_tags VALUES(8,7);
+INSERT INTO entry_tags VALUES(6,2);
+INSERT INTO entry_tags VALUES(7,2);
+INSERT INTO entry_tags VALUES(7,6);
+INSERT INTO entry_tags VALUES(29,2);
+INSERT INTO entry_tags VALUES(29,6);
 CREATE TABLE chunks (
   id INTEGER PRIMARY KEY,
   entry_id INTEGER NOT NULL REFERENCES entries(id) ON DELETE CASCADE,
