@@ -26,7 +26,7 @@ export const Header = ({ onMenuToggle }: HeaderProps) => {
       <nav className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
         <Link to="/" onClick={handleLinkClick}>OZ</Link>
         <Link to="/cv" onClick={handleLinkClick}>CV</Link>
-        <a href="/blog/" onClick={handleLinkClick}>BLOG</a>
+        <a href="/blog" onClick={handleLinkClick}>BLOG</a>
         <Link to="/projects" onClick={handleLinkClick}>PROY</Link>
         <Link to="/wizz" onClick={handleLinkClick}>WIZZ</Link>
         <Link to="/time" onClick={handleLinkClick}>TIME</Link>

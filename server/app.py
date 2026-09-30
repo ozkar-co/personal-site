@@ -190,6 +190,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         return HTMLResponse(blog_html.search_page(query, entries, cfg.site_url, message))
 
     @app.get("/blog", response_class=HTMLResponse)
+    @app.get("/blog/", response_class=HTMLResponse)
     def blog_html_index(tag: str = "", orden: str = "desc") -> HTMLResponse:
         entries = db.list_entries(cfg, tag or None, orden == "asc")
         page = blog_html.list_page(entries, db.list_tags(cfg), cfg.site_url, tag, orden == "asc")
