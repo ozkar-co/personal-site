@@ -8,8 +8,10 @@ export const Blog = () => {
   const id = searchParams.get('id');
 
   useEffect(() => {
-    const target = id ? `/blog/${encodeURIComponent(id)}/` : '/blog/';
-    window.location.replace(target);
+    const target = id ? `/blog/${encodeURIComponent(id)}` : '/blog';
+    if (window.location.pathname !== target) {
+      window.location.replace(target);
+    }
   }, [id]);
 
   return (
