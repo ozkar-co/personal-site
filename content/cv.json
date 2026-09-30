@@ -4,7 +4,7 @@
     "profiles": [
       {
         "title": "Desarrollador Senior",
-        "icon": "💻",
+        "icon": "",
         "content": "Más de 8 años diseñando e implementando soluciones de software escalables, con enfoque en backend, arquitectura, rendimiento y tecnología en la nube. Me apasiona crear sistemas eficientes y robustos, resolver problemas complejos y mantenerme actualizado en nuevas herramientas, especialmente en inteligencia artificial aplicada.",
         "highlights": [
           "Arquitectura de software escalable",
@@ -16,7 +16,7 @@
       },
       {
         "title": "CTO & Líder Técnico",
-        "icon": "🚀",
+        "icon": "",
         "content": "Co-fundador y CTO de Forja de Código, donde lidero la visión tecnológica de la startup. Trazamos estrategias escalables, priorizamos calidad y buenas prácticas, e impulsamos la innovación constante. Coordino equipos multidisciplinarios y acompaño técnicamente en proyectos clave.",
         "highlights": [
           "Liderazgo de equipos técnicos",
@@ -28,7 +28,7 @@
       },
       {
         "title": "Docente & Mentor",
-        "icon": "🎓",
+        "icon": "",
         "content": "He compartido conocimiento desde mis años como estudiante, dictando talleres, conferencias y mentorías. Tengo experiencia formando desarrolladores, liderando grupos académicos, y creando contenido técnico. Actualmente complemento mi carrera docente con estudios formales en educación universitaria, incluyendo un diplomado en docencia para la educación superior.",
         "highlights": [
           "Mentoring y formación de desarrolladores",

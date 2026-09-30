@@ -82,7 +82,7 @@ def _cards(title: str, rows: list[dict], kind: str) -> str:
             items = "".join(f"<li>{esc(item)}</li>" for item in row["items"])
             blocks.append(
                 "<article class='card'>"
-                f"<h3>{esc(row['icon'])} {esc(row['title'])}</h3>"
+                f"<h3>{esc(row['title'])}</h3>"
                 f"<p>{esc(row['body'])}</p><ul>{items}</ul></article>"
             )
         else:
