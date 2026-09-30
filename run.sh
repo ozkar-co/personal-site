@@ -1,4 +1,4 @@
 #!/bin/bash
-# Run the development server on port 8000. Make this script executable with: chmod +x run.sh
 set -e
-npx vite --port 8000
+cd "$(dirname "$0")"
+exec .venv/bin/uvicorn server.app:app --host 0.0.0.0 --port 8000

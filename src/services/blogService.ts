@@ -1,6 +1,6 @@
 import { BlogEntryType } from '../components/Blog/types';
 
-const API_BASE_URL = 'https://legacy-api.forja.cc';
+const API_BASE_URL = '';
 
 export interface LoginCredentials {
   username: string;
@@ -44,7 +44,7 @@ class BlogService {
   // Login y obtener token
   async login(credentials: LoginCredentials): Promise<string> {
     try {
-      const response = await fetch(`${API_BASE_URL}/login`, {
+      const response = await fetch(`${API_BASE_URL}/api/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -151,7 +151,7 @@ class BlogService {
   // Obtener todas las entradas del blog
   async getBlogEntries(): Promise<BlogEntryType[]> {
     try {
-      const response = await fetch(`${API_BASE_URL}/ozkar/blog`);
+      const response = await fetch(`${API_BASE_URL}/api/blog`);
 
       if (!response.ok) {
         throw new Error(`Failed to fetch blog entries: ${response.status}`);
@@ -174,7 +174,7 @@ class BlogService {
     }
 
     try {
-      const response = await fetch(`${API_BASE_URL}/ozkar/blog`, {
+      const response = await fetch(`${API_BASE_URL}/api/blog`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${this.token}`,
@@ -203,7 +203,7 @@ class BlogService {
     }
 
     try {
-      const response = await fetch(`${API_BASE_URL}/ozkar/blog/${slug}`, {
+      const response = await fetch(`${API_BASE_URL}/api/blog/${slug}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${this.token}`,
@@ -232,7 +232,7 @@ class BlogService {
     }
 
     try {
-      const response = await fetch(`${API_BASE_URL}/ozkar/blog/${slug}`, {
+      const response = await fetch(`${API_BASE_URL}/api/blog/${slug}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${this.token}`,

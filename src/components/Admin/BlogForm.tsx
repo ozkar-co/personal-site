@@ -21,6 +21,44 @@ interface BlogFormProps {
   onCancel?: () => void;
 }
 
+function TagSuggestions({
+  catalog,
+  value,
+  onPick,
+}: {
+  catalog: string[];
+  value: string;
+  onPick: (next: string) => void;
+}) {
+  const parts = value.split(',');
+  const fragment = (parts[parts.length - 1] || '').trim().toLowerCase();
+  const chosen = new Set(
+    parts.slice(0, -1).map((part) => part.trim().toLowerCase()).filter(Boolean)
+  );
+  if (!fragment) return null;
+  const matches = catalog
+    .filter((name) => name.toLowerCase().includes(fragment) && !chosen.has(name.toLowerCase()))
+    .slice(0, 8);
+  if (matches.length === 0) return null;
+  return (
+    <ul className="tag-suggestions">
+      {matches.map((name) => (
+        <li key={name}>
+          <button
+            type="button"
+            onClick={() => {
+              const head = parts.slice(0, -1).map((part) => part.trim()).filter(Boolean);
+              onPick([...head, name].join(', ') + ', ');
+            }}
+          >
+            {name}
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export const BlogForm = ({ onLogout, editingEntry, onSuccess, onCancel }: BlogFormProps) => {
   const [formData, setFormData] = useState<BlogFormData>({
     title: '',
@@ -32,8 +70,16 @@ export const BlogForm = ({ onLogout, editingEntry, onSuccess, onCancel }: BlogFo
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [tagCatalog, setTagCatalog] = useState<string[]>([]);
 
   const isEditing = !!editingEntry;
+
+  useEffect(() => {
+    fetch('/api/tags')
+      .then((response) => response.json())
+      .then((rows: { name: string }[]) => setTagCatalog(rows.map((row) => row.name)))
+      .catch(() => setTagCatalog([]));
+  }, []);
 
   // Cargar datos de la entrada si estamos editando
   useEffect(() => {
@@ -249,14 +295,19 @@ export const BlogForm = ({ onLogout, editingEntry, onSuccess, onCancel }: BlogFo
         </div>
 
         <div className="form-group">
-          <label htmlFor="tags">Tags</label>
+          <label htmlFor="tags">Etiquetas</label>
           <input
             type="text"
             id="tags"
             value={formData.tags}
             onChange={handleInputChange('tags')}
             disabled={loading}
-            placeholder="Tags separados por comas (ej: Tecnología, Reflexiones, Desarrollo)"
+            placeholder="Categorías separadas por comas"
+          />
+          <TagSuggestions
+            catalog={tagCatalog}
+            value={formData.tags}
+            onPick={(next) => setFormData((prev) => ({ ...prev, tags: next }))}
           />
         </div>
 
