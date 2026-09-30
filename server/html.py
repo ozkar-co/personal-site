@@ -17,6 +17,7 @@ NAV = (
     ("/clock", "CLOCK"),
     ("/calc", "CALC"),
     ("/admin", "ADMIN"),
+    ("/rss", "RSS"),
 )
 
 
@@ -38,7 +39,6 @@ def layout(
     for href, label in NAV:
         mark = ' aria-current="page"' if href == current else ""
         links.append(f'<a href="{href}"{mark}>{label}</a>')
-    links.append('<a href="/rss.xml">RSS</a>')
     script = "".join(f'<script type="module" src="{src}"></script>' for src in scripts)
     year = datetime.now().year
     return f"""<!DOCTYPE html>
@@ -363,7 +363,19 @@ def admin_editor(site_url: str, entry: dict | None, tags: list[str], message: st
     return layout("Editar — Ozkar", "Editar una entrada.", f"{site_url}/admin", body, "/admin", index=False)
 
 
-PUBLIC_PATHS = ("/", "/cv", "/blog", "/projects", "/wizz", "/time", "/clock", "/calc")
+def rss_page(site_url: str) -> str:
+    feed = f"{site_url}/rss.xml"
+    body = f"""
+<h1>RSS</h1>
+<p>El RSS es la lista del blog para un lector. Trae el título, la fecha y el resumen de cada entrada publicada.</p>
+<p>La dirección:</p>
+<p><a href="/rss.xml">{esc(feed)}</a></p>
+<p>Cópiala en el lector. Cada consulta arma el listado con las entradas de ese momento.</p>
+"""
+    return layout("RSS — Ozkar", "Dirección del RSS del blog de Ozkar.", f"{site_url}/rss", body, "/rss")
+
+
+PUBLIC_PATHS = ("/", "/cv", "/blog", "/projects", "/wizz", "/time", "/clock", "/calc", "/rss")
 
 
 def robots_txt(site_url: str) -> str:

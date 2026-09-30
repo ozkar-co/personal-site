@@ -354,6 +354,10 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             raise HTTPException(status_code=404, detail="No existe")
         return HTMLResponse(blog_html.entry_page(entry, cfg.site_url))
 
+    @app.get("/rss", response_class=HTMLResponse)
+    def rss_about() -> HTMLResponse:
+        return HTMLResponse(pages.rss_page(cfg.site_url))
+
     @app.get("/rss.xml")
     def rss_feed() -> Response:
         entries = db.list_entries(cfg, None, False)
