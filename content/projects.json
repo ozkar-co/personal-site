@@ -22,7 +22,7 @@
     "titulo": "Impostor",
     "descripcion": "Juego social para encontrar al impostor.",
     "url": "https://impostor.forja.cc/",
-    "imagen": "",
+    "imagen": "impostor.jpg",
     "tecnologias": [],
     "caracteristicas": []
   },
@@ -40,7 +40,7 @@
     "titulo": "Meye Tools",
     "descripcion": "Experiencia, cartas de objetos y un traductor para Las Tierras de Meye.",
     "url": "https://meye-tools.ozkr.net/",
-    "imagen": "",
+    "imagen": "meye.jpg",
     "tecnologias": [],
     "caracteristicas": []
   },
@@ -58,7 +58,7 @@
     "titulo": "LoL Chaos",
     "descripcion": "Ruleta que arma un campeón, un rol y una build.",
     "url": "https://lolchaos.ozkr.net/",
-    "imagen": "",
+    "imagen": "lolchaos.jpg",
     "tecnologias": [],
     "caracteristicas": []
   },
@@ -67,7 +67,7 @@
     "titulo": "yd",
     "descripcion": "Estación multimedia local: busca, descarga y reproduce.",
     "url": "https://github.com/ozkar-co/yd",
-    "imagen": "",
+    "imagen": "yd.jpg",
     "tecnologias": [],
     "caracteristicas": []
   },
@@ -76,7 +76,7 @@
     "titulo": "Whisper",
     "descripcion": "Audio a texto.",
     "url": "https://whisper.ozkr.net/",
-    "imagen": "",
+    "imagen": "whisper.jpg",
     "tecnologias": [],
     "caracteristicas": []
   },
@@ -85,7 +85,7 @@
     "titulo": "TTS",
     "descripcion": "Texto a voz.",
     "url": "https://tts.ozkr.net/",
-    "imagen": "",
+    "imagen": "tts.jpg",
     "tecnologias": [],
     "caracteristicas": []
   },
@@ -94,7 +94,7 @@
     "titulo": "SLM",
     "descripcion": "Modelo de lenguaje pequeño.",
     "url": "https://slm.ozkr.net/",
-    "imagen": "",
+    "imagen": "slm.jpg",
     "tecnologias": [],
     "caracteristicas": []
   },
@@ -103,7 +103,7 @@
     "titulo": "OCR",
     "descripcion": "Imagen a texto.",
     "url": "https://ocr.ozkr.net/",
-    "imagen": "",
+    "imagen": "ocr.jpg",
     "tecnologias": [],
     "caracteristicas": []
   },
@@ -112,7 +112,7 @@
     "titulo": "Embed",
     "descripcion": "Texto a vector.",
     "url": "https://embed.ozkr.net/",
-    "imagen": "",
+    "imagen": "embed.jpg",
     "tecnologias": [],
     "caracteristicas": []
   },
