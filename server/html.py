@@ -294,11 +294,9 @@ def calc_page(site_url: str) -> str:
 </div>
 <div class="card">
 <div class="readout">
-<div>
 <p class="screen" id="screen">0</p>
-<p id="words"></p>
-</div>
 <p id="op"></p>
+<p id="words"></p>
 </div>
 <div class="keys">{"".join(keys)}</div>
 </div>
