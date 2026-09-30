@@ -5,30 +5,20 @@ import logging
 import math
 from contextlib import asynccontextmanager
 from pathlib import Path
+from urllib.parse import parse_qs
 
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import HTMLResponse, Response
-from starlette.exceptions import HTTPException as StarletteHTTPException
+from fastapi.responses import HTMLResponse, RedirectResponse, Response
 from starlette.staticfiles import StaticFiles
 
-from server import blog_html, db
-from server.auth import check_password, issue_token, require_admin
+from server import blog_html, db, html as pages
+from server.auth import TOKEN_TTL, check_password, issue_token, require_admin
 from server.chunks import body_chunks
 from server.config import Settings, load_settings
 from server.embed_worker import embed_loop, unpack_vector
 
 log = logging.getLogger("blog")
-STATIC_BLOG = Path(__file__).resolve().parent / "static" / "blog.css"
-
-
-class SPAStaticFiles(StaticFiles):
-    async def get_response(self, path: str, scope):
-        try:
-            return await super().get_response(path, scope)
-        except StarletteHTTPException as exc:
-            if exc.status_code == 404:
-                return await super().get_response("index.html", scope)
-            raise
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def _slug(title: str) -> str:
@@ -152,12 +142,6 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             raise HTTPException(status_code=404, detail="No existe")
         return Response(status_code=204)
 
-    @app.get("/blog/estilos.css")
-    def blog_css() -> Response:
-        if not STATIC_BLOG.is_file():
-            raise HTTPException(status_code=500, detail="Falta el CSS del blog")
-        return Response(STATIC_BLOG.read_text(encoding="utf-8"), media_type="text/css")
-
     @app.get("/blog/buscar", response_class=HTMLResponse)
     async def blog_search(q: str = "") -> HTMLResponse:
         query = q.strip()
@@ -211,11 +195,173 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             media_type="application/rss+xml",
         )
 
-    dist = cfg.static_dir
-    if (dist / "index.html").is_file():
-        app.mount("/", SPAStaticFiles(directory=str(dist), html=True), name="spa")
-    else:
-        log.warning("Sin build del sitio en %s", dist)
+    def _guard(request: Request) -> RedirectResponse | None:
+        try:
+            require_admin(request, cfg)
+        except HTTPException:
+            return RedirectResponse("/admin", status_code=303)
+        return None
+
+    async def _fields(request: Request) -> dict[str, str]:
+        raw = (await request.body()).decode()
+        parsed = parse_qs(raw, keep_blank_values=True)
+        return {key: values[0] for key, values in parsed.items()}
+
+    def _save_form(fields: dict[str, str], slug: str) -> dict:
+        tags = [part.strip() for part in fields.get("tags", "").split(",") if part.strip()]
+        data = _payload_entry(
+            {
+                "title": fields.get("title", ""),
+                "abstract": fields.get("abstract", ""),
+                "content": fields.get("content", ""),
+                "date": fields.get("date", ""),
+                "tags": tags,
+            },
+            slug,
+        )
+        pieces = body_chunks(data["title"], data["abstract"], data["content"])
+        return db.save_entry(cfg, data, pieces)
+
+    @app.get("/", response_class=HTMLResponse)
+    def home() -> HTMLResponse:
+        return HTMLResponse(pages.home(cfg.site_url))
+
+    @app.get("/cv", response_class=HTMLResponse)
+    def cv() -> HTMLResponse:
+        return HTMLResponse(pages.cv_page(cfg.site_url))
+
+    @app.get("/projects", response_class=HTMLResponse)
+    def projects() -> HTMLResponse:
+        return HTMLResponse(pages.projects_page(cfg.site_url))
+
+    @app.get("/wizz", response_class=HTMLResponse)
+    def wizz() -> HTMLResponse:
+        return HTMLResponse(pages.wizz_page(cfg.site_url))
+
+    @app.get("/time", response_class=HTMLResponse)
+    def time_page() -> HTMLResponse:
+        return HTMLResponse(pages.time_page(cfg.site_url))
+
+    @app.get("/clock", response_class=HTMLResponse)
+    def clock() -> HTMLResponse:
+        return HTMLResponse(pages.clock_page(cfg.site_url))
+
+    @app.get("/calc", response_class=HTMLResponse)
+    def calc() -> HTMLResponse:
+        return HTMLResponse(pages.calc_page(cfg.site_url))
+
+    @app.get("/admin", response_class=HTMLResponse)
+    def admin_home(request: Request) -> HTMLResponse:
+        try:
+            require_admin(request, cfg)
+        except HTTPException:
+            return HTMLResponse(pages.admin_login(cfg.site_url, False))
+        return HTMLResponse(pages.admin_home(cfg.site_url, db.list_entries(cfg, None, False)))
+
+    @app.post("/admin/login")
+    async def admin_login(request: Request) -> Response:
+        fields = await _fields(request)
+        if not check_password(cfg, fields.get("username", ""), fields.get("password", "")):
+            return HTMLResponse(pages.admin_login(cfg.site_url, True), status_code=401)
+        response = RedirectResponse("/admin", status_code=303)
+        response.set_cookie(
+            "oz_session",
+            issue_token(cfg, cfg.admin_user),
+            httponly=True,
+            samesite="lax",
+            max_age=TOKEN_TTL,
+            path="/",
+        )
+        return response
+
+    @app.post("/admin/salir")
+    def admin_logout() -> RedirectResponse:
+        response = RedirectResponse("/admin", status_code=303)
+        response.delete_cookie("oz_session", path="/")
+        return response
+
+    @app.get("/admin/nueva", response_class=HTMLResponse)
+    def admin_new(request: Request) -> Response:
+        denied = _guard(request)
+        if denied:
+            return denied
+        names = [item["name"] for item in db.list_tags(cfg)]
+        return HTMLResponse(pages.admin_editor(cfg.site_url, None, names, ""))
+
+    @app.post("/admin/nueva")
+    async def admin_create(request: Request) -> Response:
+        denied = _guard(request)
+        if denied:
+            return denied
+        fields = await _fields(request)
+        names = [item["name"] for item in db.list_tags(cfg)]
+        try:
+            slug = _slug(fields.get("title", ""))
+        except HTTPException as exc:
+            return HTMLResponse(pages.admin_editor(cfg.site_url, None, names, exc.detail), status_code=400)
+        if db.get_entry(cfg, slug) is not None:
+            return HTMLResponse(
+                pages.admin_editor(cfg.site_url, None, names, "Ese slug ya existe"),
+                status_code=409,
+            )
+        try:
+            _save_form(fields, slug)
+        except HTTPException as exc:
+            return HTMLResponse(pages.admin_editor(cfg.site_url, None, names, exc.detail), status_code=400)
+        return RedirectResponse("/admin", status_code=303)
+
+    @app.get("/admin/{slug}", response_class=HTMLResponse)
+    def admin_edit(slug: str, request: Request) -> Response:
+        denied = _guard(request)
+        if denied:
+            return denied
+        entry = db.get_entry(cfg, slug)
+        if entry is None:
+            raise HTTPException(status_code=404, detail="No existe")
+        names = [item["name"] for item in db.list_tags(cfg)]
+        return HTMLResponse(pages.admin_editor(cfg.site_url, entry, names, ""))
+
+    @app.post("/admin/{slug}")
+    async def admin_update(slug: str, request: Request) -> Response:
+        denied = _guard(request)
+        if denied:
+            return denied
+        entry = db.get_entry(cfg, slug)
+        names = [item["name"] for item in db.list_tags(cfg)]
+        if entry is None:
+            raise HTTPException(status_code=404, detail="No existe")
+        fields = await _fields(request)
+        try:
+            _save_form(fields, slug)
+        except HTTPException as exc:
+            shown = dict(entry)
+            shown["title"] = fields.get("title", "")
+            shown["abstract"] = fields.get("abstract", "")
+            shown["content"] = fields.get("content", "")
+            shown["date"] = fields.get("date", "")
+            shown["tags"] = [part.strip() for part in fields.get("tags", "").split(",") if part.strip()]
+            return HTMLResponse(pages.admin_editor(cfg.site_url, shown, names, str(exc.detail)), status_code=400)
+        return RedirectResponse("/admin", status_code=303)
+
+    @app.post("/admin/{slug}/borrar")
+    def admin_delete(slug: str, request: Request) -> Response:
+        denied = _guard(request)
+        if denied:
+            return denied
+        db.delete_entry(cfg, slug)
+        return RedirectResponse("/admin", status_code=303)
+
+    @app.get("/robots.txt")
+    def robots() -> Response:
+        path = ROOT / "public" / "robots.txt"
+        text = path.read_text(encoding="utf-8") if path.is_file() else "User-agent: *\nAllow: /\n"
+        return Response(text, media_type="text/plain")
+
+    app.mount("/s", StaticFiles(directory=str(Path(__file__).resolve().parent / "static")), name="s")
+    app.mount("/assets", StaticFiles(directory=str(ROOT / "public" / "assets")), name="assets")
+    astro = ROOT / "public" / "astronomical-data"
+    if astro.is_dir():
+        app.mount("/astronomical-data", StaticFiles(directory=str(astro)), name="astro")
 
     return app
 

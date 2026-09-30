@@ -1,52 +1,17 @@
 import html
 from urllib.parse import quote
 
+from server.html import esc, layout
+
 MONTHS = (
     "enero", "febrero", "marzo", "abril", "mayo", "junio",
     "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
 )
 
 
-def esc(value: str) -> str:
-    return html.escape(value, quote=True)
-
-
 def human_date(iso: str) -> str:
     year, month, day = iso.split("-")
     return f"{int(day)} de {MONTHS[int(month) - 1]} de {year}"
-
-
-def page(title: str, description: str, canonical: str, site_url: str, body: str) -> str:
-    rss = f"{site_url}/rss.xml"
-    return f"""<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{esc(title)}</title>
-<meta name="description" content="{esc(description)}">
-<link rel="canonical" href="{esc(canonical)}">
-<link rel="alternate" type="application/rss+xml" title="Ozkar" href="{esc(rss)}">
-<link rel="stylesheet" href="/blog/estilos.css">
-</head>
-<body>
-<header class="top"><a href="/">Ozkar.co</a><nav>
-<a href="/">OZ</a>
-<a href="/cv">CV</a>
-<a href="/blog" aria-current="page">BLOG</a>
-<a href="/projects">PROY</a>
-<a href="/wizz">WIZZ</a>
-<a href="/time">TIME</a>
-<a href="/clock">CLOCK</a>
-<a href="/calc">CALC</a>
-<a href="/rss.xml">RSS</a>
-</nav></header>
-<main class="wrap">
-{body}
-</main>
-</body>
-</html>
-"""
 
 
 def _cloud(tags: list[dict], current: str) -> str:
@@ -85,7 +50,7 @@ def list_page(entries: list[dict], tags: list[dict], site_url: str, tag: str, ol
     tag_q = f"&tag={quote(tag)}" if tag else ""
     body = f"""
 <h1>Blog</h1>
-<div class="layout">
+<div class="split">
 <div>
 <form class="tools" action="/blog/buscar" method="get">
 <label class="search">Buscar
@@ -95,10 +60,10 @@ def list_page(entries: list[dict], tags: list[dict], site_url: str, tag: str, ol
 </form>
 {_cards(entries)}
 </div>
-{_cloud(tags, tag)}
+<aside class="side">{_cloud(tags, tag)}</aside>
 </div>
 """
-    return page("Blog — Ozkar", "Entradas del blog de Ozkar.", f"{site_url}/blog", site_url, body)
+    return layout("Blog — Ozkar", "Entradas del blog de Ozkar.", f"{site_url}/blog", body, "/blog")
 
 
 def entry_page(entry: dict, site_url: str) -> str:
@@ -110,17 +75,17 @@ def entry_page(entry: dict, site_url: str) -> str:
 <article>
 <h1>{esc(entry["title"])}</h1>
 <time datetime="{esc(entry["date"])}">{human_date(entry["date"])}</time>
-<div class="entry-body">{entry["content"]}</div>
+<div class="prose">{entry["content"]}</div>
 <footer class="tags">{tags}</footer>
 </article>
 """
     plain = html_to_plain(entry["abstract"]) or entry["title"]
-    return page(
+    return layout(
         f'{entry["title"]} — Ozkar',
         plain[:180],
         f'{site_url}/blog/{entry["slug"]}',
-        site_url,
         body,
+        "/blog",
     )
 
 
@@ -136,12 +101,12 @@ def search_page(query: str, entries: list[dict], site_url: str, message: str) ->
 {note}
 {_cards(entries)}
 """
-    return page(
+    return layout(
         "Búsqueda — Ozkar",
         "Búsqueda del blog por significado.",
         f"{site_url}/blog/buscar",
-        site_url,
         body,
+        "/blog",
     )
 
 

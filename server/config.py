@@ -36,7 +36,6 @@ class Settings:
     db_file: Path
     embed_url: str
     site_url: str
-    static_dir: Path
     host: str
     port: int
 
@@ -47,10 +46,6 @@ def load_settings() -> Settings:
     db_file = Path(db_raw)
     if not db_file.is_absolute():
         db_file = ROOT / db_file
-    static_raw = os.environ.get("STATIC_DIR", "dist").strip()
-    static_dir = Path(static_raw)
-    if not static_dir.is_absolute():
-        static_dir = ROOT / static_dir
     return Settings(
         admin_user=_need("ADMIN_USER"),
         admin_password=_need("ADMIN_PASSWORD"),
@@ -59,7 +54,6 @@ def load_settings() -> Settings:
         db_file=db_file,
         embed_url=os.environ.get("EMBED_URL", "https://embed.ozkr.net").rstrip("/"),
         site_url=os.environ.get("SITE_URL", "https://ozkar.co").rstrip("/"),
-        static_dir=static_dir,
         host=os.environ.get("HOST", "0.0.0.0"),
         port=int(os.environ.get("PORT", "8000")),
     )

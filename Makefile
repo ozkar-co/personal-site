@@ -1,4 +1,4 @@
-.PHONY: setup run migrate web
+.PHONY: setup run migrate
 
 setup:
 	python3 -m venv .venv
@@ -9,6 +9,3 @@ run:
 
 migrate:
 	.venv/bin/python -m server.migrate
-
-build:
-	npm run build
