@@ -1,0 +1,102 @@
+body:has(.digits) h1,
+body:has(.keys) h1 {
+  font-family: var(--font-mono);
+  font-size: .82rem;
+  font-weight: 400;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.digits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1rem 1.6rem;
+  font-family: var(--font-mono);
+}
+
+.digits span {
+  display: grid;
+  gap: .1rem;
+  color: var(--muted);
+  font-size: .72rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.digits b {
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
+}
+
+.screen {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 2.6rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .04em;
+}
+
+.bar {
+  height: 3px;
+  margin: .8rem 0 .35rem;
+  background: var(--line);
+}
+
+.bar i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+}
+
+body:has(.keys) .card { max-width: 26rem; }
+
+.keys {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .35rem;
+}
+
+.keys button { width: 100%; min-height: 2.8rem; }
+.keys .wide { grid-column: 1 / -1; }
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+  gap: .35rem;
+  font-family: var(--font-mono);
+  font-size: .78rem;
+}
+
+.days span {
+  border: 1px solid var(--line);
+  padding: .4rem .5rem;
+}
+
+.days b { font-weight: 400; }
+.days .today { border-color: var(--accent); color: var(--accent-hot); }
+.days .dim { color: var(--muted); }
+
+.wizz {
+  max-width: 34rem;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.wizz blockquote {
+  border: 0;
+  padding: 0;
+  color: var(--fg);
+  font-style: italic;
+  font-size: 1.5rem;
+  line-height: 1.4;
+}
+
+.wizz img {
+  display: block;
+  width: min(14rem, 70%);
+  margin: 1.2rem auto;
+}
