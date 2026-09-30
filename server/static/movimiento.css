@@ -1,17 +1,24 @@
 @media (prefers-reduced-motion: no-preference) {
-  body.stage main { animation: rise .45s ease both; }
+  body.stage main { animation: rise .55s ease both; }
 
-  a, .card, button, .btn {
-    transition: background-size .2s ease, color .2s ease, border-color .2s ease, background-color .2s ease;
+  a, .card, button, .btn, .entries > li, .portrait, .projects img {
+    transition: color .2s ease, background-color .2s ease, border-color .2s ease, box-shadow .25s ease, transform .25s ease;
   }
 
-  nav a::after { transition: transform .2s ease; }
+  .card:hover, .projects .card:hover { transform: translateY(-3px); }
   .bar i { transition: width .35s linear; }
+
+  .brand { animation: pulse 3.6s ease-in-out infinite; }
 }
 
 @keyframes rise {
-  from { opacity: 0; transform: translateY(.4rem); }
+  from { opacity: 0; transform: translateY(.6rem); }
   to { opacity: 1; transform: none; }
+}
+
+@keyframes pulse {
+  0%, 100% { text-shadow: 0 0 10px #3dff6e88; }
+  50% { text-shadow: 0 0 22px #3dff6e; }
 }
 
 @media (prefers-reduced-motion: reduce) {
