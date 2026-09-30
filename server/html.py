@@ -279,23 +279,29 @@ def calc_page(site_url: str) -> str:
         key("7", digit="7"), key("8", digit="8"), key("9", digit="9"), key("×", op="×"),
         key("4", digit="4"), key("5", digit="5"), key("6", digit="6"), key("-", op="-"),
         key("1", digit="1"), key("2", digit="2"), key("3", digit="3"), key("+", op="+"),
-        key("0", digit="0"), key("X", digit="X"), key("W", digit="W"), key("=", eq=""),
-        key(",", dot="", wide=""),
+        key("0", digit="0"), key("X", digit="X"), key("W", digit="W"), key(",", dot=""),
+        key("=", eq="", wide=""),
     ]
     body = f"""
 <h1>Calculadora dozenal</h1>
-<div class="card">
-<p class="screen" id="screen">0</p>
-<p id="op" class="muted"></p>
-<p id="words"></p>
-<div class="keys">{"".join(keys)}</div>
-</div>
+<div class="split calc">
 <div class="prose">
 <h2>Cómo funciona</h2>
 <p><strong>Base 12.</strong> Dígitos 0-9, X (diez), W (once). 12 tiene más divisores que 10.</p>
 <p><strong>Nombres.</strong> 0 zero, 1 un, 2 du, 3 tri, 4 quar, 5 kin, 6 ses, 7 sep, 8 ok, 9 non, X dek, W elv. 10₁₂ es zen, 100₁₂ es un grod, 1000₁₂ es un mil.</p>
 <p><strong>Koma.</strong> La coma separa la fracción. Se lee de a dos dígitos: 5,3 es kin koma tri. Si una pareja lleva cero, se dice: 8,06 es ok koma zero ses.</p>
 <p><strong>Tau.</strong> τ = 2π. La circunferencia es τ por el radio. Un círculo son τ radianes. Esta calculadora usa esos radianes.</p>
+</div>
+<div class="card">
+<div class="readout">
+<div>
+<p class="screen" id="screen">0</p>
+<p id="words"></p>
+</div>
+<p id="op"></p>
+</div>
+<div class="keys">{"".join(keys)}</div>
+</div>
 </div>
 """
     return layout("Calc — Ozkar", "Calculadora dozenal.", f"{site_url}/calc", body, "/calc", ("/s/calc.js",))

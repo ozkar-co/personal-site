@@ -39,6 +39,26 @@ body:has(.keys) h1 {
   letter-spacing: .04em;
 }
 
+.readout {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: .75rem;
+}
+
+.readout .screen {
+  min-width: 0;
+  text-align: right;
+}
+
+#op {
+  margin: 0;
+  min-width: 1ch;
+  font-family: var(--font-mono);
+  font-size: 1.7rem;
+  color: var(--accent-hot);
+}
+
 .bar {
   height: 3px;
   margin: .8rem 0 .35rem;
@@ -52,7 +72,12 @@ body:has(.keys) h1 {
   background: var(--accent);
 }
 
-body:has(.keys) .card { max-width: 26rem; }
+.split.calc {
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 26rem);
+  align-items: start;
+}
+
+#words { margin: .15rem 0 .8rem; text-align: right; color: var(--muted); }
 
 .keys {
   display: grid;
@@ -62,6 +87,19 @@ body:has(.keys) .card { max-width: 26rem; }
 
 .keys button { width: 100%; min-height: 2.8rem; }
 .keys .wide { grid-column: 1 / -1; }
+
+.keys [data-op] {
+  color: var(--accent-hot);
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  border-color: var(--accent);
+  box-shadow: inset 0 -3px 0 color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.keys [data-eq] {
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+}
 
 .days {
   display: grid;
@@ -79,6 +117,10 @@ body:has(.keys) .card { max-width: 26rem; }
 .days b { font-weight: 400; }
 .days .today { border-color: var(--accent); color: var(--accent-hot); }
 .days .dim { color: var(--muted); }
+
+@media (max-width: 50rem) {
+  .split.calc { grid-template-columns: 1fr; }
+}
 
 .wizz {
   max-width: 34rem;
