@@ -35,8 +35,8 @@ def _cards(entries: list[dict]) -> str:
     for entry in entries:
         items.append(
             "<li><article>"
-            f'<h2><a href="/blog/{esc(entry["slug"])}">{esc(entry["title"])}</a></h2>'
             f'<time datetime="{esc(entry["date"])}">{human_date(entry["date"])}</time>'
+            f'<h2><a href="/blog/{esc(entry["slug"])}">{esc(entry["title"])}</a></h2>'
             f'<div class="abstract">{entry["abstract"]}</div>'
             "</article></li>"
         )
