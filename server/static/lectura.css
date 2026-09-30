@@ -1,3 +1,13 @@
+main > h1::after,
+article > h1::after {
+  content: "";
+  display: block;
+  width: 2.75rem;
+  height: 2px;
+  margin-top: .8rem;
+  background: var(--accent);
+}
+
 main > h2 {
   margin: 2.6rem 0 1rem;
   padding-bottom: .45rem;
@@ -11,12 +21,13 @@ main > h2 {
 }
 
 .card {
-  background: var(--card);
+  background: linear-gradient(180deg, var(--bg-raise) 0%, var(--card) 2.4rem);
   border: 1px solid var(--line);
   padding: var(--pad);
   display: grid;
   align-content: start;
   gap: .6rem;
+  box-shadow: 0 16px 40px #00000040;
 }
 
 .card h3 { margin: 0; }
@@ -34,6 +45,7 @@ main > h2 {
   width: min(18rem, 100%);
   justify-self: end;
   border: 1px solid var(--line);
+  box-shadow: 0 0 0 6px #101214, 0 0 0 7px var(--line), 0 22px 48px #00000066;
 }
 
 .split:has(.side) {
