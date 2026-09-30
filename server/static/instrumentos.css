@@ -146,15 +146,23 @@ body:has(.keys) h1 {
 .days .dim { color: var(--muted); }
 .days .dim b.dozenal { color: var(--muted); }
 
+@font-face {
+  font-family: Dozenal;
+  src: url("/s/Dozenal-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 .dozenal,
 .screen.dozenal,
 .digits b.dozenal,
 .days b.dozenal,
 .keys button.dozenal {
-  font-family: Palatino, "Palatino Linotype", Georgia, serif;
-  font-style: italic;
-  font-weight: 500;
-  color: #d7e2ee;
+  font-family: Dozenal, Palatino, Georgia, serif;
+  font-style: normal;
+  font-weight: 400;
+  font-synthesis: none;
 }
 
 @media (max-width: 50rem) {
