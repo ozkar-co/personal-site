@@ -118,21 +118,45 @@
   box-shadow: 0 0 16px #3dff6e33;
 }
 
-.keys .wide { grid-column: 1 / -1; }
-
-.keys [data-op] {
+.keys button[data-fn],
+.keys button[data-dot],
+.keys button[data-op] {
   color: #041208;
   background: var(--accent);
   border-color: transparent;
   box-shadow: 0 0 16px var(--accent-soft);
 }
 
-.keys [data-op]:hover, .keys [data-op]:focus-visible {
+.keys button[data-fn]:hover,
+.keys button[data-dot]:hover,
+.keys button[data-op]:hover,
+.keys button[data-fn]:focus-visible,
+.keys button[data-dot]:focus-visible,
+.keys button[data-op]:focus-visible {
   color: #041208;
   background: var(--accent-hot);
+  box-shadow: 0 0 20px var(--accent);
 }
 
-.keys [data-eq] {
+.keys button[data-clear] {
+  color: #1a0608;
+  background: var(--warn);
+  border-color: transparent;
+  box-shadow: 0 0 18px #ff6b7a66;
+}
+
+.keys button[data-clear]:hover,
+.keys button[data-clear]:focus-visible {
+  color: #1a0608;
+  background: #ffb3ba;
+  box-shadow: 0 0 22px var(--warn);
+}
+
+.keys .wide { grid-column: 1 / -1; }
+
+.keys button[data-eq],
+.keys button[data-eq]:hover,
+.keys button[data-eq]:focus-visible {
   color: #041208;
   background: var(--accent-hot);
   border-color: transparent;
@@ -140,29 +164,152 @@
   box-shadow: 0 0 20px var(--accent-soft);
 }
 
+.digits span i { font-style: normal; }
+.digits.warn b,
+.card.remain h2,
+.card.remain .digits b {
+  color: var(--warn);
+  text-shadow: 0 0 16px #ff6b7a66;
+}
+
+.card.remain {
+  border-color: #ff6b7a55;
+  background:
+    linear-gradient(160deg, #ff6b7a22, transparent 46%),
+    var(--card);
+}
+
+.motto {
+  margin: -.2rem 0 .15rem;
+  color: var(--accent-hot);
+  font-size: 1.2rem;
+  letter-spacing: .03em;
+  text-shadow: var(--glow);
+}
+
+.motto-es { margin-top: 0; }
+
+.switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin: 0 0 1.2rem;
+}
+
+.switch button {
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--line);
+  box-shadow: none;
+}
+
+.switch button[aria-pressed="true"],
+.switch button[aria-pressed="true"]:hover,
+.switch button[aria-pressed="true"]:focus-visible {
+  color: #041208;
+  background: var(--accent);
+  border-color: transparent;
+  box-shadow: 0 0 18px var(--accent-soft);
+}
+
+@media (max-width: 40rem) {
+  .digits {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .digits b { font-size: 1.7rem; }
+  .screen { font-size: 2rem; }
+  .keys button { min-height: 2.4rem; padding: .35rem .2rem; }
+  .days b { font-size: 1.25rem; }
+  .days span { min-height: 4.2rem; }
+  .days small, .weekdays { font-size: .62rem; }
+}
+
+.cal-head {
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+  width: 100%;
+  text-align: center;
+  margin: 2.2rem 0 1rem;
+}
+.cal-head h2 { margin: .8rem 0 0; }
+.cal-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .4rem;
+  margin: 0;
+}
+
+.weekdays,
 .days {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
-  gap: .45rem;
-  font-family: var(--font-mono);
-  font-size: .78rem;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: .4rem;
 }
+
+.weekdays {
+  margin-bottom: .15rem;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  letter-spacing: .08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.days { font-family: var(--font-mono); }
 
 .days span {
+  min-height: 5.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .2rem;
   border: 1px solid var(--line);
-  border-radius: .9rem 1.2rem;
-  padding: .45rem .55rem;
+  border-radius: .9rem;
+  padding: .55rem .25rem;
   background: #04120888;
+  text-align: center;
 }
 
-.days b { font-weight: 400; }
+.days .pad {
+  border: 0;
+  background: transparent;
+  min-height: 0;
+}
+
+.days b {
+  font-weight: 400;
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+.days small {
+  color: var(--muted);
+  font-size: .72rem;
+  line-height: 1.2;
+}
+
 .days .today {
   border-color: var(--accent);
   color: var(--accent-hot);
-  box-shadow: 0 0 14px #3dff6e33;
+  box-shadow: 0 0 16px #3dff6e33;
 }
+
 .days .dim { color: var(--muted); }
 .days .dim b.dozenal { color: var(--muted); }
+
+.days .phase-pre-plena { box-shadow: inset 0 3px 0 var(--accent); }
+.days .phase-plena { box-shadow: inset 0 3px 0 var(--accent-hot); }
+.days .phase-pre-nova { box-shadow: inset 0 3px 0 #ff6b7a88; }
+.days .today.phase-pre-plena,
+.days .today.phase-plena,
+.days .today.phase-pre-nova {
+  box-shadow: inset 0 3px 0 var(--accent-hot), 0 0 16px #3dff6e33;
+}
 
 @font-face {
   font-family: Dozenal;

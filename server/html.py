@@ -197,20 +197,32 @@ def wizz_page(site_url: str, quote: str) -> str:
     text = esc(quote).replace("; ", ";<br>").replace(". ", ".<br>")
     image = random.choice(WIZZ).name if WIZZ else ""
     picture = f"<a href='/wizz'><img src='/assets/wizz/{esc(image)}' alt='Sabio mago'></a>" if image else ""
-    body = f"<section class='wizz'><blockquote class='prose'>{text}</blockquote>{picture}<p><a href='/wizz'>Otra frase</a></p></section>"
+    body = f"<section class='wizz'><blockquote class='prose'>{text}</blockquote>{picture}</section>"
     return layout("Wizz — Ozkar", "Una frase y un mago.", f"{site_url}/wizz", body, "/wizz")
 
 
 def time_page(site_url: str) -> str:
-    units = "".join(f"<span><b>0</b>{label}</span>" for label in ("Años", "Meses", "Días", "Horas", "Minutos", "Segundos"))
+    labels = ("Años", "Meses", "Días", "Horas", "Minutos", "Segundos")
+    units = "".join(f"<span><b>0</b><i>{label}</i></span>" for label in labels)
     body = f"""
 <h1>Time</h1>
+<p class="motto">Tempus fugit, memento mori</p>
+<p class="muted motto-es">El tiempo vuela, recuerda que morirás</p>
+<p class="switch" id="base">
+<button type="button" data-base="si" aria-pressed="true">S.I.</button>
+<button type="button" data-base="doc" aria-pressed="false">Docenal</button>
+</p>
+<div class="grid">
+<article class="card">
 <h2>Tiempo vivido</h2>
 <p class="digits" id="lived">{units}</p>
-<blockquote><p>Tempus fugit, memento mori</p><p class="muted">El tiempo vuela, recuerda que morirás</p></blockquote>
+</article>
+<article class="card remain">
 <h2>Tiempo restante</h2>
 <p class="digits" id="left">{units}</p>
 <p id="over" hidden>Has superado tu esperanza de vida.</p>
+</article>
+</div>
 <p class="muted">La cuenta regresiva es una aproximación con la esperanza de vida de mi país, el historial de mi familia y mi estilo de vida. Si llega a valores negativos y aún estoy vivo, es porque he superado esa esperanza. Si he muerto y el reloj sigue, es porque quien dejé encargado de actualizar este sitio no hizo su trabajo.</p>
 """
     return layout("Time — Ozkar", "Tiempo vivido y tiempo restante.", f"{site_url}/time", body, "/time", ("/s/time.js",))
@@ -243,15 +255,16 @@ def clock_page(site_url: str) -> str:
 <p id="moon-label"></p>
 </article>
 </div>
-<h2>Lunato</h2>
-<p>
+<header class="cal-head">
+<p class="cal-nav">
 <button type="button" id="prev-sol" aria-label="Sol anterior">≪</button>
 <button type="button" id="prev-lunato" aria-label="Lunato anterior">←</button>
 <button type="button" id="today">Lunato actual</button>
 <button type="button" id="next-lunato" aria-label="Lunato siguiente">→</button>
 <button type="button" id="next-sol" aria-label="Sol siguiente">≫</button>
 </p>
-<h3 id="cal-title"></h3>
+<h2 id="cal-title"></h2>
+</header>
 <div id="cal"></div>
 <div class="prose">
 <h2>Cómo funciona</h2>
@@ -357,6 +370,7 @@ def _editor(entry: dict | None, tags: list[str], message: str) -> str:
 def admin_login(site_url: str, failed: bool) -> str:
     note = "<p class='warn'>Credenciales incorrectas.</p>" if failed else ""
     body = f"""
+<section class="gate">
 <h1>Admin</h1>
 {note}
 <form method="post" action="/admin/login">
@@ -364,6 +378,7 @@ def admin_login(site_url: str, failed: bool) -> str:
 <label>Clave<input type="password" name="password" autocomplete="current-password" required></label>
 <button type="submit">Entrar</button>
 </form>
+</section>
 """
     return layout("Admin — Ozkar", "Administrar el blog.", f"{site_url}/admin", body, "/admin", index=False)
 
