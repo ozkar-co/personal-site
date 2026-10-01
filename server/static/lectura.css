@@ -71,7 +71,7 @@ main > h2 {
   gap: .35rem;
 }
 
-.cats a { color: var(--muted); text-shadow: none; }
+.cats a { color: var(--muted); text-shadow: none; white-space: nowrap; }
 .cats a:hover, .cats a:focus-visible, .cats a[aria-current="true"] { color: var(--accent-hot); }
 
 .tools {

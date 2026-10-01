@@ -469,7 +469,7 @@ var numberToDigitName = (num) => {
 };
 var numberToWords = (decimal) => {
   if (decimal === 0) return "zero";
-  if (decimal < 0) return "negative " + numberToWords(-decimal);
+  if (decimal < 0) return "negativo " + numberToWords(-decimal);
   if (decimal < 12) {
     return numberToDigitName(decimal);
   }
@@ -511,8 +511,11 @@ var numberToWords = (decimal) => {
   return parts.join(" ");
 };
 var dozenalToWords = (dozenal) => {
+  const raw = String(dozenal).trim();
+  const negative = raw.startsWith("-");
   let decimal = 0;
-  const str = dozenal.toUpperCase().replace(/^Z/, "");
+  const str = (negative ? raw.slice(1) : raw).toUpperCase().replace(/^Z/, "");
+  if (!str) return negative ? "negativo zero" : "zero";
   for (let i = 0; i < str.length; i++) {
     const digit = str[i];
     let value;
@@ -522,7 +525,8 @@ var dozenalToWords = (dozenal) => {
     if (isNaN(value)) return "eroro";
     decimal = decimal * 12 + value;
   }
-  return numberToWords(decimal);
+  const words = numberToWords(decimal);
+  return negative ? "negativo " + words : words;
 };
 var readFractionalPart = (fractionalDigits) => {
   const result = [];
