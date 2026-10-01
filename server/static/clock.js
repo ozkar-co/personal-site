@@ -42,22 +42,20 @@ function paintCalendar(calendar) {
   }
   const name = info.constellation ? info.constellation.name : "";
   $("cal-title").innerHTML = `Sol ${mark(info.solDozenal)} · Lunato ${mark(info.lunatoDozenal)} · ${name} ${sign(info.constellation)}`;
-  const week = ["lun", "mar", "mié", "jue", "vie", "sáb", "dom"];
-  const head = week.map((label) => `<span>${label}</span>`).join("");
-  const first = info.days[0];
-  const offset = first ? (first.civilDate.getDay() + 6) % 7 : 0;
-  const pads = Array.from({ length: offset }, () => `<span class="pad" aria-hidden="true"></span>`).join("");
-  const cells = info.days.map((day) => {
-    const when = day.civilDate.toLocaleDateString("es-ES", { day: "numeric", month: "short" });
-    const cls = [
-      day.isToday ? "today" : "",
-      day.belongsToCurrentSol ? "" : "dim",
-      `phase-${day.lunarPhase.toLowerCase().replace(" ", "-")}`,
-    ].filter(Boolean).join(" ");
-    const flake = day.isSolstice ? " ❄" : "";
-    return `<span class="${cls}"><b class="dozenal">${showDozenal(day.jornoDozenal)}</b><small>${when}${flake}</small></span>`;
+  const rows = Object.values(info.phases).filter((days) => days.length);
+  $("cal").innerHTML = rows.map((days) => {
+    const cells = days.map((day) => {
+      const when = day.civilDate.toLocaleDateString("es-ES", { day: "numeric", month: "short" });
+      const dow = day.civilDate.toLocaleDateString("es-ES", { weekday: "short" });
+      const cls = [
+        day.isToday ? "today" : "",
+        day.belongsToCurrentSol ? "" : "dim",
+      ].filter(Boolean).join(" ");
+      const flake = day.isSolstice ? " ❄" : "";
+      return `<span class="${cls}"><b class="dozenal">${showDozenal(day.jornoDozenal)}</b><small>${when}${flake}</small><small class="dow">${dow}</small></span>`;
+    }).join("");
+    return `<section class="phase"><p>${days[0].lunarPhase}</p><div class="days">${cells}</div></section>`;
   }).join("");
-  $("cal").innerHTML = `<div class="weekdays">${head}</div><div class="days">${pads}${cells}</div>`;
 }
 
 function tick() {

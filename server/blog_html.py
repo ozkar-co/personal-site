@@ -43,6 +43,20 @@ def _cards(entries: list[dict]) -> str:
     return '<ol class="entries">' + "\n".join(items) + "</ol>"
 
 
+def _search_form(query: str = "") -> str:
+    value = f' value="{esc(query)}"' if query else ""
+    hint = "" if query else ' placeholder="Una frase, no una palabra suelta"'
+    return f"""
+<form class="tools" action="/blog/buscar" method="get">
+<label for="q">Búsqueda semántica: por el sentido de la frase.</label>
+<div class="search">
+<input id="q" type="search" name="q"{value}{hint}>
+<button type="submit">Buscar</button>
+</div>
+</form>
+"""
+
+
 def list_page(entries: list[dict], tags: list[dict], site_url: str, tag: str, oldest: bool, total: int) -> str:
     recent = "" if oldest else ' aria-current="true"'
     old = ' aria-current="true"' if oldest else ""
@@ -51,11 +65,7 @@ def list_page(entries: list[dict], tags: list[dict], site_url: str, tag: str, ol
 <h1>Blog</h1>
 <div class="split">
 <div>
-<form class="tools" action="/blog/buscar" method="get">
-<label class="search">Buscar
-<input type="search" name="q" placeholder="Una frase, no una palabra suelta"></label>
-<button type="submit">Buscar</button>
-</form>
+{_search_form()}
 <p class="sort"><a href="/blog?orden=desc{tag_q}"{recent}>Más recientes</a>
 <a href="/blog?orden=asc{tag_q}"{old}>Más antiguas</a></p>
 {_cards(entries)}
@@ -94,11 +104,7 @@ def search_page(query: str, entries: list[dict], site_url: str, message: str) ->
     body = f"""
 <a class="back" href="/blog">← Blog</a>
 <h1>Búsqueda</h1>
-<form class="tools" action="/blog/buscar" method="get">
-<label class="search">Buscar
-<input type="search" name="q" value="{esc(query)}"></label>
-<button type="submit">Buscar</button>
-</form>
+{_search_form(query)}
 {note}
 {_cards(entries)}
 """

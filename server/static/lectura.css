@@ -74,8 +74,27 @@ main > h2 {
 .cats a { color: var(--muted); text-shadow: none; }
 .cats a:hover, .cats a:focus-visible, .cats a[aria-current="true"] { color: var(--accent-hot); }
 
-.tools { margin-bottom: 1.2rem; }
-.search { max-width: 28rem; }
+.tools {
+  display: grid;
+  gap: .4rem;
+  max-width: 36rem;
+  margin-bottom: 1.2rem;
+}
+
+.tools label {
+  color: var(--muted);
+  font-size: .85rem;
+}
+
+.search {
+  display: flex;
+  gap: .45rem;
+  align-items: center;
+  max-width: none;
+}
+
+.search input { flex: 1; min-width: 0; }
+.search button { flex: 0 0 auto; }
 
 .sort {
   display: flex;

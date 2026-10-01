@@ -862,7 +862,7 @@ CREATE TABLE projects (
   technologies TEXT NOT NULL,
   features TEXT NOT NULL
 );
-INSERT INTO projects VALUES('marcopolo',0,'Marco Polo','Juegos de geografía: adivinar el país en el mapa y reconocer banderas.','https://marcopolo.forja.cc/','proyecto5.png','[]','[]');
+INSERT INTO projects VALUES('marcopolo',0,'Marco Polo','Juegos de geografía: adivinar el país en el mapa y reconocer banderas.','https://marcopolo.forja.cc/','proyecto5.jpg','[]','[]');
 INSERT INTO projects VALUES('cuentas',1,'Cuentas','Registro de ingresos y gastos, con el balance del mes.','https://cuentas.forja.cc/','proyecto1.jpg','[]','[]');
 INSERT INTO projects VALUES('impostor',2,'Impostor','Juego social para encontrar al impostor.','https://impostor.forja.cc/','impostor.jpg','[]','[]');
 INSERT INTO projects VALUES('fabricalc',3,'Fabricalc','Calculadora web del costo de una impresión 3D: material, tiempo, energía y envío.','https://fabricalc.ozkr.net/','fabricalc.jpg','[]','[]');
@@ -876,6 +876,8 @@ INSERT INTO projects VALUES('slm',10,'SLM','Modelo de lenguaje pequeño.','https
 INSERT INTO projects VALUES('ocr',11,'OCR','Imagen a texto.','https://ocr.ozkr.net/','ocr.jpg','[]','[]');
 INSERT INTO projects VALUES('embed',12,'Embed','Texto a vector.','https://embed.ozkr.net/','embed.jpg','[]','[]');
 INSERT INTO projects VALUES('oznet',13,'OzNet','Servidor propio y túneles. Cada servicio escucha en local y sale por su subdominio.','https://home.ozkr.net/','oznet.jpg','[]','[]');
+INSERT INTO projects VALUES('forja',14,'Forja de Código','Desarrollo de software y web a la medida.','https://forjadecodigo.com/','forja.jpg','[]','[]');
+INSERT INTO projects VALUES('koten',15,'Koten','Mundo de rol, con sistema jugable.','https://koten.ozkr.net/','koten.jpg','[]','[]');
 CREATE TABLE cv_blocks (
   id INTEGER PRIMARY KEY,
   kind TEXT NOT NULL,

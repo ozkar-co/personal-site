@@ -1,10 +1,28 @@
 [
   {
+    "id": "forja",
+    "titulo": "Forja de Código",
+    "descripcion": "Desarrollo de software y web a la medida.",
+    "url": "https://forjadecodigo.com/",
+    "imagen": "forja.jpg",
+    "tecnologias": [],
+    "caracteristicas": []
+  },
+  {
+    "id": "koten",
+    "titulo": "Koten",
+    "descripcion": "Mundo de rol, con sistema jugable.",
+    "url": "https://koten.ozkr.net/",
+    "imagen": "koten.jpg",
+    "tecnologias": [],
+    "caracteristicas": []
+  },
+  {
     "id": "marcopolo",
     "titulo": "Marco Polo",
     "descripcion": "Juegos de geografía: adivinar el país en el mapa y reconocer banderas.",
     "url": "https://marcopolo.forja.cc/",
-    "imagen": "proyecto5.png",
+    "imagen": "proyecto5.jpg",
     "tecnologias": [],
     "caracteristicas": []
   },

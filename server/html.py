@@ -151,8 +151,8 @@ def cv_page(site_url: str, blocks: list[dict]) -> str:
 
 PROJECT_SECTIONS = (
     ("Aplicaciones", (
-        "marcopolo", "cuentas", "impostor", "fabricalc",
-        "meye", "ozro", "lolchaos", "yd",
+        "forja", "koten", "marcopolo", "cuentas", "impostor",
+        "fabricalc", "meye", "ozro", "lolchaos", "yd",
     )),
     ("Inteligencia artificial", ("whisper", "tts", "slm", "ocr", "embed")),
     ("Infraestructura", ("oznet",)),
@@ -223,7 +223,7 @@ def time_page(site_url: str) -> str:
 <p id="over" hidden>Has superado tu esperanza de vida.</p>
 </article>
 </div>
-<p class="muted">La cuenta regresiva es una aproximación con la esperanza de vida de mi país, el historial de mi familia y mi estilo de vida. Si llega a valores negativos y aún estoy vivo, es porque he superado esa esperanza. Si he muerto y el reloj sigue, es porque quien dejé encargado de actualizar este sitio no hizo su trabajo.</p>
+<p class="muted note">La cuenta regresiva es una aproximación con la esperanza de vida de mi país, el historial de mi familia y mi estilo de vida. Si llega a valores negativos y aún estoy vivo, es porque he superado esa esperanza. Si he muerto y el reloj sigue, es porque quien dejé encargado de actualizar este sitio no hizo su trabajo.</p>
 """
     return layout("Time — Ozkar", "Tiempo vivido y tiempo restante.", f"{site_url}/time", body, "/time", ("/s/time.js",))
 
@@ -268,10 +268,11 @@ def clock_page(site_url: str) -> str:
 <div id="cal"></div>
 <div class="prose">
 <h2>Cómo funciona</h2>
-<p><strong>Dozenal.</strong> Dígitos 0-9, <span class="dozenal">χ</span> (10), <span class="dozenal">ε</span> (11). <span class="dozenal">1χ</span> = 22 en decimal.</p>
-<p><strong>Reloj.</strong> 1 jorno = 20 horo. 1 horo = 1 hora civil, 1 temo ≈ 5 min, 1 mino ≈ 25 s, 1 tiko ≈ 2 s. El día empieza a medianoche.</p>
-<p><strong>Sol.</strong> Año solar personal desde el solsticio de invierno de diciembre de 1992 (Sol 0). Cada Sol va de un solsticio al siguiente.</p>
-<p><strong>Lunatos.</strong> Meses lunares que empiezan en luna nueva. Lunato 1 es la primera luna nueva después del solsticio. Un Sol tiene 12 o 13 lunatos. El nombre es la constelación sobre la que está el Sol. Ofiuco aparece en los soles de 13 lunatos.</p>
+<p><strong>Dozenal.</strong> Dígitos 0-9, <span class="dozenal">χ</span> (10), <span class="dozenal">ε</span> (11). <span class="dozenal">1χ</span> = 1×12 + 10 = 22 en decimal. 12 tiene más divisores que 10: 1, 2, 3, 4, 6 y 12.</p>
+<p><strong>Reloj.</strong> 1 jorno = 20 horo, y cada unidad se parte en 12. 1 horo = 1 hora civil, 1 temo ≈ 5 min, 1 mino ≈ 25 s, 1 tiko ≈ 2 s. El día empieza a medianoche, igual que el día civil.</p>
+<p><strong>Sol.</strong> Año solar personal desde el solsticio de invierno de diciembre de 1992 (Sol 0). Cada Sol va de un solsticio de invierno al siguiente. Es el día más corto del año y se observa sin instrumentos.</p>
+<p><strong>Lunatos.</strong> Meses lunares de unos 29,5 días. Empiezan en luna nueva, visible a simple vista. Lunato 1 es la primera luna nueva después del solsticio. Un Sol tiene 12 o 13 lunatos.</p>
+<p><strong>Nombre.</strong> Cada lunato lleva la constelación sobre la que está el Sol en la eclíptica. Los doce habituales son las del zodiaco. En un Sol de trece lunatos entra Ofiuco, entre Escorpio y Sagitario.</p>
 <p><strong>Signos.</strong> Cada lunato tiene su letra, en el orden del Sol desde Sagitario. Cetus y Ofiuco van en la misma serie.</p>
 <ul class="signs">
 <li><b class="dozenal">&#xE000;</b> Sagitario</li>
@@ -289,7 +290,9 @@ def clock_page(site_url: str) -> str:
 <li><b class="dozenal">&#xE00C;</b> Escorpio</li>
 <li><b class="dozenal">&#xE00D;</b> Ofiuco</li>
 </ul>
-<p><strong>Lunato 0.</strong> Pertenece a dos soles: es el último del anterior y el primero del actual. Incluye el solsticio, marcado con ❄. Los días anteriores al solsticio se ven atenuados.</p>
+<p><strong>Lunato 0.</strong> Cruza dos soles: es el último del anterior y el primero del actual. Empieza en la luna nueva anterior al solsticio y contiene ese día, marcado con ❄. Los días de antes del solsticio son del Sol anterior.</p>
+<p><strong>Último lunato.</strong> El que cierra el Sol (12 o 13; <span class="dozenal">χ</span> o <span class="dozenal">ε</span>) también contiene el solsticio siguiente. Los días desde ese solsticio ya son del Sol nuevo.</p>
+<p>Esos días, los que no son de este Sol, se ven en gris y con el borde gris.</p>
 </div>
 """
     return layout("Clock — Ozkar", "Reloj y calendario dozenal.", f"{site_url}/clock", body, "/clock", ("/s/clock.js",))
@@ -323,10 +326,10 @@ def calc_page(site_url: str) -> str:
 <div class="split calc">
 <div class="prose">
 <h2>Cómo funciona</h2>
-<p><strong>Base 12.</strong> Dígitos 0-9, <span class="dozenal">χ</span> (diez), <span class="dozenal">ε</span> (once). 12 tiene más divisores que 10.</p>
-<p><strong>Nombres.</strong> 0 zero, 1 un, 2 du, 3 tri, 4 quar, 5 kin, 6 ses, 7 sep, 8 ok, 9 non, <span class="dozenal">χ</span> dek, <span class="dozenal">ε</span> elv. 10₁₂ es zen, 100₁₂ es un grod, 1000₁₂ es un mil.</p>
-<p><strong>Koma.</strong> La coma separa la fracción. Se lee de a dos dígitos: 5,3 es kin koma tri. Si una pareja lleva cero, se dice: 8,06 es ok koma zero ses.</p>
-<p><strong>Tau.</strong> τ = 2π. La circunferencia es τ por el radio. Un círculo son τ radianes. Esta calculadora usa esos radianes.</p>
+<p><strong>Base 12.</strong> Dígitos 0-9, <span class="dozenal">χ</span> (diez), <span class="dozenal">ε</span> (once). Potencias: 12¹ zen, 12² grod, 12³ mil. 12 tiene más divisores que 10 (1, 2, 3, 4, 6 y 12 frente a 1, 2, 5 y 10), y por eso muchas cuentas cierran sin resto.</p>
+<p><strong>Nombres.</strong> 0 zero, 1 un, 2 du, 3 tri, 4 quar, 5 kin, 6 ses, 7 sep, 8 ok, 9 non, <span class="dozenal">χ</span> dek, <span class="dozenal">ε</span> elv. 10₁₂ es zen, 11₁₂ es zen un, 20₁₂ es duzen, 100₁₂ es un grod, 1000₁₂ es un mil.</p>
+<p><strong>Koma.</strong> La coma separa la fracción. La parte de después se lee de a dos dígitos, cada pareja como un número: 5,3 es kin koma tri; 5,46 es kin koma quarzen ses; <span class="dozenal">ε</span>,81 es elv koma okzen un. Si una pareja lleva cero, se dice: 8,06 es ok koma zero ses. Si el último dígito queda solo, se nombra solo.</p>
+<p><strong>Tau.</strong> τ = 2π. La circunferencia es τ por el radio, y un círculo son τ radianes: τ/4 es un cuarto de vuelta y τ/2 es media vuelta. 360° = τ, 180° = τ/2, 90° = τ/4, 60° = τ/6. Esta calculadora usa esos radianes.</p>
 </div>
 <div class="card">
 <div class="readout">
