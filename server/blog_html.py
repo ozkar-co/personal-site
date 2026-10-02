@@ -14,6 +14,17 @@ def human_date(iso: str) -> str:
     return f"{int(day)} de {MONTHS[int(month) - 1]} de {year}"
 
 
+def _short_word(word: str) -> str:
+    if len(word) <= 8:
+        return word
+    stem = word[:3]
+    return stem[:1].upper() + stem[1:] + "."
+
+
+def _short_category(name: str) -> str:
+    return " ".join(_short_word(word) for word in name.split())
+
+
 def _categories(tags: list[dict], current: str, total: int, oldest: bool) -> str:
     orden = "&orden=asc" if oldest else ""
     todas_href = "/blog?orden=asc" if oldest else "/blog"
@@ -22,8 +33,10 @@ def _categories(tags: list[dict], current: str, total: int, oldest: bool) -> str
     for item in sorted(tags, key=lambda row: row["name"].casefold()):
         href = "/blog?tag=" + quote(item["name"]) + orden
         mark = ' aria-current="true"' if item["name"] == current else ""
+        short = _short_category(item["name"])
+        tip = f' title="{esc(item["name"])}"' if short != item["name"] else ""
         items.append(
-            f'<li><a href="{href}"{mark}>{esc(item["name"])} ({item["count"]})</a></li>'
+            f'<li><a href="{href}"{mark}{tip}>{esc(short)} ({item["count"]})</a></li>'
         )
     return '<nav aria-label="Categorías"><ul class="cats">' + "".join(items) + "</ul></nav>"
 
@@ -61,8 +74,9 @@ def list_page(entries: list[dict], tags: list[dict], site_url: str, tag: str, ol
     recent = "" if oldest else ' aria-current="true"'
     old = ' aria-current="true"' if oldest else ""
     tag_q = f"&tag={quote(tag)}" if tag else ""
+    heading = "Blog" if not tag else f"Blog — {esc(tag)}"
     body = f"""
-<h1>Blog</h1>
+<h1>{heading}</h1>
 <div class="split">
 <div>
 {_search_form()}

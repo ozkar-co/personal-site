@@ -16,8 +16,8 @@ NAV = (
     ("/time", "TIME"),
     ("/clock", "CLOCK"),
     ("/calc", "CALC"),
-    ("/admin", "ADMIN"),
     ("/rss", "RSS"),
+    ("/admin", "ADMIN"),
 )
 
 
@@ -315,10 +315,10 @@ def calc_page(site_url: str) -> str:
         key("√", fn="sqrt"), key("asin", fn="asin"), key("acos", fn="acos"), key("atan", fn="atan"),
         key("xʸ", op="^"), key("x²", fn="square"), key("ln", fn="ln"), key("eˣ", fn="exp"),
         key("C", clear=""), key("+/-", fn="sign"), key("1/x", fn="inv"), key("÷", op="÷"),
-        key("7", digit="7"), key("8", digit="8"), key("9", digit="9"), key("×", op="×"),
-        key("4", digit="4"), key("5", digit="5"), key("6", digit="6"), key("-", op="-"),
-        key("1", digit="1"), key("2", digit="2"), key("3", digit="3"), key("+", op="+"),
-        key("0", digit="0"), key("X", digit="X"), key("W", digit="W"), key(",", dot=""),
+        key("0", digit="0"), key("1", digit="1"), key("2", digit="2"), key("×", op="×"),
+        key("3", digit="3"), key("4", digit="4"), key("5", digit="5"), key("-", op="-"),
+        key("6", digit="6"), key("7", digit="7"), key("8", digit="8"), key("+", op="+"),
+        key("9", digit="9"), key("X", digit="X"), key("W", digit="W"), key(",", dot=""),
         key("=", eq="", wide=""),
     ]
     body = f"""
