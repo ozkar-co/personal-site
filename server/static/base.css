@@ -145,7 +145,7 @@ p, ul, ol { margin: 0 0 var(--gap); }
 .warn, .warn b { color: var(--warn); text-shadow: 0 0 12px #ff6b7a55; }
 
 form, .prose { display: grid; gap: var(--gap); }
-label { display: grid; gap: .35rem; font-family: var(--font-mono); font-size: .85rem; letter-spacing: .04em; }
+label, .field { display: grid; gap: .35rem; font-family: var(--font-mono); font-size: .85rem; letter-spacing: .04em; }
 
 input, textarea, button, .btn {
   font: .95rem/1.4 var(--font-mono);
@@ -160,6 +160,25 @@ textarea {
   min-height: 8rem;
   width: 100%;
   border-radius: 1.2rem;
+}
+
+#content { min-height: 18rem; }
+
+.tabs { display: flex; flex-wrap: wrap; gap: .35rem; }
+
+.tabs button {
+  padding: .25rem .7rem;
+  font-size: .78rem;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--line);
+  box-shadow: none;
+}
+
+.tabs button[aria-pressed="true"] {
+  color: #041208;
+  background: var(--accent);
+  outline: 0;
 }
 
 button, .btn {

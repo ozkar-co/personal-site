@@ -361,7 +361,15 @@ def _editor(entry: dict | None, tags: list[str], message: str) -> str:
 <label>Título<input name="title" value="{esc(title)}" required></label>
 <label>Fecha<input type="date" name="date" value="{esc(date)}" required></label>
 <label>Resumen<textarea name="abstract">{esc(abstract)}</textarea></label>
-<label>Contenido<textarea name="content" required>{esc(content)}</textarea></label>
+<div class="field">
+<span id="content-label">Contenido</span>
+<div class="tabs">
+<button type="button" data-tab="edit" aria-pressed="true">Edición</button>
+<button type="button" data-tab="view">Visualización</button>
+</div>
+<textarea id="content" name="content" required aria-labelledby="content-label">{esc(content)}</textarea>
+<div id="preview" class="prose" hidden></div>
+</div>
 <label>Categorías<input name="tags" value="{esc(chosen)}" placeholder="una, otra"></label>
 <p class="muted">Ya existen: {known}</p>
 <button type="submit">Guardar</button>
@@ -410,7 +418,15 @@ def admin_home(site_url: str, entries: list[dict]) -> str:
 
 def admin_editor(site_url: str, entry: dict | None, tags: list[str], message: str) -> str:
     body = _editor(entry, tags, message)
-    return layout("Editar — Ozkar", "Editar una entrada.", f"{site_url}/admin", body, "/admin", index=False)
+    return layout(
+        "Editar — Ozkar",
+        "Editar una entrada.",
+        f"{site_url}/admin",
+        body,
+        "/admin",
+        ("/s/editor.js",),
+        index=False,
+    )
 
 
 def rss_page(site_url: str) -> str:
