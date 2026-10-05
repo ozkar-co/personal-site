@@ -15,6 +15,7 @@ from server import blog_html, db, html as pages
 from server.auth import TOKEN_TTL, check_password, issue_token, require_admin
 from server.chunks import body_chunks
 from server.config import Settings, load_settings
+from server.markup import entry_html
 from server.embed_worker import embed_loop, unpack_vector
 
 log = logging.getLogger("blog")
@@ -37,7 +38,7 @@ def _slug(title: str) -> str:
 
 def _payload_entry(body: dict, slug: str) -> dict:
     title = str(body.get("title") or "").strip()
-    content = str(body.get("content") or "").strip()
+    content = entry_html(str(body.get("content") or ""))
     if not title or not content:
         raise HTTPException(status_code=400, detail="Título y contenido son obligatorios")
     abstract = str(body.get("abstract") or "").strip()
