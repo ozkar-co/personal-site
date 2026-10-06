@@ -145,6 +145,7 @@ p, ul, ol { margin: 0 0 var(--gap); }
 .warn, .warn b { color: var(--warn); text-shadow: 0 0 12px #ff6b7a55; }
 
 form, .prose { display: grid; gap: var(--gap); }
+#preview[hidden], #content[hidden] { display: none !important; }
 label, .field { display: grid; gap: .35rem; font-family: var(--font-mono); font-size: .85rem; letter-spacing: .04em; }
 
 input, textarea, button, .btn {
