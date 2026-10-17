@@ -3,18 +3,25 @@ const preview = document.querySelector("#preview");
 const tabs = document.querySelector(".tabs");
 
 if (field && preview && tabs) {
+  const buttons = [...tabs.querySelectorAll("button")];
+
+  const show = (view) => {
+    if (view) preview.innerHTML = field.value;
+    else preview.replaceChildren();
+    field.hidden = view;
+    preview.hidden = !view;
+    for (const tab of buttons) {
+      tab.setAttribute("aria-pressed", tab.dataset.tab === (view ? "view" : "edit") ? "true" : "false");
+    }
+  };
+
   tabs.addEventListener("click", (event) => {
     const button = event.target.closest("button");
     if (!button) return;
-    const view = button.dataset.tab === "view";
-    preview.innerHTML = view ? field.value : "";
-    field.hidden = view;
-    preview.hidden = !view;
-    for (const tab of tabs.querySelectorAll("button")) {
-      tab.setAttribute("aria-pressed", tab === button ? "true" : "false");
-    }
+    show(button.dataset.tab === "view");
   });
+
   field.form.addEventListener("submit", () => {
-    field.hidden = false;
+    show(false);
   });
 }

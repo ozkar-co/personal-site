@@ -25,6 +25,17 @@ def esc(value: str) -> str:
     return html.escape(str(value), quote=True)
 
 
+def _asset(name: str) -> str:
+    filename = Path(name).name
+    path = Path(__file__).resolve().parent / "static" / filename
+    try:
+        stat = path.stat()
+        stamp = f"{int(stat.st_mtime)}-{stat.st_size}"
+    except OSError:
+        stamp = "0"
+    return f"/s/{filename}?v={stamp}"
+
+
 def layout(
     title: str,
     description: str,
@@ -39,9 +50,9 @@ def layout(
     for href, label in NAV:
         mark = ' aria-current="page"' if href == current else ""
         links.append(f'<a href="{href}"{mark}>{label}</a>')
-    script = "".join(f'<script type="module" src="{src}"></script>' for src in scripts)
+    script = "".join(f'<script type="module" src="{_asset(src)}"></script>' for src in scripts)
     sheets = "".join(
-        f'<link rel="stylesheet" href="/s/{name}">'
+        f'<link rel="stylesheet" href="{_asset(name)}">'
         for name in ("base.css", "lectura.css", "instrumentos.css", "movimiento.css")
     )
     year = datetime.now().year
@@ -365,7 +376,7 @@ def _editor(entry: dict | None, tags: list[str], message: str) -> str:
 <span id="content-label">Contenido</span>
 <div class="tabs">
 <button type="button" data-tab="edit" aria-pressed="true">Edición</button>
-<button type="button" data-tab="view">Visualización</button>
+<button type="button" data-tab="view" aria-pressed="false">Visualización</button>
 </div>
 <textarea id="content" name="content" required aria-labelledby="content-label">{esc(content)}</textarea>
 <div id="preview" class="prose" hidden></div>
